@@ -1,0 +1,18 @@
+.overview {
+  height: 100%;
+}
+.overview .action_buttons {
+  display: flex;
+  gap: 1rem;
+}
+.overview .action_buttons button {
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 0.15rem solid #959595;
+  color: #959595;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}/*# sourceMappingURL=index.module.css.map */

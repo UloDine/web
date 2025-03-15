@@ -1,0 +1,113 @@
+"use client";
+import UloDIneButton from "@/components/button/UloDIneButton";
+import { GeneralIcons } from "@/icons/general/icons";
+import { SocialIcons } from "@/icons/socials/icons";
+import React, { useContext, useEffect, useState } from "react";
+import styles from "@/styles/auth/Index.module.css";
+import UloDineLink from "@/components/button/UloDineLink";
+import { AUTH_ROUTES } from "@/routes/RoutePaths";
+import { LoginContext } from "@/context/LoginContext";
+import UloDineInput from "@/components/input/UloDineInput";
+
+function page() {
+  const context = useContext(LoginContext);
+
+  if (!context) {
+    throw new Error("Please wrap this in a provider");
+  }
+
+  const [sending, setSending] = useState<boolean>(false);
+
+  const { businessLogin, setBusinessLogin } = context;
+  const socials = [
+    {
+      icon: SocialIcons.x,
+      link: "",
+    },
+    {
+      icon: SocialIcons.instagram,
+      link: "",
+    },
+    {
+      icon: SocialIcons.facebook,
+      link: "",
+    },
+    {
+      icon: SocialIcons.linkedin,
+      link: "",
+    },
+  ];
+
+  return (
+    <section className={`${styles.auth} ${styles.login}`}>
+      <div className={styles.auth_img_bg_login}>
+        <div className={styles.auth_logo}>
+          {GeneralIcons.logo} <h1>UloDine</h1>
+        </div>
+        <div className={styles.auth_center}>
+          <h1>
+            Welcome Back to <span>UloDine</span> Manage Your Restaurant with
+            Ease.
+          </h1>
+        </div>
+        <div className={styles.auth_bottom}>
+          <div className={styles.auth_bottom_socials}>
+            {socials.map((social, i) => (
+              <a href={social.link} key={i}>
+                {social.icon}
+              </a>
+            ))}
+          </div>
+          <p style={{ color: "#6B6A6A" }}>
+            &copy; {new Date().getFullYear()} UloDine. All rights reserved.
+            UloDine is a trusted platform for restaurant management and online
+            ordering.
+          </p>
+        </div>
+      </div>
+      <div className={styles.auth_form}>
+        <div className={styles.auth_form_header}>
+          <h1>Login</h1>
+          <UloDineLink
+            color='green'
+            label='Signup'
+            path={AUTH_ROUTES.RES_SIGNUP}
+            type='primary'
+            key={"jkfhuewr"}
+          />
+        </div>
+        <div className={styles.auth_form_login}>
+          <div style={{ margin: "1rem 0" }}>
+            <UloDineInput type='email' value='' label='Email' />
+          </div>
+          <div style={{ margin: "1rem 0" }}>
+            <UloDineInput type='password' value='' label='Password' />
+          </div>
+          <div style={{ marginTop: 30 }}>
+            <UloDIneButton
+              type='primary'
+              label='Login'
+              color='green'
+              onClick={() => {
+                setSending(true);
+              }}
+              style={{ width: 150, height: 40 }}
+              disabled={false}
+              loading={sending}
+            />
+          </div>
+        </div>
+        <div className={styles.auth_form_bottom}>
+          <UloDineLink
+            label='Forgot Password?'
+            color='green'
+            path=''
+            type='minor'
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default page;

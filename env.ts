@@ -1,0 +1,1 @@
+export const IPGEOLOCATION_API_KEY = `d12a75b623b743b4a62f4a83c401a390`;

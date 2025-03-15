@@ -1,0 +1,84 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0 1rem;
+  font-weight: 550;
+  background: #00bb95;
+  color: #ffffff;
+  cursor: pointer;
+}
+.button span {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 0.3rem solid transparent;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-bottom-color: #ffffff;
+  animation: load 1s linear forwards infinite;
+}
+@keyframes load {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.button.primary {
+  border-radius: 5rem;
+}
+
+.button.minor {
+  border-radius: 5rem;
+  background: transparent;
+  border: 0.1rem solid #00bb95;
+  color: #00bb95;
+}
+
+.button.minor.disabled {
+  color: #959595;
+  background: transparent;
+  border-color: #959595;
+}
+
+.button.disabled {
+  border-color: #959595;
+  background: #959595;
+}
+
+.button.loading {
+  background: #6c9c93;
+}
+
+.ulodine_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  padding: 0 1rem;
+  font-weight: 550;
+  background: #00bb95;
+  cursor: pointer;
+}
+.ulodine_link a {
+  color: #ffffff;
+}
+
+.ulodine_link.minor {
+  background: transparent;
+}
+.ulodine_link.minor a {
+  color: #00bb95;
+}
+
+.ulodine_link.primary {
+  border-radius: 5rem;
+}
+.ulodine_link.primary a {
+  text-decoration: none;
+  color: #ffffff;
+}/*# sourceMappingURL=Button.module.css.map */

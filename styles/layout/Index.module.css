@@ -1,0 +1,37 @@
+.step_indicator {
+  position: relative;
+}
+.step_indicator .step {
+  margin-bottom: 1rem;
+  height: 7rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  position: relative;
+}
+.step_indicator .step:not(:last-child)::before {
+  position: absolute;
+  content: "";
+  left: 0.7rem;
+  top: 29%;
+  background: #e5e5e5;
+  width: 0.1rem;
+  height: 80%;
+  border-radius: 1rem;
+}
+.step_indicator .step p {
+  padding-top: 0.2rem;
+}
+.step_indicator .step.active {
+  color: #00a886;
+}
+.step_indicator .step.active::before {
+  background: #00a886;
+}
+
+.step_one {
+  position: relative;
+}
+.step_one .input {
+  margin-bottom: 1rem;
+}/*# sourceMappingURL=Index.module.css.map */
