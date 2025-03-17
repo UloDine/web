@@ -438,4 +438,154 @@ export const RestaurantIcons = {
       ></path>
     </svg>
   ),
+  orderIndicator: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='14'
+      height='15'
+      fill='none'
+      viewBox='0 0 14 15'
+    >
+      <path
+        stroke='#959595'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M2.95 1 1 3.6v9.1A1.3 1.3 0 0 0 2.3 14h9.1a1.3 1.3 0 0 0 1.3-1.3V3.6L10.75 1zM1 3.6h11.7'
+      ></path>
+      <path
+        stroke='#959595'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M9.45 6.2a2.6 2.6 0 0 1-5.2 0'
+      ></path>
+    </svg>
+  ),
+  salesIndicator: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='10'
+      height='16'
+      fill='none'
+      viewBox='0 0 10 16'
+    >
+      <path
+        stroke='#959595'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M4.818 1v14M8 3.545H3.227a2.227 2.227 0 0 0 0 4.455H6.41a2.227 2.227 0 1 1 0 4.454H1'
+      ></path>
+    </svg>
+  ),
+  reportIndicator: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='14'
+      height='12'
+      fill='none'
+      viewBox='0 0 14 12'
+    >
+      <path
+        stroke='#959595'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M13 6h-2.4l-1.8 5L5.2 1 3.4 6H1'
+      ></path>
+    </svg>
+  ),
+  arrowExternal: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='12'
+      height='12'
+      fill='none'
+      viewBox='0 0 12 12'
+    >
+      <path
+        stroke='#959595'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='2'
+        d='M1 11 11 1M1 1h10v10'
+      ></path>
+    </svg>
+  ),
+  edit: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='15'
+      height='14'
+      fill='none'
+      viewBox='0 0 15 14'
+    >
+      <path
+        stroke='#6B6A6A'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M7.308 13h6.308M10.462 1.435a1.487 1.487 0 1 1 2.103 2.103L3.804 12.3 1 13l.7-2.803z'
+      ></path>
+    </svg>
+  ),
+  umark: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='15'
+      height='15'
+      fill='none'
+      viewBox='0 0 15 15'
+    >
+      <path
+        stroke='#6B6A6A'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M7.28 13.56A6.28 6.28 0 1 0 7.28 1a6.28 6.28 0 0 0 0 12.56M9.163 5.396 5.396 9.164M5.396 5.396l3.767 3.768'
+      ></path>
+    </svg>
+  ),
+  mark: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='14'
+      height='14'
+      fill='none'
+      viewBox='0 0 14 14'
+    >
+      <path
+        stroke='#6B6A6A'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M13 6.451v.552A6 6 0 1 1 9.442 1.52'
+      ></path>
+      <path
+        stroke='#6B6A6A'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M13 2.203 7 8.21l-1.8-1.8'
+      ></path>
+    </svg>
+  ),
+  trash: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='14'
+      height='15'
+      fill='none'
+      viewBox='0 0 14 15'
+    >
+      <path
+        stroke='#D80000'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M1 3.6h11.700000000000001M11.4 3.6v9.1a1.3 1.3 0 0 1-1.3 1.3H3.6a1.3 1.3 0 0 1-1.3-1.3V3.6m1.95 0V2.3A1.3 1.3 0 0 1 5.55 1h2.6a1.3 1.3 0 0 1 1.3 1.3v1.3M5.55 6.85v3.9M8.15 6.85v3.9'
+      ></path>
+    </svg>
+  ),
 };

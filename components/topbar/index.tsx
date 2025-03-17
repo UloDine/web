@@ -18,9 +18,10 @@ function Topbar() {
     <header className={styles.header}>
       {GeneralIcons.logo}{" "}
       <div className={styles.right}>
-        {plan !== "free" ? (
+        {plan !== "enterprise" ? (
           <UloDineLink
-            label={plan == "premium" ? "Get Enterprise" : "Get Premium"}
+            color='green'
+            label={plan == "free" ? "Get Premium" : "Get Enterprise"}
             path={""}
             type='primary'
           />

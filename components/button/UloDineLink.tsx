@@ -9,15 +9,18 @@ function UloDineLink({
   disabled,
   style,
   type,
+  icon,
 }: UloDineLink) {
   return (
     <div
-      className={`${styles.ulodine_link} ${styles[type]} ${
+      className={`${styles.ulodine_link} ${styles[type]} ${styles[color]} ${
         disabled ? styles.disabled : ""
       }`}
       style={style}
     >
-      <Link href={path}>{label}</Link>
+      <Link href={path}>
+        {label} {icon ?? null}
+      </Link>
     </div>
   );
 }

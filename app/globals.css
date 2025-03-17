@@ -16,3 +16,8 @@ html {
   font-family: "Poppins", sans-serif;
   background: none;
 }
+
+body {
+  height: 100vh;
+  overflow: hidden;
+}

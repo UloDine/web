@@ -2,6 +2,11 @@
 import PageTitleBar from "@/components/title";
 import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
+import OverviewTopCard from "./components/card";
+import { formatCurrency } from "@/utils/helpers";
+import { RestaurantIcons } from "@/icons/restaurant/icons";
+import { feedbacks } from "@/res/feedbacks";
+import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 
 export default function Overview() {
   const actions = [
@@ -21,6 +26,47 @@ export default function Overview() {
       action: () => {},
     },
   ];
+
+  const overviewData = {
+    topData: [
+      {
+        label: "Total Orders Today",
+        count: 56,
+        rate: 5,
+        icon: RestaurantIcons.orderIndicator,
+        filterItems: null,
+      },
+      {
+        label: "Pending Orders",
+        count: 20,
+        rate: 5,
+        icon: RestaurantIcons.orderIndicator,
+        filterItems: null,
+      },
+      {
+        label: "Total Sales",
+        count: formatCurrency(250780, "ngn"),
+        rate: 5,
+        icon: RestaurantIcons.salesIndicator,
+        filterItems: {
+          filter: ["Daily", "Weekly", "Monthly"],
+          selected: "Daily",
+          action: function (newSelected: string) {
+            this.selected = newSelected;
+          },
+        },
+      },
+      {
+        label: "Page Visits",
+        count: 450,
+        rate: 5,
+        icon: RestaurantIcons.reportIndicator,
+        filterItems: null,
+      },
+    ],
+    feedbacks: [],
+    // feedbacks: feedbacks,
+  };
   return (
     <section className={styles.overview}>
       <PageTitleBar
@@ -36,6 +82,28 @@ export default function Overview() {
           </div>
         }
       />
+      <div className={styles.scrollable}>
+        <div className={styles.cards}>
+          {overviewData.topData.map((item, i) => {
+            return <OverviewTopCard {...item} key={i} />;
+          })}
+        </div>
+        <div className={styles.overview_feedbacks}>
+          <h2 className={styles.overview_feedbacks_title}>
+            Customer feedbacks
+          </h2>
+          <div>
+            {overviewData.feedbacks.length > 0 ? (
+              <></>
+            ) : (
+              <EmptyScreen
+                title='No Feedback From Customers at The Moment!'
+                subTitle='Feedback from customers will show up here.'
+              />
+            )}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

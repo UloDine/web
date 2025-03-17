@@ -9,4 +9,19 @@
   gap: 1.5rem;
   padding: 1rem;
   margin-top: 1rem;
+}
+
+.empty_screen {
+  border-radius: 20px;
+  background: linear-gradient(111deg, #fcfcfc 1.05%, #fff2f2 22.1%, #fcfff1 41.68%, #f7fbff 61.75%, #ffebf4 80.35%, #fffafa 98.95%);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 20rem;
+  gap: 1rem;
+}
+.empty_screen .sub {
+  color: #7c7c7c;
 }/*# sourceMappingURL=index.module.css.map */

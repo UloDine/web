@@ -60,6 +60,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
   height: 2.5rem;
   padding: 0 1rem;
   font-weight: 550;
@@ -68,6 +69,10 @@
 
   a {
     color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
   }
 }
 
@@ -85,5 +90,28 @@
   a {
     text-decoration: none;
     color: #ffffff;
+  }
+}
+
+.ulodine_link.secondary {
+  border-radius: 5rem;
+  border: 0.15rem solid #959595;
+  background: transparent;
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.ulodine_link.green {
+  a {
+    background: #00bb95;
+    color: #ffffff;
+  }
+}
+
+.ulodine_link.grey {
+  a {
+    color: #959595;
   }
 }

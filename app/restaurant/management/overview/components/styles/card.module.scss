@@ -1,0 +1,84 @@
+.overview_card {
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 1rem;
+
+  &_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &_left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      span {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        background: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      p {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
+
+    &_right {
+      position: relative;
+
+      &_drop {
+        padding: 0.5rem;
+        border: 0.1rem solid #dfdfdf;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 0.3rem;
+        width: 6rem;
+        cursor: pointer;
+      }
+
+      &_drop_down {
+        background: #ffffff;
+        padding: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 100%;
+
+        small {
+          display: block;
+          padding: 0.3rem;
+          cursor: pointer;
+
+          &:hover {
+            background: #f5f5f5;
+          }
+        }
+      }
+    }
+  }
+
+  &_count {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+    display: block;
+  }
+
+  &_bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      color: #00bb95;
+    }
+  }
+}

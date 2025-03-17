@@ -51,3 +51,29 @@ export function formatPhoneNumber(input: string, maxLength: number): string {
   // Limit length
   return numericInput.slice(0, maxLength);
 }
+
+export function formatCurrency(amount: number, symbol?: string) {
+  return amount.toLocaleString("en-NG", {
+    style: "currency",
+    currency: symbol?.toUpperCase() ?? "NGN",
+  });
+}
+
+export function formatTime(
+  date: Date | string | number,
+  format: "short" | "long" | "full" = "short"
+): string {
+  const d = new Date(date);
+  if (isNaN(d.getTime())) throw new Error("Invalid date provided");
+
+  const options: Intl.DateTimeFormatOptions = {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: format === "long" ? "2-digit" : undefined,
+    hour12: true,
+  };
+
+  return format === "full"
+    ? d.toTimeString()
+    : d.toLocaleTimeString("en-US", options);
+}
