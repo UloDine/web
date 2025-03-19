@@ -267,4 +267,127 @@ export const GeneralIcons = {
       ></path>
     </svg>
   ),
+  fileUpload: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='12'
+      height='12'
+      fill='none'
+      viewBox='0 0 12 12'
+    >
+      <path
+        stroke='#00BB95'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M11.202 7.801v2.267a1.133 1.133 0 0 1-1.134 1.134H2.134A1.133 1.133 0 0 1 1 10.068V7.801M8.935 3.834 6.1 1 3.267 3.834M6.1 1v6.801'
+      ></path>
+    </svg>
+  ),
+  imagePlaceholder: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='28'
+      height='28'
+      fill='none'
+      viewBox='0 0 28 28'
+    >
+      <path
+        stroke='#B2B2B2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M24.111 1H3.89A2.89 2.89 0 0 0 1 3.889V24.11A2.89 2.89 0 0 0 3.889 27H24.11A2.89 2.89 0 0 0 27 24.111V3.89A2.89 2.89 0 0 0 24.111 1'
+      ></path>
+      <path
+        stroke='#B2B2B2'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M8.945 11.111a2.167 2.167 0 1 0 0-4.333 2.167 2.167 0 0 0 0 4.333M27 18.333l-7.222-7.222L3.888 27'
+      ></path>
+    </svg>
+  ),
+  bold: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='11'
+      height='14'
+      fill='none'
+      viewBox='0 0 11 14'
+    >
+      <path
+        stroke='#6B6A6A'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='2'
+        d='M1 1h5.538a2.77 2.77 0 0 1 0 5.538H1zM1 6.538h6.23a2.77 2.77 0 0 1 0 5.539H1z'
+      ></path>
+    </svg>
+  ),
+  list: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='15'
+      height='11'
+      fill='none'
+      viewBox='0 0 15 11'
+    >
+      <path
+        stroke='#6B6A6A'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='2'
+        d='M4.611 1h9.39M4.611 5.333h9.39M4.611 9.667h9.39M1 1h.007M1 5.333h.007M1 9.667h.007'
+      ></path>
+    </svg>
+  ),
+  link: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='14'
+      height='13'
+      fill='none'
+      viewBox='0 0 14 13'
+    >
+      <path
+        stroke='#6B6A6A'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='2'
+        d='M5.398 7.055a2.77 2.77 0 0 0 4.175.299l1.662-1.662A2.769 2.769 0 0 0 7.32 1.777l-.953.947'
+      ></path>
+      <path
+        stroke='#6B6A6A'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='2'
+        d='M7.614 5.946a2.77 2.77 0 0 0-4.175-.299L1.777 7.31a2.769 2.769 0 0 0 3.916 3.915l.946-.947'
+      ></path>
+    </svg>
+  ),
+  export: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='13'
+      height='11'
+      fill='none'
+      viewBox='0 0 13 11'
+    >
+      <path
+        stroke='#959595'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='m4.502 8.002 2 1.998L8.5 8.002M6.501 5.503V10'
+      ></path>
+      <path
+        stroke='#959595'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth='1.5'
+        d='M10.938 8.546a2.498 2.498 0 0 0-1.439-4.542h-.63a3.998 3.998 0 1 0-6.865 3.643'
+      ></path>
+    </svg>
+  ),
 };

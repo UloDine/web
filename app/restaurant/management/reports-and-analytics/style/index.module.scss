@@ -1,0 +1,53 @@
+.report_page {
+  position: relative;
+
+  &_export {
+    display: flex;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+    margin: 1rem 0;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 1rem;
+      border: 0.12rem solid #959595;
+      border-radius: 0.5rem;
+      color: #959595;
+      cursor: pointer;
+    }
+  }
+
+  &_cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .charts {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+
+    &_chart {
+      display: block;
+      width: 100%;
+      height: 400px;
+
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        p {
+          font-weight: 600;
+          font-size: 1.2rem;
+          margin-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

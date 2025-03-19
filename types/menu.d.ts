@@ -41,6 +41,13 @@ declare global {
     status: "Ready" | "Not Ready";
     price: number;
   }
+
+  interface MenuContextProps {
+    toggleModal: () => void;
+    createMenu: (menu: Menu) => void;
+    editMenu: (menu: Menu) => void;
+    updateMenu: (details: any) => void;
+  }
 }
 
 export {};

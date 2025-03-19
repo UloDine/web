@@ -1,0 +1,27 @@
+.report_card {
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 1rem;
+}
+.report_card h2 {
+  font-size: 2rem;
+}
+.report_card div {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.report_card div span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background: #f5f5f5;
+}
+.report_card div p {
+  font-weight: 600;
+  color: #6b6a6a;
+}/*# sourceMappingURL=index.module.css.map */

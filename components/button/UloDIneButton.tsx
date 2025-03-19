@@ -9,13 +9,14 @@ function UloDIneButton({
   style,
   disabled = false,
   loading,
+  labelColor,
 }: Button) {
   return (
     <button
       disabled={disabled || loading}
-      className={`${styles.button} ${styles[type]} ${
-        disabled ? styles.disabled : loading ? styles.loading : ""
-      }`}
+      className={`${styles.button} ${styles[type]} ${styles[color]} ${
+        styles[`label_${labelColor ?? ""}`]
+      } ${disabled ? styles.disabled : loading ? styles.loading : ""}`}
       style={style}
       onClick={onClick}
     >

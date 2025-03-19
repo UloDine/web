@@ -112,6 +112,7 @@
     box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
     max-height: 25rem;
     overflow: auto;
+    z-index: 10;
 
     span {
       display: block;
@@ -215,5 +216,35 @@
 
   &_verifying {
     color: #00bb95;
+  }
+}
+
+.editor {
+  border: 0.13rem solid #dfdfdf;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  width: 100%;
+
+  &_header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+
+    svg {
+      cursor: pointer;
+    }
+  }
+
+  &_input {
+    padding: 1rem;
+    background: #f5f5f5;
+    width: 100%;
+    word-wrap: break-word;
+    min-height: 20rem;
+
+    &:empty {
+      content: attr(data-placeholder);
+    }
   }
 }

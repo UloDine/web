@@ -77,3 +77,33 @@ export function formatTime(
     ? d.toTimeString()
     : d.toLocaleTimeString("en-US", options);
 }
+
+export function formatCount(count: number): string {
+  if (count < 1000) return count.toString();
+  if (count < 1_000_000)
+    return (count / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+  if (count < 1_000_000_000)
+    return (count / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+  return (count / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B";
+}
+
+export function getMonthsUpToCurrent(): string[] {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const currentMonthIndex = new Date().getMonth(); // Get current month (0-based index)
+
+  return months.slice(0, currentMonthIndex + 1); // Get months from January to current month
+}

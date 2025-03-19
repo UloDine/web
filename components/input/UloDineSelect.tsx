@@ -8,8 +8,9 @@ function UloDineSelect({
   items,
   label = "Select an item",
   placeholder = "Placeholder here",
+  defaultSelected,
 }: Select) {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>(defaultSelected ?? "");
   const [open, setOpen] = useState<boolean>(false);
   return (
     <div className={styles.select}>
@@ -18,7 +19,7 @@ function UloDineSelect({
         <p data-placeholder={placeholder}>{value}</p>
         {GeneralIcons.chevronDown}
       </div>
-      {open && (
+      {open && items ? (
         <div className={styles.dropdown}>
           {items.map((item, i) => (
             <span
@@ -33,7 +34,7 @@ function UloDineSelect({
             </span>
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

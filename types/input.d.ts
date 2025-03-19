@@ -24,4 +24,5 @@ interface Select {
   onChange: (selected: item) => void;
   label?: string;
   placeholder?: string;
+  defaultSelected?: string;
 }

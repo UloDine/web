@@ -6,6 +6,7 @@ import Image from "next/image";
 import { formatCurrency, formatTime } from "@/utils/helpers";
 import FormatStatus from "./FormatStatus";
 import { useAlert } from "@/context/alert/AlertContext";
+import { useMenuContext } from "@/context/menu/MenuContext";
 
 function MenuCard({
   image,
@@ -18,6 +19,7 @@ function MenuCard({
   price,
 }: Menu) {
   const { addAlert } = useAlert();
+  const { toggleModal, editMenu } = useMenuContext();
   const [imgSrcs, setImgSrcs] = useState(image);
   const [contextOpen, setContextOpen] = useState<boolean>(false);
 
@@ -25,7 +27,19 @@ function MenuCard({
     {
       icon: RestaurantIcons.edit,
       label: "Edit Details",
-      action: () => {},
+      action: () => {
+        setContextOpen((prev) => !prev);
+        editMenu({
+          image,
+          id,
+          name,
+          description,
+          status,
+          category,
+          stockStatus,
+          price,
+        });
+      },
     },
     {
       icon:

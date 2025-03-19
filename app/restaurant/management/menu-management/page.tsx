@@ -9,8 +9,10 @@ import { useEffect, useState } from "react";
 import Filter from "@/components/filter/Filter";
 import menuList from "@/res/menu";
 import MenuCard from "./components/MenuCard";
+import { useMenuContext } from "@/context/menu/MenuContext";
 
 function MenuManagement() {
+  const { toggleModal } = useMenuContext();
   const [menuData, setMenuData] = useState<Menu[]>([]);
   const [searched, setSearched] = useState<Menu[]>([]);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
@@ -95,7 +97,7 @@ function MenuManagement() {
               />
             )}
           </div>
-          <button className={styles.add_btn}>
+          <button className={styles.add_btn} onClick={toggleModal}>
             {GeneralIcons.plus} Add New Item
           </button>
         </div>

@@ -1,7 +1,13 @@
 import { CSSProperties, ReactNode } from "react";
 
 declare global {
-  type buttonColor = "green" | "green-light" | "grey" | "light" | "transparent";
+  type buttonColor =
+    | "green"
+    | "green-light"
+    | "grey"
+    | "light"
+    | "transparent"
+    | "red";
   interface Button {
     type: string;
     label: string;
@@ -10,6 +16,8 @@ declare global {
     className?: string;
     style?: React.CSSProperties;
     disabled?: boolean;
+    loading?: boolean;
+    labelColor?: buttonColor;
   }
 
   interface UloDineLink {

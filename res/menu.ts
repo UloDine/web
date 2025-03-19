@@ -134,3 +134,38 @@ const menuList: Menu[] = [
 ];
 
 export default menuList;
+
+export const categories: item[] = [
+  { label: "Appetizers", value: "appetizers" },
+  { label: "Soups", value: "soups" },
+  { label: "Salads", value: "salads" },
+  { label: "Main Course", value: "main_course" },
+  { label: "Side Dishes", value: "side_dishes" },
+  { label: "Fast Food", value: "fast_food" },
+  { label: "Seafood", value: "seafood" },
+  { label: "Vegetarian", value: "vegetarian" },
+  { label: "Vegan", value: "vegan" },
+  { label: "Pasta", value: "pasta" },
+  { label: "Pizza", value: "pizza" },
+  { label: "Rice Dishes", value: "rice_dishes" },
+  { label: "Grilled", value: "grilled" },
+  { label: "Beverages", value: "beverages" },
+  { label: "Desserts", value: "desserts" },
+  { label: "Bakery", value: "bakery" },
+  { label: "Breakfast", value: "breakfast" },
+  { label: "Brunch", value: "brunch" },
+  { label: "Snacks", value: "snacks" },
+  { label: "Street Food", value: "street_food" },
+  { label: "Asian", value: "asian" },
+  { label: "Mexican", value: "mexican" },
+  { label: "Italian", value: "italian" },
+  { label: "Indian", value: "indian" },
+  { label: "Middle Eastern", value: "middle_eastern" },
+  { label: "African", value: "african" },
+  { label: "Caribbean", value: "caribbean" },
+  { label: "BBQ", value: "bbq" },
+  { label: "Healthy", value: "healthy" },
+  { label: "Gluten-Free", value: "gluten_free" },
+  { label: "Keto", value: "keto" },
+  { label: "Organic", value: "organic" },
+];

@@ -1,6 +1,10 @@
 import { ReactNode } from "react";
 
-interface InputError {
-  message: string;
-  icon: ReactNode;
+declare global {
+  interface InputError {
+    message: string;
+    icon: ReactNode;
+  }
 }
+
+export {};

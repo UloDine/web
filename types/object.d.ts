@@ -94,4 +94,10 @@ declare global {
     buttonColor?: string;
     buttonLabelColor?: string;
   }
+
+  interface ReportCard {
+    icon: ReactNode;
+    label: string;
+    value: number | string;
+  }
 }
