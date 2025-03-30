@@ -109,7 +109,7 @@ function page() {
           <UloDIneButton
             color='transparent'
             label='Prev'
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            onClick={(e) => {
               setStep(prev);
             }}
             type='minor'
@@ -119,7 +119,7 @@ function page() {
             <UloDIneButton
               color='green'
               label='Create account'
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {}}
+              onClick={(e) => {}}
               type='primary'
               disabled
             />
@@ -127,7 +127,7 @@ function page() {
             <UloDIneButton
               color='transparent'
               label='Next'
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              onClick={(e) => {
                 setStep(next);
                 console.log(personal);
               }}
