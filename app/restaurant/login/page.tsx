@@ -6,19 +6,15 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/auth/Index.module.css";
 import UloDineLink from "@/components/button/UloDineLink";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
-import { LoginContext } from "@/context/LoginContext";
 import UloDineInput from "@/components/input/UloDineInput";
+import { useLoginContext } from "@/context/LoginContext";
+import { isStrongPassword } from "@/utils/helpers";
+import { useAlert } from "@/context/alert/AlertContext";
 
 function page() {
-  const context = useContext(LoginContext);
-
-  if (!context) {
-    throw new Error("Please wrap this in a provider");
-  }
-
-  const [sending, setSending] = useState<boolean>(false);
-
-  const { businessLogin, setBusinessLogin } = context;
+  const { businessLogin, setBusinessLogin, handleLogin, sending } =
+    useLoginContext();
+  const { addAlert } = useAlert();
   const socials = [
     {
       icon: SocialIcons.x,
@@ -78,21 +74,49 @@ function page() {
         </div>
         <div className={styles.auth_form_login}>
           <div style={{ margin: "1rem 0" }}>
-            <UloDineInput type='email' value='' label='Email' />
+            <UloDineInput
+              type='email'
+              value={businessLogin.email}
+              label='Email'
+              onChange={(e) => {
+                setBusinessLogin((prev) => ({
+                  ...prev,
+                  email: e.target.value,
+                }));
+              }}
+            />
           </div>
           <div style={{ margin: "1rem 0" }}>
-            <UloDineInput type='password' value='' label='Password' />
+            <UloDineInput
+              type='password'
+              value={businessLogin.password}
+              label='Password'
+              onChange={(e) => {
+                setBusinessLogin((prev) => ({
+                  ...prev,
+                  password: e.target.value,
+                }));
+              }}
+            />
           </div>
           <div style={{ marginTop: 30 }}>
             <UloDIneButton
               type='primary'
               label='Login'
               color='green'
-              onClick={() => {
-                setSending(true);
+              onClick={async () => {
+                const response = await handleLogin(businessLogin);
+                console.log(response);
+                if (response.status == "fail") {
+                  addAlert("error", response.message);
+                }
               }}
               style={{ width: 150, height: 40 }}
-              disabled={false}
+              disabled={
+                businessLogin.email === "" ||
+                businessLogin.password === "" ||
+                !isStrongPassword(businessLogin.password)
+              }
               loading={sending}
             />
           </div>

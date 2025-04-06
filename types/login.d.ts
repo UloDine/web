@@ -1,8 +1,11 @@
 interface Login {
   userLogin: UserLogin;
   businessLogin: BusinessLogin;
-  setUserLogin: (details: UserLogin) => void;
-  setBusinessLogin: (details: BusinessLogin) => void;
+  setUserLogin: React.Dispatch<React.SetStateAction<UserLogin>>;
+  setBusinessLogin: React.Dispatch<React.SetStateAction<BusinessLogin>>;
+  handleLogin: (loginDetails: BusinessLogin) => Promise<LoginResponse>;
+  sending: boolean;
+  setSending: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface UserLogin {
@@ -19,3 +22,22 @@ interface BusinessLogin {
 }
 
 type Role = "user" | "restaurant" | "admin";
+
+interface Business {
+  id: string;
+  fullName: string;
+  email: string;
+}
+
+interface LoginSuccess {
+  message: string;
+  user: Business;
+  status: string;
+}
+
+interface LoginFailure {
+  status: string;
+  message: string;
+}
+
+type LoginResponse = LoginSuccess | LoginFailure;

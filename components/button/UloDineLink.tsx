@@ -13,9 +13,9 @@ function UloDineLink({
 }: UloDineLink) {
   return (
     <div
-      className={`${styles.ulodine_link} ${styles[type]} ${styles[color]} ${
-        disabled ? styles.disabled : ""
-      }`}
+      className={`${styles.ulodine_link} ${styles[type as string]} ${
+        styles[color]
+      } ${disabled ? styles.disabled : ""}`}
       style={style}
     >
       <Link href={path}>

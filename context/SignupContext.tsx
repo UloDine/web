@@ -1,8 +1,8 @@
 "use client";
 
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 
-export const SignupContext = createContext<Signup | null>(null);
+const SignupContext = createContext<Signup | null>(null);
 
 export default function SignupProvider({ children }: { children: ReactNode }) {
   const [personal, setPersonal] = useState<PersonalDetails>({
@@ -42,4 +42,13 @@ export default function SignupProvider({ children }: { children: ReactNode }) {
       {children}
     </SignupContext.Provider>
   );
+}
+
+export function useSignUpContext() {
+  const context = useContext(SignupContext);
+
+  if (!context) {
+    throw new Error("Please use this in signup context");
+  }
+  return context;
 }

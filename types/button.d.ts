@@ -27,7 +27,7 @@ declare global {
     disabled?: boolean;
     className?: string;
     label: string;
-    type: string;
+    type?: string;
     icon?: ReactNode;
   }
 }

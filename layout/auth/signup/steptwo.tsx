@@ -2,18 +2,12 @@
 import UloDineInput from "@/components/input/UloDineInput";
 import React, { useContext, useState } from "react";
 import styles from "@/styles/layout/Index.module.css";
-import { SignupContext } from "@/context/SignupContext";
 import UloDineSelect from "@/components/input/UloDineSelect";
 import nigerianStates from "@/res/states";
+import { useSignUpContext } from "@/context/SignupContext";
 
 function StepTwo() {
-  const context = useContext(SignupContext);
-
-  if (!context) {
-    throw new Error("Context needs to be wrapped in a provider");
-  }
-
-  const { business, setBusiness } = context;
+  const { business, setBusiness } = useSignUpContext();
 
   return (
     <div className={styles.step_one}>

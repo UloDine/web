@@ -2,16 +2,10 @@
 import UloDineInput from "@/components/input/UloDineInput";
 import React, { useContext, useState } from "react";
 import styles from "@/styles/layout/Index.module.css";
-import { SignupContext } from "@/context/SignupContext";
+import { useSignUpContext } from "@/context/SignupContext";
 
 function StepOne() {
-  const context = useContext(SignupContext);
-
-  if (!context) {
-    throw new Error("Context needs to be wrapped in a provider");
-  }
-
-  const { personal, setPersonal } = context;
+  const { personal, setPersonal } = useSignUpContext();
 
   return (
     <div className={styles.step_one}>

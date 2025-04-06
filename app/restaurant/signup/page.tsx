@@ -8,19 +8,13 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/auth/Index.module.css";
 import UloDineLink from "@/components/button/UloDineLink";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
-import { SignupContext } from "@/context/SignupContext";
 import StepTwo from "@/layout/auth/signup/steptwo";
 import StepThree from "@/layout/auth/signup/stepthree";
+import { useSignUpContext } from "@/context/SignupContext";
 
 function page() {
-  const conttext = useContext(SignupContext);
-
-  if (!conttext) {
-    throw new Error("Please wrap this in a provider");
-  }
-
   const { step, setStep, personal, setPersonal, business, setBusiness, auth } =
-    conttext;
+    useSignUpContext();
   const next = step + 1;
   const prev = step <= 0 ? 0 : step - 1;
 
