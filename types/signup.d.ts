@@ -8,6 +8,8 @@ declare global {
     setAuth: (details: AuthDetails) => void;
     step: number;
     setStep: (step: number) => void;
+    emailVerified: boolean;
+    setEmailVerified: React.Dispatch<React.SetStateAction<boolean>>;
   }
 
   interface PersonalDetails {

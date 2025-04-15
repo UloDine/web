@@ -25,7 +25,10 @@ function UloDineInput({
   sending = false,
   errorMessage,
   invalid = false,
-}: Input) {
+  disabled = false,
+  otpLoading = false,
+}: // eslint-disable-next-line @typescript-eslint/no-unused-vars
+Input) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [timeLeft, setTimeLeft] = useState(5 * 60); // 5 minutes in seconds
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
@@ -65,6 +68,7 @@ function UloDineInput({
   }, [timeLeft]);
 
   useEffect(() => {
+    setOtpComplete(Object.values(otp).every((v) => v !== ""));
     if (otpComplete && onComplete) {
       onComplete(otp);
     }
@@ -112,7 +116,8 @@ function UloDineInput({
               ref={(el) => {
                 inputRefs.current[index] = el; // ✅ Ensure no return value
               }}
-              type='text'
+              type='number'
+              min={0}
               maxLength={1}
               value={otp[index]}
               onChange={(e) => handleChange(index, e.target.value)}
@@ -121,7 +126,7 @@ function UloDineInput({
           ))}
         </div>
         <div className={styles.otp_bottom}>
-          {sending ? (
+          {otpLoading ? (
             <p className={styles.otp_verifying}>Verifying...</p>
           ) : (
             <p>
@@ -245,6 +250,7 @@ function UloDineInput({
                 ? styles.error
                 : ""
             }`}
+            value={value ?? inputValue}
             onChange={(e) => {
               if (onChange) onChange(e);
 
@@ -270,6 +276,7 @@ function UloDineInput({
                 setError(false);
               }
             }}
+            disabled={disabled}
           />
         )}
         {error || invalid ? (

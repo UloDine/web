@@ -23,7 +23,6 @@ export async function getCountryDetails(): Promise<IPGeolocation> {
     `https://api.ipgeolocation.io/ipgeo?apiKey=${IPGEOLOCATION_API_KEY}`
   );
   const data: IPGeolocation = await response.json();
-  console.log(data);
 
   return data;
 }

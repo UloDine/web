@@ -157,6 +157,7 @@
   font-size: 1.5rem;
   font-weight: 800;
   text-align: center;
+  border: 2px solid transparent;
 }
 .otp_inputs input .error {
   border-color: #d80000;
@@ -165,10 +166,18 @@
   border-color: #00bb95;
 }
 .otp_inputs input::-moz-placeholder {
-  color: #c7c7c7;
+  color: #c30000;
 }
 .otp_inputs input::placeholder {
-  color: #c7c7c7;
+  color: #c30000;
+}
+.otp_inputs input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.otp_inputs input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .otp_bottom {
   display: flex;

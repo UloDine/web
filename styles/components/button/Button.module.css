@@ -114,10 +114,13 @@
 }
 
 .ulodine_link.green a {
-  background: #00bb95;
-  color: #ffffff;
+  color: #00bb95;
 }
 
 .ulodine_link.grey a {
   color: #959595;
+}
+
+.ulodine_link.white a {
+  color: #ffffff;
 }/*# sourceMappingURL=Button.module.css.map */

@@ -12,6 +12,8 @@ interface Input {
   sending?: boolean;
   errorMessage?: string;
   invalid?: boolean;
+  disabled?: boolean;
+  otpLoading?: boolean;
 }
 
 type item = {

@@ -25,7 +25,9 @@ export default function SignupProvider({ children }: { children: ReactNode }) {
     retypedpassword: "",
     complete: false,
   });
-  const [step, setStep] = useState<number>(3);
+
+  const [emailVerified, setEmailVerified] = useState<boolean>(false);
+  const [step, setStep] = useState<number>(1);
   return (
     <SignupContext.Provider
       value={{
@@ -37,6 +39,8 @@ export default function SignupProvider({ children }: { children: ReactNode }) {
         setAuth,
         step,
         setStep,
+        emailVerified,
+        setEmailVerified,
       }}
     >
       {children}

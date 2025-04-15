@@ -1,31 +1,48 @@
 "use client";
 import UloDineInput from "@/components/input/UloDineInput";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "@/styles/layout/Index.module.css";
 import { useSignUpContext } from "@/context/SignupContext";
 
 function StepThree() {
-  const { business, setBusiness, auth, setAuth, personal } = useSignUpContext();
+  const {
+    business,
+    setBusiness,
+    auth,
+    setAuth,
+    personal,
+    emailVerified,
+    setEmailVerified,
+  } = useSignUpContext();
   const [loading, setLoading] = useState<boolean>(false);
-  const [verified, setVerified] = useState<boolean>(true);
+  const [verifying, setVerifying] = useState<boolean>(false);
   const [errMessage, setErrMessage] = useState<string>("Value cannot be empty");
   const [invalid, setInvalid] = useState<boolean>(false);
+
+  const [email, setEmail] = useState<string>("");
+
+  useEffect(() => {
+    if (personal.email) {
+      setEmail(personal.email);
+    }
+  }, [personal.email]);
 
   return (
     <div className={styles.step_one}>
       <div className={styles.input}>
         <UloDineInput
-          value={personal.email}
+          value={email}
           onChange={(e) => {
-            setBusiness({ ...business, businessName: e.target.value });
+            // setBusiness({ ...business, businessName: e.target.value });
           }}
           type='email'
           label='Email'
-          placeholder=''
+          placeholder='Email'
           strict
+          disabled
         />
       </div>
-      {verified ? (
+      {emailVerified ? (
         <div>
           <div className={styles.input}>
             <UloDineInput
@@ -65,15 +82,15 @@ function StepThree() {
         <div className={styles.input}>
           <UloDineInput
             value={business.businessAddress}
-            onChange={(e) => {
-              setBusiness({ ...business, businessAddress: e.target.value });
-            }}
+            onChange={(e) => {}}
             type='otp'
             label='Business address'
             placeholder='e.g abc road, 123 ave.'
             sending={loading}
+            otpLoading={verifying}
             onComplete={() => {
-              setLoading(true);
+              setVerifying(true);
+              // setLoading(true);
             }}
           />
         </div>

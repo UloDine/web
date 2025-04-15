@@ -84,7 +84,7 @@ function page() {
         <div className={styles.auth_form_header}>
           <h1>Sign Up</h1>
           <UloDineLink
-            color='green'
+            color='white'
             label='Login'
             path={AUTH_ROUTES.RES_LOGIN}
             type='primary'

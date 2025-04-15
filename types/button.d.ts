@@ -7,7 +7,8 @@ declare global {
     | "grey"
     | "light"
     | "transparent"
-    | "red";
+    | "red"
+    | "white";
   interface Button {
     type: string;
     label: string;
