@@ -1,0 +1,56 @@
+.header_nav {
+  width: 100%;
+  padding: 1rem;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.header_nav .home_left {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.header_nav .home_logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+}
+.header_nav .home_logo h1 {
+  color: #000000;
+  font-weight: 800;
+}
+.header_nav nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  width: 50%;
+}
+.header_nav nav .action_buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.header_nav nav ul {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.header_nav nav ul li {
+  display: block;
+}
+.header_nav nav ul li a {
+  color: #000000;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+.header_nav nav ul li a:hover {
+  color: #00bb95;
+}
+.header_nav nav ul li .active {
+  color: #00bb95;
+}/*# sourceMappingURL=index.module.css.map */

@@ -10,6 +10,8 @@ function UloDineLink({
   style,
   type,
   icon,
+  underline = true,
+  labelColor = "white",
 }: UloDineLink) {
   return (
     <div
@@ -18,7 +20,20 @@ function UloDineLink({
       } ${disabled ? styles.disabled : ""}`}
       style={style}
     >
-      <Link href={path}>
+      <Link
+        href={path}
+        style={{
+          textDecoration: underline ? "underline" : "none",
+          color:
+            labelColor === "green"
+              ? "#00BB95"
+              : labelColor === "green-light"
+              ? "#E8FFFA"
+              : labelColor === "grey"
+              ? "#6B6A6A"
+              : "#ffffff",
+        }}
+      >
         {label} {icon ?? null}
       </Link>
     </div>

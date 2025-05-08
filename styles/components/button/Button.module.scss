@@ -4,7 +4,7 @@
   justify-content: center;
   height: 2.5rem;
   padding: 0 1rem;
-  font-weight: 550;
+  font-weight: 450;
   background: #00bb95;
   color: #ffffff;
   cursor: pointer;
@@ -115,13 +115,8 @@
   background: transparent;
 
   a {
-    text-decoration: none;
-  }
-}
-
-.ulodine_link.green {
-  a {
-    color: #00bb95;
+    text-decoration: none !important;
+    color: #959595 !important;
   }
 }
 
@@ -134,5 +129,18 @@
 .ulodine_link.white {
   a {
     color: #ffffff;
+  }
+}
+
+.ulodine_link.outline {
+  background: transparent;
+  border: 0.15rem solid transparent;
+  border-radius: 2rem;
+}
+
+.ulodine_link.green {
+  border-color: #00bb95;
+  a {
+    color: #00bb95;
   }
 }

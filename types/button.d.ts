@@ -28,7 +28,9 @@ declare global {
     disabled?: boolean;
     className?: string;
     label: string;
-    type?: string;
+    type?: "main" | "outline";
     icon?: ReactNode;
+    underline?: boolean;
+    labelColor?: buttonColor;
   }
 }

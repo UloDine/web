@@ -28,3 +28,10 @@ interface Select {
   placeholder?: string;
   defaultSelected?: string;
 }
+
+interface UloDineSearch {
+  type: "home-page" | "normal";
+  placeholder: string;
+  onSearchChange: (query: string) => void;
+  width?: number | string;
+}

@@ -226,4 +226,43 @@
 }
 .editor_input:empty {
   content: attr(data-placeholder);
+}
+
+.ulodine_search {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 2rem;
+  padding: 0.3rem;
+  border: 0.15rem solid #dfdfdf;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.ulodine_search input {
+  display: block;
+  font-size: 1rem;
+  min-width: 15rem;
+  outline: none;
+  padding: 0 1rem;
+}
+.ulodine_search input::-webkit-search-cancel-button {
+  height: 1rem;
+  width: 1rem;
+  background: url("/cancel.svg") no-repeat center center;
+  background-size: contain;
+  cursor: pointer;
+}
+.ulodine_search button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #00bb95;
+  cursor: pointer;
+}
+.ulodine_search button:hover {
+  background: #00a785;
 }/*# sourceMappingURL=Input.module.css.map */

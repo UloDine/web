@@ -1,3 +1,9 @@
+export const HOME_ROUTES = {
+  HOME: "/",
+  RESTAURANTS: "/restaurants",
+  PRICING: "/pricing",
+};
+
 export const AUTH_ROUTES = {
   RES_LOGIN: "/restaurant/login",
   RES_SIGNUP: "/restaurant/signup",

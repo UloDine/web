@@ -1,0 +1,41 @@
+"use client";
+import styles from "@/styles/components/input/Input.module.css";
+import { GeneralIcons } from "@/icons/general/icons";
+import React, { useEffect, useState } from "react";
+
+function UloDineSearch({
+  type,
+  placeholder = "Search here",
+  onSearchChange,
+  width,
+}: UloDineSearch) {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  useEffect(() => {
+    if (!searchTerm) return;
+
+    const delayDebounce = setTimeout(() => {
+      onSearchChange?.(searchTerm);
+    }, 1000);
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchTerm]);
+
+  return (
+    <div className={styles.ulodine_search}>
+      <input
+        type='search'
+        placeholder={placeholder}
+        onChange={(e) => {
+          setSearchTerm(e.target.value);
+        }}
+        style={{ width: width ? width : "100%" }}
+      />
+      <button onClick={() => onSearchChange(searchTerm)}>
+        {GeneralIcons.search_white}
+      </button>
+    </div>
+  );
+}
+
+export default UloDineSearch;

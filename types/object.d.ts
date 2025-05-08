@@ -100,4 +100,9 @@ declare global {
     label: string;
     value: number | string;
   }
+
+  interface NavElement {
+    label: string;
+    path: string;
+  }
 }

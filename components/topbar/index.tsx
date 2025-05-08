@@ -24,6 +24,7 @@ function Topbar() {
             label={plan == "free" ? "Get Premium" : "Get Enterprise"}
             path={""}
             type='primary'
+            underline={false}
           />
         ) : null}
         <ToggleTheme />
