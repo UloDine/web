@@ -51,8 +51,12 @@ export function formatPhoneNumber(input: string, maxLength: number): string {
   return numericInput.slice(0, maxLength);
 }
 
-export function formatCurrency(amount: number, symbol?: string) {
-  return amount.toLocaleString("en-NG", {
+export function formatCurrency(
+  amount: number,
+  symbol?: string,
+  locale?: string
+) {
+  return amount.toLocaleString(locale ?? "en-NG", {
     style: "currency",
     currency: symbol?.toUpperCase() ?? "NGN",
   });

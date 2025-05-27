@@ -25,6 +25,18 @@ export const metadata: Metadata = {
     siteName: "UloDine",
     images: [{ url: "https://ulodine.com/og.png" }],
   },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon-16x16.png",
+    other: [
+      {
+        rel: "mask-icon",
+        url: "/safari-pinned-tab.svg",
+        color: "#00A886",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

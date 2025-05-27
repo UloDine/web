@@ -27,7 +27,7 @@
   gap: 2rem;
   margin-top: 2rem;
 }
-.hero .image {
+.hero .hero_png {
   width: 60%;
   height: 80%;
   display: block;
@@ -35,4 +35,247 @@
   right: 2%;
   bottom: 0;
   z-index: -1;
+}
+
+.about {
+  position: relative;
+}
+@media screen and (min-width: 760px) {
+  .about {
+    padding: 4rem;
+  }
+}
+@media screen and (min-width: 760px) {
+  .about .about_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+}
+.about .about_grid .about_img_wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/3;
+}
+.about .about_grid .about_img_wrapper .about_png {
+  background-position: center;
+}
+.about .about_grid .right {
+  position: relative;
+}
+.about .about_grid .right p {
+  margin: 1rem 0;
+  color: #6b6a6a;
+  font-size: 1.2rem;
+}
+.about .about_grid .right div {
+  margin-bottom: 1rem;
+}
+.about .about_grid .right div p {
+  margin: unset;
+}
+
+.why {
+  position: relative;
+}
+@media screen and (min-width: 760px) {
+  .why {
+    padding: 4rem;
+  }
+}
+@media screen and (min-width: 760px) {
+  .why .why_cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+}
+.why .why_cards .why_card {
+  border-radius: 2rem;
+  background: linear-gradient(131deg, #fff 0.23%, #fcfff4 24.42%, #fbf5ff 49.99%, #fffaf4 73.72%, #fff 99.77%);
+  padding: 2rem;
+  border-radius: 1rem;
+}
+.why .why_cards .why_card .why_image_wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/2;
+}
+.why .why_cards .why_card .why_image_wrapper .why_image {
+  -o-object-fit: contain;
+     object-fit: contain;
+  position: relative;
+}
+.why .why_cards .why_card strong {
+  font-size: 1.5rem;
+  display: block;
+  margin-top: 2rem;
+}
+.why .why_cards .why_card p {
+  color: #6b6a6a;
+  font-size: 1.2rem;
+  margin-top: 0.7rem;
+}
+
+.how_it_works {
+  position: relative;
+}
+@media screen and (min-width: 760px) {
+  .how_it_works {
+    padding: 4rem;
+  }
+}
+.how_it_works .how_cards {
+  position: relative;
+}
+.how_it_works .how_cards .how_card {
+  border-radius: 1rem;
+  background: var(--White, #fff);
+  padding: 2rem;
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+  align-items: center;
+}
+.how_it_works .how_cards .how_card .how_image_wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4/2;
+}
+.how_it_works .how_cards .how_card .how_image_wrapper .how_image {
+  -o-object-fit: contain;
+     object-fit: contain;
+  position: relative;
+}
+.how_it_works .how_cards .how_card .how_right {
+  position: relative;
+}
+.how_it_works .how_cards .how_card .how_right h2 {
+  font-size: 4rem;
+  background: linear-gradient(143deg, #00bb95 11.36%, #054 88.64%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.how_it_works .how_cards .how_card .how_right strong {
+  font-size: 1.5rem;
+  display: block;
+  font-weight: 600;
+}
+.how_it_works .how_cards .how_card .how_right p {
+  max-width: 60rem;
+  margin: 0.5rem 0;
+  color: #6b6a6a;
+}
+
+.pricing {
+  position: relative;
+}
+@media screen and (min-width: 760px) {
+  .pricing {
+    padding: 4rem;
+  }
+}
+@media screen and (min-width: 760px) {
+  .pricing .pricing_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+.pricing .pricing_wrapper .pricing_card {
+  position: relative;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fff 0%, #e4fff8 100%);
+  box-shadow: 0px 4px 25.7px 5px rgba(44, 84, 70, 0.1);
+  padding: 2rem;
+  height: 33rem;
+}
+.pricing .pricing_wrapper .pricing_card h2 {
+  font-size: 3rem;
+}
+.pricing .pricing_wrapper .pricing_card .pricing_card_inner_details_wrapper {
+  padding: 1rem 0;
+  border-bottom: 0.15rem solid #dfdfdf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pricing .pricing_wrapper .pricing_card .pricing_card_inner_details_wrapper span {
+  display: block;
+  padding: 0.2rem 0.5rem;
+  color: #ffffff;
+  background: #00bb95;
+}
+.pricing .pricing_wrapper .pricing_card ul {
+  display: block;
+  padding: 1rem;
+}
+.pricing .pricing_wrapper .pricing_card ul li {
+  color: #6b6a6a;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+.pricing .pricing_wrapper .pricing_card .action_button {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 2rem;
+}
+.pricing .pricing_wrapper .pricing_card_differ {
+  position: relative;
+  border-radius: 10px;
+  background: var(--Primary, #00bb95);
+  box-shadow: 0px 4px 25.7px 5px rgba(44, 84, 70, 0.1);
+  overflow: hidden;
+  height: 33rem;
+}
+.pricing .pricing_wrapper .pricing_card_differ h2 {
+  font-size: 3rem;
+}
+.pricing .pricing_wrapper .pricing_card_differ .recommended {
+  text-align: center;
+  display: block;
+  padding: 1rem;
+  color: #00bb95;
+  background: #ffffff;
+  font-weight: 600;
+}
+.pricing .pricing_wrapper .pricing_card_differ .pricing_card_inner_details_wrapper {
+  padding: 1rem 0;
+  width: 85%;
+  margin: 0 auto;
+  border-bottom: 0.15rem solid #dfdfdf;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+}
+.pricing .pricing_wrapper .pricing_card_differ .pricing_card_inner_details_wrapper span {
+  display: block;
+  padding: 0.2rem 0.5rem;
+  background: #ffffff;
+  color: #00bb95;
+}
+.pricing .pricing_wrapper .pricing_card_differ ul {
+  display: block;
+  padding: 1rem 3rem;
+}
+.pricing .pricing_wrapper .pricing_card_differ ul li {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+.pricing .pricing_wrapper .pricing_card_differ .action_button {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 2rem;
 }/*# sourceMappingURL=index.module.css.map */

@@ -5,6 +5,7 @@ import Outlet from "./Outlet";
 import Topbar from "@/components/topbar";
 
 function RestaurantLayout({ children }: { children: ReactNode }) {
+  
   return (
     <section className={styles.main_layout}>
       <Topbar />

@@ -4,6 +4,10 @@ export const HOME_ROUTES = {
   PRICING: "/pricing",
 };
 
+export const PAGE_ROUTES = {
+  ABOUT: "/about-us",
+};
+
 export const AUTH_ROUTES = {
   RES_LOGIN: "/restaurant/login",
   RES_SIGNUP: "/restaurant/signup",

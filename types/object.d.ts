@@ -105,4 +105,57 @@ declare global {
     label: string;
     path: string;
   }
+
+  interface WhyData {
+    image: string;
+    title: string;
+    description: string;
+  }
+
+  interface HowData {
+    image: string;
+    title: string;
+    description: string;
+    step: string;
+  }
+
+  interface Pricing {
+    plan: "Free" | "Pro" | "Premium" | "Enterprise";
+    price: number;
+    details: string[];
+  }
+
+  interface LinkPair {
+    label: string;
+    path: string;
+  }
+
+  interface FooterObject {
+    title: string;
+    links: LinkPair[];
+  }
+
+  interface SocialObject {
+    icon: ReactNode;
+    link: string;
+  }
+
+  interface AppLinkObject {
+    icon: ReactNode;
+    link: string;
+  }
+
+  interface TabData {
+    label: string;
+    value: string;
+    action: () => void;
+    icon?: ReactNode;
+    active?: boolean;
+    disabled?: boolean;
+    subLabel?: string;
+    subLabelColor?: string;
+    subLabelAction?: () => void;
+    subLabelIcon?: ReactNode;
+    subLabelDisabled?: boolean;
+  }
 }

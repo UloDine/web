@@ -34,10 +34,31 @@ function UloDineEditor({
 
   const restoreSelection = (selectionInfo: any) => {
     if (!selectionInfo || !editorRef.current) return;
+
     const selection = window.getSelection();
     const range = document.createRange();
-    range.setStart(editorRef.current.childNodes[0], selectionInfo.startOffset);
-    range.setEnd(editorRef.current.childNodes[0], selectionInfo.endOffset);
+
+    // Use a TreeWalker to find the first text node inside the editor
+    const walker = document.createTreeWalker(
+      editorRef.current,
+      NodeFilter.SHOW_TEXT,
+      null
+    );
+    const textNode = walker.nextNode();
+
+    if (!textNode) return;
+
+    const start = Math.min(
+      selectionInfo.startOffset,
+      textNode.textContent?.length ?? 0
+    );
+    const end = Math.min(
+      selectionInfo.endOffset,
+      textNode.textContent?.length ?? 0
+    );
+
+    range.setStart(textNode, start);
+    range.setEnd(textNode, end);
     selection?.removeAllRanges();
     selection?.addRange(range);
   };
@@ -45,7 +66,9 @@ function UloDineEditor({
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
     const selectionInfo = saveSelection();
     onChange(e.currentTarget.textContent || "");
-    setTimeout(() => restoreSelection(selectionInfo), 0);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => restoreSelection(selectionInfo));
+    });
   };
 
   // Apply or remove markdown formatting

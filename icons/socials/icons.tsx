@@ -13,6 +13,20 @@ export const SocialIcons = {
       ></path>
     </svg>
   ),
+  x_black: (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='32'
+      height='28'
+      fill='none'
+      viewBox='0 0 32 28'
+    >
+      <path
+        fill='#000'
+        d='M25.189 0h4.883L19.406 11.884 32 28h-9.896l-7.71-9.769L5.526 28H.643L12.08 15.307 0 0h10.153l7.004 8.96zm-1.735 25.138h2.699L8.675 2.676H5.719z'
+      ></path>
+    </svg>
+  ),
   instagram: (
     <svg
       xmlns='http://www.w3.org/2000/svg'

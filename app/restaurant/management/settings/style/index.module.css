@@ -1,0 +1,246 @@
+.settings {
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  gap: 2rem;
+  background: #ffffff;
+  border-radius: 2rem;
+  margin-top: 1rem;
+  max-height: 56rem;
+}
+.settings .tabs {
+  position: relative;
+  border-right: 0.15rem solid #dfdfdf;
+  padding-right: 1rem;
+}
+.settings .tabs .tabItem {
+  padding: 1rem;
+  cursor: pointer;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 0.5rem;
+  color: #6b6a6a;
+}
+.settings .tabs .tabItem:not(:first-child) {
+  margin: 1rem 0;
+}
+.settings .tabs .tabItem span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.settings .tabs .tabItem.active {
+  background: #f5f5f5;
+  color: #000000;
+}
+
+.general {
+  position: relative;
+  max-height: 54rem;
+  overflow: auto;
+}
+.general::-webkit-scrollbar {
+  color: #00bb95;
+  background: #f7f7f7;
+  width: 0.3rem;
+  border-radius: 1rem;
+}
+.general::-webkit-scrollbar-thumb {
+  background: #008067;
+  border-radius: 1rem;
+}
+.general .banner_area {
+  height: 25rem;
+  position: relative;
+}
+.general .banner_area .uploadButtonContainer {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
+.general .banner_area .profile_image {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  position: absolute;
+  bottom: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0.5rem solid #ffffff;
+}
+.general .banner_area .profile_image .placeholder {
+  border-radius: 50%;
+}
+.general .banner_area .profile_image .placeholder div {
+  transform: scale(0.3);
+}
+.general .banner_area .profile_image .upload_btn {
+  position: absolute;
+  bottom: -0.5rem;
+  right: -0.5rem;
+}
+.general .restaurant_name {
+  margin: 2rem 0;
+  margin-top: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.general .restaurant_name h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  min-width: 50%;
+}
+.general .restaurant_name h1:empty::before {
+  content: attr(data-placeholder);
+  color: #c1c1c1;
+}
+.general .restaurant_name h1.active {
+  border: 0.1rem solid #bafff1;
+  border-radius: 0.5rem;
+  padding: 0 0.7rem;
+}
+.general .restaurant_name .edit_pen_container {
+  margin-left: 1rem;
+}
+.general .restaurant_desc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.general .restaurant_desc p {
+  font-size: 1.2rem;
+  text-align: center;
+  width: 100%;
+  padding: 0.7rem;
+  border: 0.1rem solid transparent;
+}
+.general .restaurant_desc p:empty::before {
+  content: attr(data-placeholder);
+  color: #c1c1c1;
+}
+.general .restaurant_desc p:focus {
+  border-color: #bafff1;
+  border-radius: 0.5rem;
+}
+.general .section_edits_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+.general .section_edits_wrapper:not(:first-child) {
+  margin-top: 1.5rem;
+}
+.general .section_edits_wrapper .inner_wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.general .section_edits_wrapper .inner_wrapper .icon {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1.5rem;
+}
+
+.account_and_security {
+  position: relative;
+  min-height: 54rem;
+  overflow: auto;
+}
+.account_and_security .action_item {
+  padding: 2rem 0;
+}
+.account_and_security .action_item:not(:last-child) {
+  border-bottom: 0.1rem solid #dfdfdf;
+}
+.account_and_security .action_item .action_title {
+  font-weight: 550;
+}
+.account_and_security .action_item .action_description {
+  margin: 0.5rem 0;
+  color: #6b6a6a;
+}
+.account_and_security .action_item .action_button {
+  margin-top: 1rem;
+}
+
+.imagePlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #e0e0e0;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload_button {
+  width: 3rem;
+  height: 3rem;
+  background: #f5f5f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.upload_button:hover {
+  background: #e8e8e8;
+}
+.upload_button .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload_button .icon svg path {
+  stroke: #c1c1c1;
+}
+
+.edit_pen {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #f5f5f5;
+}
+.edit_pen.editing {
+  background: #00bb95;
+}
+.edit_pen.empty {
+  background: #959595;
+  cursor: not-allowed;
+}
+.edit_pen.loading {
+  background: #08846b;
+  cursor: not-allowed;
+}
+.edit_pen_icon {
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section {
+  margin: 1rem 0;
+  width: 100%;
+}
+.section_title {
+  color: #000000;
+  font-size: 1.2rem;
+}
+.section_wrapper {
+  border: 0.15rem solid #dfdfdf;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}/*# sourceMappingURL=index.module.css.map */

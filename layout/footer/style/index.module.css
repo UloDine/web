@@ -1,0 +1,96 @@
+.footer {
+  position: relative;
+  background: #d9d9d9;
+}
+@media screen and (min-width: 768px) {
+  .footer {
+    padding: 3rem;
+  }
+}
+.footer .top {
+  width: 100%;
+}
+@media screen and (min-width: 768px) {
+  .footer .top {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+}
+.footer .top_card {
+  position: relative;
+}
+.footer .top_card strong {
+  display: block;
+  font-size: 1.2rem;
+}
+.footer .top_card ul li {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  list-style: none;
+}
+.footer .top_card ul li a {
+  color: #6b6a6a;
+  text-decoration: none;
+  display: block;
+}
+.footer .top_card ul li a:hover {
+  text-decoration: underline;
+}
+.footer .bottom {
+  width: 100%;
+  margin: 2rem 0;
+}
+@media screen and (min-width: 768px) {
+  .footer .bottom {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: end;
+  }
+}
+.footer .bottom a {
+  color: #6b6a6a;
+  text-decoration: none;
+}
+.footer .bottom a:hover {
+  text-decoration: underline;
+}
+.footer .bottom_left {
+  position: relative;
+}
+.footer .bottom_left strong {
+  display: block;
+  font-size: 1.2rem;
+}
+.footer .bottom_left ul {
+  display: block;
+}
+.footer .bottom_left ul li {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+  list-style: none;
+  display: inline-block;
+  margin-right: 1rem;
+}
+.footer .bottom_left ul li a {
+  color: #6b6a6a;
+  text-decoration: none;
+}
+.footer .bottom_left ul li a:hover {
+  filter: contrast(0.1);
+}
+.footer .bottom_center {
+  position: relative;
+}
+.footer .bottom_center .app_link {
+  display: inline-block;
+  margin-right: 1rem;
+}
+.footer small {
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+  color: #6b6a6a;
+  margin-top: 1rem;
+}/*# sourceMappingURL=index.module.css.map */
