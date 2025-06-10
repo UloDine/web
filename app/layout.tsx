@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { ApiServiceProvider } from "@/context/ApiServiceContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { ToastProvider } from "@/context/ToastContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -45,8 +48,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className={poppins.variable}>
-      <body>{children}</body>
+    <html lang="en" className={poppins.variable}>
+      <body>
+        <AuthProvider>
+          <ToastProvider>
+            <ApiServiceProvider>{children}</ApiServiceProvider>
+          </ToastProvider>
+        </AuthProvider>
+      </body>
     </html>
   );
 }

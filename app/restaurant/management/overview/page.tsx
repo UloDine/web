@@ -7,8 +7,12 @@ import { formatCurrency } from "@/utils/helpers";
 import { RestaurantIcons } from "@/icons/restaurant/icons";
 import { feedbacks } from "@/res/feedbacks";
 import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
+import { useApiService } from "@/context/ApiServiceContext";
+import { useEffect } from "react";
+import { apiRoutes } from "@/lib/apiRoutes";
 
 export default function Overview() {
+  const api = useApiService();
   const actions = [
     {
       label: "Generate QR",
@@ -67,10 +71,20 @@ export default function Overview() {
     feedbacks: [],
     // feedbacks: feedbacks,
   };
+
+  useEffect(() => {
+    api
+      .get<RestaurantOverview>(apiRoutes.business.fetchOverview)
+      .then((res) => {
+        if (res.status === "success") {
+          console.log("Overview Data:", res.data);
+        }
+      });
+  }, []);
   return (
     <section className={styles.overview}>
       <PageTitleBar
-        title='Overview'
+        title="Overview"
         rightContent={
           <div className={styles.action_buttons}>
             {actions.map((action, i) => (
@@ -97,8 +111,8 @@ export default function Overview() {
               <></>
             ) : (
               <EmptyScreen
-                title='No Feedback From Customers at The Moment!'
-                subTitle='Feedback from customers will show up here.'
+                title="No Feedback From Customers at The Moment!"
+                subTitle="Feedback from customers will show up here."
               />
             )}
           </div>
