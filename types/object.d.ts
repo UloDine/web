@@ -158,4 +158,17 @@ declare global {
     subLabelIcon?: ReactNode;
     subLabelDisabled?: boolean;
   }
+
+  interface WindowSize {
+    width: number;
+    height: number;
+  }
+
+  type Theme = "light" | "dark";
+
+  interface AppContextType {
+    windowSize: WindowSize;
+    isOnline: boolean;
+    theme: Theme;
+  }
 }

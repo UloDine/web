@@ -4,6 +4,8 @@ import "./globals.css";
 import { ApiServiceProvider } from "@/context/ApiServiceContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ToastProvider } from "@/context/ToastContext";
+import { AppProvider } from "@/context/app/AppContext";
+import { AlertProvider } from "@/context/alert/AlertContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -50,11 +52,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.variable}>
       <body>
-        <AuthProvider>
-          <ToastProvider>
-            <ApiServiceProvider>{children}</ApiServiceProvider>
-          </ToastProvider>
-        </AuthProvider>
+        <AppProvider>
+          <AlertProvider>
+            <AuthProvider>
+              <ToastProvider>
+                <ApiServiceProvider>{children}</ApiServiceProvider>
+              </ToastProvider>
+            </AuthProvider>
+          </AlertProvider>
+        </AppProvider>
       </body>
     </html>
   );

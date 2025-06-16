@@ -53,7 +53,7 @@ function StepOne() {
           }}
           type='phone'
           label='Phone'
-          placeholder='e.g 123456789'
+          placeholder='123456789'
           strict
         />
       </div>

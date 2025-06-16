@@ -14,6 +14,7 @@ interface Input {
   invalid?: boolean;
   disabled?: boolean;
   otpLoading?: boolean;
+  timer?: number;
 }
 
 type item = {

@@ -1,11 +1,13 @@
 export const BASE_API = {
-  restaurant: "http://localhost:5000",
+  restaurant: "https://api-48zq.onrender.com",
 };
 
 export const apiRoutes = {
   auth: {
-    register: `${BASE_API}/api/auth/register`,
-    login: `${BASE_API}/api/auth/login`,
+    register: `${BASE_API.restaurant}/api/auth/register`,
+    login: `${BASE_API.restaurant}/api/auth/login`,
+    request_otp: `${BASE_API.restaurant}/api/auth/send-otp`,
+    verify_otp: `${BASE_API.restaurant}/api/auth/verify-otp`,
   },
   business: {
     fetchOverview: `${BASE_API.restaurant}/api/restaurants/overview`,

@@ -84,10 +84,10 @@ function page() {
         <div className={styles.auth_form_header}>
           <h1>Sign Up</h1>
           <UloDineLink
-            color='white'
-            label='Login'
+            color="white"
+            label="Login"
             path={AUTH_ROUTES.RES_LOGIN}
-            type='primary'
+            type="main"
             key={"ewiuywie"}
           />
         </div>
@@ -101,31 +101,31 @@ function page() {
         </div>
         <div className={styles.auth_form_bottom}>
           <UloDIneButton
-            color='transparent'
-            label='Prev'
+            color="transparent"
+            label="Prev"
             onClick={(e) => {
               setStep(prev);
             }}
-            type='minor'
+            type="minor"
             disabled={step <= 1}
           />
           {step == 3 ? (
             <UloDIneButton
-              color='green'
-              label='Create account'
+              color="green"
+              label="Create account"
               onClick={(e) => {}}
-              type='primary'
+              type="primary"
               disabled
             />
           ) : (
             <UloDIneButton
-              color='transparent'
-              label='Next'
+              color="transparent"
+              label="Next"
               onClick={(e) => {
                 setStep(next);
                 console.log(personal);
               }}
-              type='minor'
+              type="minor"
               disabled={
                 !personal.complete && step === 1
                   ? true

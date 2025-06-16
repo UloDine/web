@@ -105,6 +105,12 @@ interface ApiService {
   del<T>(url: string): Promise<BaseResponse<T>>;
 }
 
+interface OTPRequestResponse {
+  status: string;
+  message: string;
+  expiration: number;
+}
+
 type Nullable<T> = T | null;
 type Optional<T> = T | undefined;
 type ApiResult<T = any> = Promise<BaseResponse<T>>;

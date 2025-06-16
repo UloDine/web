@@ -68,11 +68,14 @@ Input) {
   }, [timeLeft]);
 
   useEffect(() => {
-    setOtpComplete(Object.values(otp).every((v) => v !== ""));
-    if (otpComplete && onComplete) {
+    const isComplete = otp.every((digit) => digit !== "");
+    setOtpComplete(isComplete);
+
+    if (isComplete && onComplete) {
       onComplete(otp);
     }
   }, [otp]);
+
   if (type == "otp") {
     // Format time as mm:ss
     const formatTime = (seconds: number) => {
@@ -116,7 +119,7 @@ Input) {
               ref={(el) => {
                 inputRefs.current[index] = el; // ✅ Ensure no return value
               }}
-              type='number'
+              type="number"
               min={0}
               maxLength={1}
               value={otp[index]}
@@ -167,14 +170,14 @@ Input) {
           ></textarea>
         ) : type == "phone" ? (
           <div className={styles.phone}>
-            <span>{countryDetails?.calling_code}</span>
             <Image
               src={countryDetails?.country_flag ?? "/small.png"}
-              alt='Country flag'
+              alt="Country flag"
               width={14}
               height={14}
               className={styles.flag}
             />
+            <span>{countryDetails?.calling_code}</span>
             <input
               type={type}
               placeholder={placeholder}
