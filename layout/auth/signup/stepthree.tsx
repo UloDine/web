@@ -63,6 +63,7 @@ function StepThree() {
     if (personal.email) {
       setEmail(personal.email);
       if (!emailVerified) {
+        setLoading(true);
         api
           .post<OTPRequestResponse>(apiRoutes.auth.request_otp, {
             email: personal.email,

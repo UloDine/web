@@ -11,10 +11,16 @@ import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import StepTwo from "@/layout/auth/signup/steptwo";
 import StepThree from "@/layout/auth/signup/stepthree";
 import { useSignUpContext } from "@/context/SignupContext";
+import { useAlert } from "@/context/alert/AlertContext";
+import { useApiService } from "@/context/ApiServiceContext";
+import { apiRoutes } from "@/lib/apiRoutes";
 
 function page() {
   const { step, setStep, personal, setPersonal, business, setBusiness, auth } =
     useSignUpContext();
+  const api = useApiService();
+  const { addAlert } = useAlert();
+  const [loading, setLoading] = useState<boolean>(false);
   const next = step + 1;
   const prev = step <= 0 ? 0 : step - 1;
 
@@ -36,6 +42,14 @@ function page() {
       link: "",
     },
   ];
+
+  async function register() {
+    try {
+      api.post(apiRoutes.auth.register);
+    } catch (err: any) {
+      addAlert("error", err.message);
+    }
+  }
 
   useEffect(() => {
     const isComplete = Object.values(personal)
@@ -115,7 +129,12 @@ function page() {
               label="Create account"
               onClick={(e) => {}}
               type="primary"
-              disabled
+              disabled={
+                !personal.complete ||
+                !business.complete ||
+                auth.password !== auth.retypedpassword ||
+                loading
+              }
             />
           ) : (
             <UloDIneButton

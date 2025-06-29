@@ -31,8 +31,8 @@ function HeaderNavLayout() {
           {GeneralIcons.logo} <h1>UloDIne</h1>
         </Link>
         <UloDineSearch
-          type='home-page'
-          placeholder='Search something'
+          type="home-page"
+          placeholder="Search something"
           onSearchChange={(query) => {
             console.log(query);
           }}
@@ -57,21 +57,22 @@ function HeaderNavLayout() {
         </ul>
         <div className={styles.action_buttons}>
           <UloDineLink
-            color='green'
-            label='Login'
+            color="green"
+            label="Login"
             path={AUTH_ROUTES.RES_LOGIN}
             underline={false}
-            type='main'
-            labelColor='green'
-            style={{ background: "#f5f5f5" }}
+            type="main"
+            labelColor="green"
+            style={{ background: "#f5f5f5", borderRadius: "2rem" }}
           />
 
           <UloDineLink
-            color='white'
-            label='Signup'
+            color="white"
+            label="Signup"
             path={AUTH_ROUTES.RES_SIGNUP}
             underline={false}
-            type='main'
+            type="main"
+            style={{ borderRadius: "2rem" }}
           />
         </div>
       </nav>

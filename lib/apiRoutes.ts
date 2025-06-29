@@ -1,5 +1,7 @@
+import { API_BASE_URL } from "@/env";
+
 export const BASE_API = {
-  restaurant: "https://api-48zq.onrender.com",
+  restaurant: API_BASE_URL,
 };
 
 export const apiRoutes = {
