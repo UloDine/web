@@ -3,7 +3,7 @@ interface Login {
   businessLogin: BusinessLogin;
   setUserLogin: React.Dispatch<React.SetStateAction<UserLogin>>;
   setBusinessLogin: React.Dispatch<React.SetStateAction<BusinessLogin>>;
-  handleLogin: (loginDetails: BusinessLogin) => Promise<LoginResponse>;
+  handleLogin: (loginDetails: BusinessLogin) => void;
   sending: boolean;
   setSending: React.Dispatch<React.SetStateAction<boolean>>;
 }

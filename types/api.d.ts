@@ -40,12 +40,19 @@ interface LoginRequest {
   password: string;
 }
 
-interface LoginResponse extends BaseResponse<AuthToken> {}
+interface LoggedUser {
+  id: string;
+  fullName: string;
+  email: string;
+  // role: "user" | "restaurant" | "admin";
+}
+
+interface LoginResponse extends BaseResponse<LoggedUser> {}
 
 interface RegisterRequest {
-  name: string;
-  email: string;
-  password: string;
+  business: BusinessDetails;
+  personal: PersonalDetails;
+  auth: AuthDetails;
 }
 interface RegisterResponse extends BaseResponse<User> {}
 

@@ -4,6 +4,7 @@ import React, { createContext, useContext, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { useToast } from "./ToastContext";
 import SessionExpiredModal from "@/components/SessionExpiredModal";
+import { useAlert } from "./alert/AlertContext";
 
 const ApiServiceContext = createContext<ApiService | null>(null);
 
@@ -18,6 +19,7 @@ export const ApiServiceProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { logout } = useAuth();
   const { showToast } = useToast();
+  const { addAlert } = useAlert();
   const [showSessionModal, setShowSessionModal] = useState(false);
 
   const handleResponse = async <T,>(
@@ -34,6 +36,7 @@ export const ApiServiceProvider: React.FC<{ children: React.ReactNode }> = ({
         }, 10000);
       } else {
         showToast(json.message || "An error occurred.", "error");
+        addAlert("error", json.message);
       }
 
       throw new Error(json.message || "API error");

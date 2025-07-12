@@ -6,6 +6,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { ToastProvider } from "@/context/ToastContext";
 import { AppProvider } from "@/context/app/AppContext";
 import { AlertProvider } from "@/context/alert/AlertContext";
+import ProgressBar from "@/components/Progressbar";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function RootLayout({
     <html lang="en" className={poppins.variable}>
       <body>
         <AppProvider>
+          <ProgressBar />
           <AlertProvider>
             <AuthProvider>
               <ToastProvider>

@@ -10,6 +10,8 @@ declare global {
     setStep: (step: number) => void;
     emailVerified: boolean;
     setEmailVerified: React.Dispatch<React.SetStateAction<boolean>>;
+    register: () => void;
+    sending: boolean;
   }
 
   interface PersonalDetails {

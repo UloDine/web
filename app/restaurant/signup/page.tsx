@@ -4,23 +4,25 @@ import { GeneralIcons } from "@/icons/general/icons";
 import { SocialIcons } from "@/icons/socials/icons";
 import StepIndicator from "@/layout/auth/signup/stepindicator";
 import StepOne from "@/layout/auth/signup/stepone";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "@/styles/auth/Index.module.css";
 import UloDineLink from "@/components/button/UloDineLink";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import StepTwo from "@/layout/auth/signup/steptwo";
 import StepThree from "@/layout/auth/signup/stepthree";
 import { useSignUpContext } from "@/context/SignupContext";
-import { useAlert } from "@/context/alert/AlertContext";
-import { useApiService } from "@/context/ApiServiceContext";
-import { apiRoutes } from "@/lib/apiRoutes";
 
-function page() {
-  const { step, setStep, personal, setPersonal, business, setBusiness, auth } =
-    useSignUpContext();
-  const api = useApiService();
-  const { addAlert } = useAlert();
-  const [loading, setLoading] = useState<boolean>(false);
+function Page() {
+  const {
+    step,
+    setStep,
+    personal,
+    setPersonal,
+    business,
+    setBusiness,
+    auth,
+    sending,
+  } = useSignUpContext();
   const next = step + 1;
   const prev = step <= 0 ? 0 : step - 1;
 
@@ -42,14 +44,6 @@ function page() {
       link: "",
     },
   ];
-
-  async function register() {
-    try {
-      api.post(apiRoutes.auth.register);
-    } catch (err: any) {
-      addAlert("error", err.message);
-    }
-  }
 
   useEffect(() => {
     const isComplete = Object.values(personal)
@@ -133,7 +127,7 @@ function page() {
                 !personal.complete ||
                 !business.complete ||
                 auth.password !== auth.retypedpassword ||
-                loading
+                sending
               }
             />
           ) : (
@@ -162,4 +156,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

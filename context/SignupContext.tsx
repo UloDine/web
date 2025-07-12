@@ -1,10 +1,15 @@
 "use client";
 
 import { createContext, ReactNode, useContext, useState } from "react";
+import { useApiService } from "./ApiServiceContext";
+import { useAlert } from "./alert/AlertContext";
+import { apiRoutes } from "@/lib/apiRoutes";
 
 const SignupContext = createContext<Signup | null>(null);
 
 export default function SignupProvider({ children }: { children: ReactNode }) {
+  const api = useApiService();
+  const { addAlert } = useAlert();
   const [personal, setPersonal] = useState<PersonalDetails>({
     email: "",
     firstName: "",
@@ -28,6 +33,25 @@ export default function SignupProvider({ children }: { children: ReactNode }) {
 
   const [emailVerified, setEmailVerified] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
+  const [sending, setSending] = useState(false);
+
+  async function register() {
+    setSending(true);
+
+    api
+      .post<RegisterResponse>(apiRoutes.restaurant.auth.register, {
+        personal,
+        business,
+        auth,
+      })
+      .then((response) => {
+        const { data } = response;
+        console.log(data);
+      })
+      .finally(() => {
+        setSending(false);
+      });
+  }
   return (
     <SignupContext.Provider
       value={{
@@ -41,6 +65,8 @@ export default function SignupProvider({ children }: { children: ReactNode }) {
         setStep,
         emailVerified,
         setEmailVerified,
+        register,
+        sending,
       }}
     >
       {children}

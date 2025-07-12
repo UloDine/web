@@ -1,12 +1,15 @@
 "use client";
 
-import { RESTAURANT_API_ROUTES } from "@/routes/RoutePaths";
-import { POST } from "@/utils/request";
+import { apiRoutes } from "@/lib/apiRoutes";
 import { createContext, ReactNode, useContext, useState } from "react";
+import { useApiService } from "./ApiServiceContext";
+import { useAlert } from "./alert/AlertContext";
 
 const LoginContext = createContext<Login | undefined>(undefined);
 
 export default function LoginProvider({ children }: { children: ReactNode }) {
+  const { addAlert } = useAlert();
+  const api = useApiService();
   const [userLogin, setUserLogin] = useState<UserLogin>({
     email: "",
     password: "",
@@ -19,41 +22,19 @@ export default function LoginProvider({ children }: { children: ReactNode }) {
     pin: "",
   });
   const [sending, setSending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  async function handleLogin(
-    loginDetails: BusinessLogin
-  ): Promise<LoginResponse> {
-    try {
-      setSending(true);
-      const data: LoginResponse = await POST<LoginResponse>(
-        loginDetails,
-        `http://localhost:5000${RESTAURANT_API_ROUTES.LOGIN}`
-      );
-      if (!data) {
+  async function handleLogin(loginDetails: BusinessLogin) {
+    setSending(true);
+    api
+      .post<LoggedUser>(apiRoutes.restaurant.auth.login, loginDetails)
+      .then((response) => {
+        const data = response.data;
+        localStorage.setItem("restaurant_acc", JSON.stringify(data));
+        addAlert("success", response.message);
+      })
+      .finally(() => {
         setSending(false);
-        return {
-          message: "Login failed. Please try again.",
-          user: { id: "", fullName: "", email: "" },
-          status: "fail",
-        };
-      }
-      if (data.status === "success") {
-        console.log(data);
-      }
-      setSending(false);
-      return data;
-    } catch (err) {
-      console.error(err);
-      setSending(false);
-      return {
-        message: "An error occurred while processing your request.",
-        user: { id: "", fullName: "", email: "" },
-        status: "fail",
-      };
-    }
+      });
   }
   return (
     <LoginContext.Provider

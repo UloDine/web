@@ -2,19 +2,17 @@
 import UloDIneButton from "@/components/button/UloDIneButton";
 import { GeneralIcons } from "@/icons/general/icons";
 import { SocialIcons } from "@/icons/socials/icons";
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import styles from "@/styles/auth/Index.module.css";
 import UloDineLink from "@/components/button/UloDineLink";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import UloDineInput from "@/components/input/UloDineInput";
 import { useLoginContext } from "@/context/LoginContext";
 import { isStrongPassword } from "@/utils/helpers";
-import { useAlert } from "@/context/alert/AlertContext";
 
 function page() {
   const { businessLogin, setBusinessLogin, handleLogin, sending } =
     useLoginContext();
-  const { addAlert } = useAlert();
   const socials = [
     {
       icon: SocialIcons.x,
@@ -65,19 +63,19 @@ function page() {
         <div className={styles.auth_form_header}>
           <h1>Login</h1>
           <UloDineLink
-            color='green'
-            label='Signup'
+            color="green"
+            label="Signup"
             path={AUTH_ROUTES.RES_SIGNUP}
-            type='primary'
+            type="main"
             key={"jkfhuewr"}
           />
         </div>
         <div className={styles.auth_form_login}>
           <div style={{ margin: "1rem 0" }}>
             <UloDineInput
-              type='email'
+              type="email"
               value={businessLogin.email}
-              label='Email'
+              label="Email"
               onChange={(e) => {
                 setBusinessLogin((prev) => ({
                   ...prev,
@@ -88,9 +86,9 @@ function page() {
           </div>
           <div style={{ margin: "1rem 0" }}>
             <UloDineInput
-              type='password'
+              type="password"
               value={businessLogin.password}
-              label='Password'
+              label="Password"
               onChange={(e) => {
                 setBusinessLogin((prev) => ({
                   ...prev,
@@ -101,15 +99,11 @@ function page() {
           </div>
           <div style={{ marginTop: 30 }}>
             <UloDIneButton
-              type='primary'
-              label='Login'
-              color='green'
+              type="primary"
+              label="Login"
+              color="green"
               onClick={async () => {
-                const response = await handleLogin(businessLogin);
-                console.log(response);
-                if (response.status == "fail") {
-                  addAlert("error", response.message);
-                }
+                handleLogin(businessLogin);
               }}
               style={{ width: 150, height: 40 }}
               disabled={
@@ -123,10 +117,10 @@ function page() {
         </div>
         <div className={styles.auth_form_bottom}>
           <UloDineLink
-            label='Forgot Password?'
-            color='green'
-            path=''
-            type='minor'
+            label="Forgot Password?"
+            color="green"
+            path=""
+            type="outline"
           />
         </div>
       </div>
