@@ -1,6 +1,6 @@
 "use client";
 import UloDineInput from "@/components/input/UloDineInput";
-import React, { useContext, useState } from "react";
+import React from "react";
 import styles from "@/styles/layout/Index.module.css";
 import UloDineSelect from "@/components/input/UloDineSelect";
 import nigerianStates from "@/res/states";
@@ -17,9 +17,9 @@ function StepTwo() {
           onChange={(e) => {
             setBusiness({ ...business, businessName: e.target.value });
           }}
-          type='text'
-          label='Business name'
-          placeholder='e.g yummy buka'
+          type="text"
+          label="Business name"
+          placeholder="e.g yummy buka"
           strict
         />
       </div>
@@ -29,9 +29,9 @@ function StepTwo() {
           onChange={(e) => {
             setBusiness({ ...business, businessAddress: e.target.value });
           }}
-          type='text'
-          label='Business address'
-          placeholder='e.g abc road, 123 ave.'
+          type="text"
+          label="Business address"
+          placeholder="e.g abc road, 123 ave."
           strict
         />
       </div>
@@ -41,8 +41,8 @@ function StepTwo() {
           onChange={(item) => {
             setBusiness({ ...business, state: item.label });
           }}
-          label='State'
-          placeholder='Select state'
+          label="State"
+          placeholder="Select state"
         />
       </div>
       <div className={styles.input}>
@@ -51,9 +51,9 @@ function StepTwo() {
           onChange={(e) => {
             setBusiness({ ...business, postalCode: e.target.value });
           }}
-          type='text'
-          label='Postal code'
-          placeholder='e.g 001234'
+          type="text"
+          label="Postal code"
+          placeholder="e.g 001234"
           strict
         />
       </div>

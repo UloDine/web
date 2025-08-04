@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./page.module.css";
 import HeaderNavLayout from "@/layout/pageNavbar";
 import Hero from "@/layout/hero";

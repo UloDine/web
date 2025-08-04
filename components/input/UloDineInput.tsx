@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "@/styles/components/input/Input.module.css";
 import {
-  countryPhoneLengths,
   formatPhoneNumber,
   getCountryDetails,
   isStrongPassword,

@@ -52,9 +52,9 @@ function OverviewTopCard({
         <span>+{rate}% This month</span>
         <UloDineLink
           path={""}
-          type={"secondary"}
-          color='grey'
-          label='View All'
+          type={"outline"}
+          color="grey"
+          label="View All"
           icon={RestaurantIcons.arrowExternal}
         />
       </div>

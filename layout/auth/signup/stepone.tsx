@@ -1,6 +1,6 @@
 "use client";
 import UloDineInput from "@/components/input/UloDineInput";
-import React, { useContext, useState } from "react";
+import React from "react";
 import styles from "@/styles/layout/Index.module.css";
 import { useSignUpContext } from "@/context/SignupContext";
 
@@ -15,9 +15,9 @@ function StepOne() {
           onChange={(e) => {
             setPersonal({ ...personal, firstName: e.target.value });
           }}
-          type='text'
-          label='First name'
-          placeholder='e.g John'
+          type="text"
+          label="First name"
+          placeholder="e.g John"
           strict
         />
       </div>
@@ -27,9 +27,9 @@ function StepOne() {
           onChange={(e) => {
             setPersonal({ ...personal, lastName: e.target.value });
           }}
-          type='text'
-          label='Last name'
-          placeholder='e.g Doe'
+          type="text"
+          label="Last name"
+          placeholder="e.g Doe"
           strict
         />
       </div>
@@ -39,9 +39,9 @@ function StepOne() {
           onChange={(e) => {
             setPersonal({ ...personal, email: e.target.value });
           }}
-          type='email'
-          label='Email'
-          placeholder='e.g johndoe@example.com'
+          type="email"
+          label="Email"
+          placeholder="e.g johndoe@example.com"
           strict
         />
       </div>
@@ -51,9 +51,9 @@ function StepOne() {
           onChange={(e) => {
             setPersonal({ ...personal, phone: e.target.value });
           }}
-          type='phone'
-          label='Phone'
-          placeholder='123456789'
+          type="phone"
+          label="Phone"
+          placeholder="123456789"
           strict
         />
       </div>

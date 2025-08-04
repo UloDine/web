@@ -5,7 +5,6 @@ import styles from "./style/index.module.css";
 import OverviewTopCard from "./components/card";
 import { formatCurrency } from "@/utils/helpers";
 import { RestaurantIcons } from "@/icons/restaurant/icons";
-import { feedbacks } from "@/res/feedbacks";
 import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 import { useApiService } from "@/context/ApiServiceContext";
 import { useEffect } from "react";
@@ -74,7 +73,7 @@ export default function Overview() {
 
   useEffect(() => {
     api
-      .get<RestaurantOverview>(apiRoutes.business.fetchOverview)
+      .get<RestaurantOverview>(apiRoutes.restaurant.fetchOverview)
       .then((res) => {
         if (res.status === "success") {
           console.log("Overview Data:", res.data);

@@ -1,6 +1,5 @@
 import { AlertProvider } from "@/context/alert/AlertContext";
 import { MenuProvider } from "@/context/menu/MenuContext";
-import RestaurantProvider from "@/context/RestaurantContext";
 import RestaurantLayout from "@/layout/wrapper/containers/RestaurantLayout";
 import { ReactNode } from "react";
 
@@ -12,9 +11,7 @@ export default function RestaurantDashboard({
   return (
     <MenuProvider>
       <AlertProvider>
-        <RestaurantProvider>
-          <RestaurantLayout>{children}</RestaurantLayout>
-        </RestaurantProvider>
+        <RestaurantLayout>{children}</RestaurantLayout>
       </AlertProvider>
     </MenuProvider>
   );

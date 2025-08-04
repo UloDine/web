@@ -88,10 +88,10 @@ declare global {
     icon?: ReactNode;
     title?: string;
     subTitle?: string;
-    button?: boolean;
+    showButton?: boolean;
     buttonLabel?: string;
     action?: () => void;
-    buttonColor?: string;
+    buttonColor?: buttonColor;
     buttonLabelColor?: string;
   }
 

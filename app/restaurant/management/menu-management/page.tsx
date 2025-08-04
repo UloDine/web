@@ -2,9 +2,6 @@
 import PageTitleBar from "@/components/title";
 import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
-import { formatCurrency } from "@/utils/helpers";
-import { RestaurantIcons } from "@/icons/restaurant/icons";
-import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 import { useEffect, useState } from "react";
 import Filter from "@/components/filter/Filter";
 import menuList from "@/res/menu";
@@ -53,7 +50,7 @@ function MenuManagement() {
   }, [searched]);
   return (
     <section className={styles.orders}>
-      <PageTitleBar title='Menu Management' />
+      <PageTitleBar title="Menu Management" />
       <div className={styles.orders_header}>
         <div className={styles.orders_header_left}>
           <span className={styles.length}>
@@ -62,8 +59,8 @@ function MenuManagement() {
           <div className={styles.search}>
             {GeneralIcons.search}
             <input
-              type='search'
-              placeholder='Search menu...'
+              type="search"
+              placeholder="Search menu..."
               onChange={(e) => searchOrders(e.target.value)}
             />
           </div>

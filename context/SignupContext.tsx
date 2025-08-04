@@ -2,14 +2,12 @@
 
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useApiService } from "./ApiServiceContext";
-import { useAlert } from "./alert/AlertContext";
 import { apiRoutes } from "@/lib/apiRoutes";
 
 const SignupContext = createContext<Signup | null>(null);
 
 export default function SignupProvider({ children }: { children: ReactNode }) {
   const api = useApiService();
-  const { addAlert } = useAlert();
   const [personal, setPersonal] = useState<PersonalDetails>({
     email: "",
     firstName: "",

@@ -1,21 +1,12 @@
 "use client";
-import { RestaurantContext } from "@/context/RestaurantContext";
 import { RestaurantIcons } from "@/icons/restaurant/icons";
 import { RESTAURANT_MANAGEMENT_ROUTES } from "@/routes/RoutePaths";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./styles/index.module.css";
 
 function RestaurantSidebar() {
-  const context = useContext(RestaurantContext);
-
-  if (!context) {
-    throw new Error("Restaurant has no provider");
-  }
-
-  const { businessName, plan } = context;
-
   const pathname = usePathname();
   const menu = [
     {
@@ -60,8 +51,8 @@ function RestaurantSidebar() {
       <div className={styles.side_bar_header}>
         {RestaurantIcons.profilePlaceholder}
         <div className={styles.side_bar_header_right}>
-          <strong>{businessName}</strong>
-          <small>{plan.charAt(0).toUpperCase() + plan.slice(1)}</small>
+          <strong>{"businessName"}</strong>
+          <small>{"Free"}</small>
         </div>
       </div>
       <ul>

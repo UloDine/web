@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import styles from "./style/index.module.css";
 import { GeneralIcons } from "@/icons/general/icons";
 import Image from "next/image";
-import { formatCurrency, formatTime } from "@/utils/helpers";
+import { formatCurrency } from "@/utils/helpers";
 import FormatStatus from "./FormatStatus";
-import { useAlert } from "@/context/alert/AlertContext";
 import { useMenuContext } from "@/context/menu/MenuContext";
 
 function MenuCard({
@@ -18,8 +17,7 @@ function MenuCard({
   stockStatus,
   price,
 }: Menu) {
-  const { addAlert } = useAlert();
-  const { toggleModal, editMenu } = useMenuContext();
+  const { editMenu } = useMenuContext();
   const [imgSrcs, setImgSrcs] = useState(image);
   const [contextOpen, setContextOpen] = useState<boolean>(false);
 
@@ -70,7 +68,7 @@ function MenuCard({
         src={imgSrcs}
         width={40}
         height={40}
-        alt='Customer image'
+        alt="Customer image"
         className={styles.menu_card_image}
         onError={() => handleImageError()}
       />

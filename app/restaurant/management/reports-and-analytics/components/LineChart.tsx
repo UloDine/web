@@ -5,7 +5,6 @@ import {
   BarElement,
   CategoryScale,
   Chart as ChartJS,
-  ChartOptions,
   Legend,
   LinearScale,
   LineElement,

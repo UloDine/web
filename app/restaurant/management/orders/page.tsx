@@ -2,10 +2,6 @@
 import PageTitleBar from "@/components/title";
 import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
-import { formatCurrency } from "@/utils/helpers";
-import { RestaurantIcons } from "@/icons/restaurant/icons";
-import { feedbacks } from "@/res/feedbacks";
-import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 import { useEffect, useState } from "react";
 import orders from "@/res/orders";
 import OrderCard from "./components/OrderCard";
@@ -46,7 +42,7 @@ function Orders() {
   }, [searched]);
   return (
     <section className={styles.orders}>
-      <PageTitleBar title='Orders' />
+      <PageTitleBar title="Orders" />
       <div className={styles.orders_header}>
         <div className={styles.orders_header_left}>
           <span className={styles.length}>
@@ -55,8 +51,8 @@ function Orders() {
           <div className={styles.search}>
             {GeneralIcons.search}
             <input
-              type='search'
-              placeholder='Search orders...'
+              type="search"
+              placeholder="Search orders..."
               onChange={(e) => searchOrders(e.target.value)}
             />
           </div>
