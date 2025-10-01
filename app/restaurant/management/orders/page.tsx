@@ -36,6 +36,7 @@ function Orders() {
 
     setSearched(filtered);
   }
+  console.log(crypto.randomUUID());
 
   useEffect(() => {
     setOrdersData(orders);

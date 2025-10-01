@@ -55,6 +55,7 @@ function OverviewTopCard({
           type={"outline"}
           color="grey"
           label="View All"
+          labelColor="green"
           icon={RestaurantIcons.arrowExternal}
         />
       </div>

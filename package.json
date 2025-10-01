@@ -10,6 +10,15 @@
     "prepare": "husky install",
     "dev:secure": "ngrok http --url=https://trusty-lacewing-conversely.ngrok-free.app 4000"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css}": [
+      "prettier --write"
+    ]
+  },
   "dependencies": {
     "chart.js": "^4.4.8",
     "next": "15.2.1",

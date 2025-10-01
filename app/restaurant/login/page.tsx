@@ -121,6 +121,7 @@ function page() {
             color="green"
             path=""
             type="outline"
+            labelColor="green"
           />
         </div>
       </div>
