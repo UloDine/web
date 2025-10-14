@@ -16,7 +16,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AppContext.Provider value={{ windowSize, isOnline, theme }}>
-      {!isOnline && <OfflineAlert />}
+      {/* {!isOnline && <OfflineAlert />} */}
       {children}
     </AppContext.Provider>
   );

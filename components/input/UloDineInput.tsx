@@ -49,6 +49,18 @@ Input) {
 
   const [secret, setSecret] = useState<boolean>(true);
 
+  function handleBlur() {
+    if ((strict && value == "") || (strict && value == " ")) {
+      setError(true);
+      setAlertMessage({
+        ...alertMessage,
+        message: "Value cannot be empty",
+      });
+    } else {
+      setError(false);
+    }
+  }
+
   useEffect(() => {
     const getResult = async () => {
       const result = await getCountryDetails();
@@ -175,6 +187,7 @@ Input) {
               width={14}
               height={14}
               className={styles.flag}
+              quality={100}
             />
             <span>{countryDetails?.calling_code}</span>
             <input
@@ -192,17 +205,7 @@ Input) {
                 setInputValue(formatPhoneNumber(e.target.value, 10));
                 setError(false);
               }}
-              onBlur={() => {
-                if ((strict && value == "") || (strict && value == " ")) {
-                  setError(true);
-                  setAlertMessage({
-                    ...alertMessage,
-                    message: "Value cannot be empty",
-                  });
-                } else {
-                  setError(false);
-                }
-              }}
+              onBlur={handleBlur}
             />
           </div>
         ) : type == "password" ? (
@@ -225,17 +228,7 @@ Input) {
                 setInputValue(e.target.value);
                 setError(false);
               }}
-              onBlur={() => {
-                if ((strict && value == "") || (strict && value == " ")) {
-                  setError(true);
-                  setAlertMessage({
-                    ...alertMessage,
-                    message: "Value cannot be empty",
-                  });
-                } else {
-                  setError(false);
-                }
-              }}
+              onBlur={handleBlur}
             />
             <button onClick={() => setSecret(!secret)}>
               {secret ? GeneralIcons.eye_closed : GeneralIcons.eye}
@@ -267,17 +260,7 @@ Input) {
                 });
               }
             }}
-            onBlur={() => {
-              if ((strict && value == "") || (strict && value == " ")) {
-                setError(true);
-                setAlertMessage({
-                  ...alertMessage,
-                  message: "Value cannot be empty",
-                });
-              } else {
-                setError(false);
-              }
-            }}
+            onBlur={handleBlur}
             disabled={disabled}
           />
         )}

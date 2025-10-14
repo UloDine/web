@@ -8,7 +8,7 @@ export const apiRoutes = {
   restaurant: {
     auth: {
       register: `${BASE_API.restaurant}/api/auth/restaurant/register`,
-      login: `${BASE_API.restaurant}/api/auth/restaurant/login`,
+      login: `/auth/restaurant/login`,
       request_otp: `${BASE_API.restaurant}/api/auth/send-otp`,
       verify_otp: `${BASE_API.restaurant}/api/auth/verify-otp`,
     },

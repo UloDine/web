@@ -2,40 +2,50 @@
 
 import { apiRoutes } from "@/lib/apiRoutes";
 import { createContext, ReactNode, useContext, useState } from "react";
-import { useApiService } from "./ApiServiceContext";
 import { useAlert } from "./alert/AlertContext";
+import { usePost } from "@/hooks/usePost";
 
 const LoginContext = createContext<Login | undefined>(undefined);
 
 export default function LoginProvider({ children }: { children: ReactNode }) {
   const { addAlert } = useAlert();
-  const api = useApiService();
+
   const [userLogin, setUserLogin] = useState<UserLogin>({
     email: "",
     password: "",
     role: "user",
   });
+
   const [businessLogin, setBusinessLogin] = useState<BusinessLogin>({
     email: "",
     password: "",
     role: "restaurant",
     pin: "",
   });
-  const [sending, setSending] = useState(false);
 
+  // ✅ Use the hook to handle restaurant login via Next.js API route
+  const {
+    // data: loginData,
+    loading: sending,
+    // error,
+    postData: loginRestaurant,
+  } = usePost<BusinessLogin, BaseResponse<LoggedUser>>({
+    endpoint: apiRoutes.restaurant.auth.login, // e.g. "/api/restaurant/auth/login"
+    onSuccess: (response) => {
+      localStorage.setItem("restaurant", JSON.stringify(response.data));
+      addAlert("success", response.message || "Login successful");
+      console.log(response);
+    },
+    onError: (err) => {
+      addAlert("error", err.message || "Login failed");
+    },
+  });
+
+  // ✅ Wrap the hook function in a cleaner interface for components
   async function handleLogin(loginDetails: BusinessLogin) {
-    setSending(true);
-    api
-      .post<LoggedUser>(apiRoutes.restaurant.auth.login, loginDetails)
-      .then((response) => {
-        const data = response.data;
-        localStorage.setItem("restaurant_acc", JSON.stringify(data));
-        addAlert("success", response.message);
-      })
-      .finally(() => {
-        setSending(false);
-      });
+    await loginRestaurant(loginDetails);
   }
+
   return (
     <LoginContext.Provider
       value={{
@@ -45,7 +55,7 @@ export default function LoginProvider({ children }: { children: ReactNode }) {
         setBusinessLogin,
         handleLogin,
         sending,
-        setSending,
+        setSending: () => {}, // no-op (hook manages this)
       }}
     >
       {children}
@@ -56,7 +66,7 @@ export default function LoginProvider({ children }: { children: ReactNode }) {
 export function useLoginContext() {
   const context = useContext(LoginContext);
   if (!context) {
-    throw new Error("Context needs to be in a provider");
+    throw new Error("useLoginContext must be used within a LoginProvider");
   }
   return context;
 }

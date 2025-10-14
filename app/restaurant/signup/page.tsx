@@ -22,6 +22,7 @@ function Page() {
     setBusiness,
     auth,
     sending,
+    emailVerified,
   } = useSignUpContext();
   const next = step + 1;
   const prev = step <= 0 ? 0 : step - 1;
@@ -117,7 +118,7 @@ function Page() {
             type="minor"
             disabled={step <= 1}
           />
-          {step == 3 ? (
+          {step == 3 && emailVerified ? (
             <UloDIneButton
               color="green"
               label="Create account"
@@ -130,7 +131,7 @@ function Page() {
                 sending
               }
             />
-          ) : (
+          ) : step !== 3 && !emailVerified ? (
             <UloDIneButton
               color="transparent"
               label="Next"
@@ -149,7 +150,7 @@ function Page() {
                   : false
               }
             />
-          )}
+          ) : null}
         </div>
       </div>
     </section>

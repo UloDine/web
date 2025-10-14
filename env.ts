@@ -1,3 +1,5 @@
-export const IPGEOLOCATION_API_KEY = `d12a75b623b743b4a62f4a83c401a390`;
+export const IPGEOLOCATION_API_KEY =
+  process.env.NEXT_PUBLIC_IPGEOLOCATION_API_KEY || "";
 
-export const API_BASE_URL = `https://api.ulodine.com`;
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
