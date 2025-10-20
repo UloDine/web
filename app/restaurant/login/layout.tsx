@@ -1,11 +1,11 @@
 import { AlertProvider } from "@/context/alert/AlertContext";
-import LoginProvider from "@/context/LoginContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { ReactNode } from "react";
 
 export default function SignupLayout({ children }: { children: ReactNode }) {
   return (
-    <LoginProvider>
+    <AuthProvider>
       <AlertProvider>{children}</AlertProvider>
-    </LoginProvider>
+    </AuthProvider>
   );
 }

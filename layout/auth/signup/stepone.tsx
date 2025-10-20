@@ -2,10 +2,10 @@
 import UloDineInput from "@/components/input/UloDineInput";
 import React from "react";
 import styles from "@/styles/layout/Index.module.css";
-import { useSignUpContext } from "@/context/SignupContext";
+import { useAuth } from "@/context/AuthContext";
 
 function StepOne() {
-  const { personal, setPersonal } = useSignUpContext();
+  const { personal, setPersonal } = useAuth();
 
   return (
     <div className={styles.step_one}>

@@ -54,7 +54,20 @@ interface RegisterRequest {
   personal: PersonalDetails;
   auth: AuthDetails;
 }
-interface RegisterResponse extends BaseResponse<User> {}
+
+interface RegisterResponsePayload {
+  user: {
+    id: string;
+    user_role: string;
+    email: string;
+  };
+  restaurant: {
+    id: string;
+    business_name: string;
+    business_plan: string;
+  };
+}
+interface RegisterResponse extends BaseResponse<RegisterResponsePayload> {}
 
 interface PaginationRequest {
   page: number;
@@ -110,12 +123,6 @@ interface ApiService {
   post<T>(url: string, data?: any): Promise<BaseResponse<T>>;
   put<T>(url: string, data?: any): Promise<BaseResponse<T>>;
   del<T>(url: string): Promise<BaseResponse<T>>;
-}
-
-interface OTPRequestResponse {
-  status: string;
-  message: string;
-  expiration: number;
 }
 
 type Nullable<T> = T | null;

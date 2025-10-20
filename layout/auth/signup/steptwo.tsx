@@ -4,10 +4,10 @@ import React from "react";
 import styles from "@/styles/layout/Index.module.css";
 import UloDineSelect from "@/components/input/UloDineSelect";
 import nigerianStates from "@/res/states";
-import { useSignUpContext } from "@/context/SignupContext";
+import { useAuth } from "@/context/AuthContext";
 
 function StepTwo() {
-  const { business, setBusiness } = useSignUpContext();
+  const { business, setBusiness } = useAuth();
 
   return (
     <div className={styles.step_one}>

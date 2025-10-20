@@ -2,67 +2,92 @@
 import UloDineInput from "@/components/input/UloDineInput";
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/layout/Index.module.css";
-import { useSignUpContext } from "@/context/SignupContext";
-import { useApiService } from "@/context/ApiServiceContext";
 import { apiRoutes } from "@/lib/apiRoutes";
 import { useAlert } from "@/context/alert/AlertContext";
+import { useAuth } from "@/context/AuthContext";
 
 function StepThree() {
-  const api = useApiService();
   const alert = useAlert();
-  const { business, auth, setAuth, personal, emailVerified, setEmailVerified } =
-    useSignUpContext();
+  const {
+    business,
+    auth,
+    setAuth,
+    personal,
+    emailVerified,
+    updateEmailStatus,
+  } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
   const [verifying, setVerifying] = useState<boolean>(false);
 
   const [email, setEmail] = useState<string>("");
 
-  function verifyEmail(otp: number) {
-    setLoading(true);
-    api
-      .post<any>(apiRoutes.restaurant.auth.verify_otp, {
-        email: personal.email,
-        accountType: "restaurant",
-        otp: otp,
-      })
-      .then((response) => {
-        if (response.status === "success") {
-          setEmailVerified((prev) => !prev);
-          setLoading(false);
-          alert.addAlert("success", response.message);
-        } else {
-          setLoading(false);
-          alert.addAlert("error", response.message);
-        }
+  async function verifyEmail(otp: string) {
+    try {
+      setVerifying(true);
+
+      const res = await fetch(apiRoutes.restaurant.auth.verify_otp, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: personal.email,
+          accountType: "restaurant",
+          otp,
+        }),
       });
+
+      const response = (await res.json()) as BaseResponse<{ email: string }>;
+
+      if (response.status === "success") {
+        updateEmailStatus({ email: response.data?.email, status: true });
+        alert.addAlert("success", response.message);
+      } else {
+        alert.addAlert("error", response.message);
+      }
+    } catch (error: any) {
+      alert.addAlert("error", "Verification failed. " + error.message);
+    } finally {
+      setVerifying(false);
+    }
+  }
+
+  async function requestOTP() {
+    try {
+      setLoading(true);
+      const res = await fetch(apiRoutes.restaurant.auth.request_otp, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: personal.email,
+          accountType: "restaurant",
+        }),
+      });
+
+      const response = (await res.json()) as BaseResponse<OTPRequestResponse>;
+
+      if (response.status === "success") {
+        alert.addAlert("success", response.message);
+      } else {
+        alert.addAlert("error", response.message);
+      }
+    } catch (error: any) {
+      alert.addAlert(
+        "error",
+        "Failed to request OTP. Please try again. " + error.message
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
     if (personal.email) {
       setEmail(personal.email);
-      if (!emailVerified) {
-        setLoading(true);
-        api
-          .post<OTPRequestResponse>(apiRoutes.restaurant.auth.request_otp, {
-            email: personal.email,
-            accountType: "restaurant",
-          })
-          .then((response) => {
-            if (response.status === "success") {
-              setLoading(false);
-              alert.addAlert("success", response.message);
-            } else {
-              setLoading(false);
-              alert.addAlert("error", response.message);
-            }
-          })
-          .catch((error) => {
-            setLoading(false);
-            alert.addAlert(
-              "error",
-              "Failed to request OTP. Please try again. " + error.message
-            );
-          });
+      if (
+        !emailVerified ||
+        !emailVerified.status ||
+        emailVerified.email !== personal.email
+      ) {
+        requestOTP();
       }
     }
   }, [personal.email]);
@@ -73,6 +98,8 @@ function StepThree() {
         <UloDineInput
           value={email}
           onChange={(e) => {
+            console.log(e);
+
             // setBusiness({ ...business, businessName: e.target.value });
           }}
           type="email"
@@ -82,7 +109,9 @@ function StepThree() {
           disabled
         />
       </div>
-      {emailVerified ? (
+      {emailVerified &&
+      emailVerified.email === personal.email &&
+      emailVerified.status ? (
         <div>
           <div className={styles.input}>
             <UloDineInput
@@ -113,21 +142,30 @@ function StepThree() {
         </div>
       ) : (
         <>
-          {loading && <p>Requesting OTP from UloDine...</p>}
-          <div className={styles.input}>
-            <UloDineInput
-              value={business.businessAddress}
-              onChange={(e) => {}}
-              type="otp"
-              sending={loading}
-              otpLoading={verifying}
-              onComplete={(otp) => {
-                setVerifying(true);
-                verifyEmail(Number(otp.join("")));
-                // setLoading(true);
-              }}
-            />
-          </div>
+          {loading ? (
+            <p style={{ color: "green", fontSize: "1rem" }}>
+              Requesting OTP from UloDine...
+            </p>
+          ) : (
+            <div className={styles.input}>
+              <UloDineInput
+                value={business.businessAddress}
+                onChange={(e) => {
+                  console.log(e);
+                }}
+                type="otp"
+                sending={loading}
+                otpLoading={verifying}
+                onComplete={(otp) => {
+                  verifyEmail(otp.join(""));
+                  // setLoading(true);
+                }}
+                onResend={() => {
+                  requestOTP();
+                }}
+              />
+            </div>
+          )}
         </>
       )}
     </div>

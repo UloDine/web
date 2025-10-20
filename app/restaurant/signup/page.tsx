@@ -10,7 +10,7 @@ import UloDineLink from "@/components/button/UloDineLink";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import StepTwo from "@/layout/auth/signup/steptwo";
 import StepThree from "@/layout/auth/signup/stepthree";
-import { useSignUpContext } from "@/context/SignupContext";
+import { useAuth } from "@/context/AuthContext";
 
 function Page() {
   const {
@@ -23,7 +23,9 @@ function Page() {
     auth,
     sending,
     emailVerified,
-  } = useSignUpContext();
+    register,
+  } = useAuth();
+
   const next = step + 1;
   const prev = step <= 0 ? 0 : step - 1;
 
@@ -118,11 +120,11 @@ function Page() {
             type="minor"
             disabled={step <= 1}
           />
-          {step == 3 && emailVerified ? (
+          {step == 3 && emailVerified && emailVerified.status ? (
             <UloDIneButton
               color="green"
               label="Create account"
-              onClick={(e) => {}}
+              onClick={register}
               type="primary"
               disabled={
                 !personal.complete ||
@@ -131,11 +133,11 @@ function Page() {
                 sending
               }
             />
-          ) : step !== 3 && !emailVerified ? (
+          ) : step !== 3 ? (
             <UloDIneButton
               color="transparent"
               label="Next"
-              onClick={(e) => {
+              onClick={() => {
                 setStep(next);
                 console.log(personal);
               }}

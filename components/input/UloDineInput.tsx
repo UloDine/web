@@ -26,6 +26,7 @@ function UloDineInput({
   invalid = false,
   disabled = false,
   otpLoading = false,
+  onResend,
 }: // eslint-disable-next-line @typescript-eslint/no-unused-vars
 Input) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -59,6 +60,13 @@ Input) {
     } else {
       setError(false);
     }
+  }
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (onChange) onChange(e);
+
+    setInputValue(e.target.value);
+    setError(false);
   }
 
   useEffect(() => {
@@ -149,13 +157,11 @@ Input) {
           )}
 
           <button
-            disabled={otpComplete}
+            // disabled={otpComplete}
             className={otpComplete ? styles.disabled : ""}
             onClick={() => {
-              if (otpComplete && onComplete) {
-                onComplete(otp);
-                setTimeLeft(5 * 60);
-              }
+              onResend?.();
+              setTimeLeft(5 * 60);
             }}
           >
             Resend OTP
@@ -188,6 +194,7 @@ Input) {
               height={14}
               className={styles.flag}
               quality={100}
+              unoptimized
             />
             <span>{countryDetails?.calling_code}</span>
             <input
@@ -222,12 +229,7 @@ Input) {
               type={secret ? type : "text"}
               placeholder={placeholder}
               className={`${styles.input} ${className}`}
-              onChange={(e) => {
-                if (onChange) onChange(e);
-
-                setInputValue(e.target.value);
-                setError(false);
-              }}
+              onChange={handleChange}
               onBlur={handleBlur}
             />
             <button onClick={() => setSecret(!secret)}>

@@ -7,10 +7,10 @@ export const BASE_API = {
 export const apiRoutes = {
   restaurant: {
     auth: {
-      register: `${BASE_API.restaurant}/api/auth/restaurant/register`,
+      register: `/api/auth/restaurant/register`,
       login: `/auth/restaurant/login`,
-      request_otp: `${BASE_API.restaurant}/api/auth/send-otp`,
-      verify_otp: `${BASE_API.restaurant}/api/auth/verify-otp`,
+      request_otp: `/api/auth/otp/request`,
+      verify_otp: `/api/auth/otp/verify`,
     },
     fetchOverview: `${BASE_API.restaurant}/api/restaurants/overview`,
     fetchById: (id: string) => `${BASE_API.restaurant}/api/restaurants/${id}`,

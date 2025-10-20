@@ -23,7 +23,7 @@ export function usePost<TBody = any, TResponse = any>({
 
     try {
       // ✅ Always hit Next.js API route
-      const res = await fetch(`/api${endpoint}`, {
+      const res = await fetch(`${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,8 @@ export function usePost<TBody = any, TResponse = any>({
       if (!res.ok) {
         const errBody = await res.json().catch(() => ({}));
         const message = errBody.message || res.statusText;
-        throw new Error(`HTTP ${res.status}: ${message}`);
+        console.log(`HTTP ${res.status}: ${message}`);
+        throw new Error(`${message}`);
       }
 
       const json = (await res.json()) as TResponse;

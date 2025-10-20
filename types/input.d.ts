@@ -15,6 +15,7 @@ interface Input {
   disabled?: boolean;
   otpLoading?: boolean;
   timer?: number;
+  onResend?: () => void;
 }
 
 type item = {

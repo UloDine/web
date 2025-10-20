@@ -7,12 +7,11 @@ import styles from "@/styles/auth/Index.module.css";
 import UloDineLink from "@/components/button/UloDineLink";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import UloDineInput from "@/components/input/UloDineInput";
-import { useLoginContext } from "@/context/LoginContext";
 import { isStrongPassword } from "@/utils/helpers";
+import { useAuth } from "@/context/AuthContext";
 
 function page() {
-  const { businessLogin, setBusinessLogin, handleLogin, sending } =
-    useLoginContext();
+  const { businessLogin, setBusinessLogin, login, sending } = useAuth();
   const socials = [
     {
       icon: SocialIcons.x,
@@ -103,7 +102,7 @@ function page() {
               label="Login"
               color="green"
               onClick={async () => {
-                handleLogin(businessLogin);
+                login(businessLogin);
               }}
               style={{ width: 150, height: 40 }}
               disabled={

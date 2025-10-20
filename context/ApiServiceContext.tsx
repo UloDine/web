@@ -28,7 +28,7 @@ export const ApiServiceProvider: React.FC<{ children: React.ReactNode }> = ({
     const json = await res.json();
 
     if (!res.ok) {
-      if (res.status === 401 || res.status === 403) {
+      if (res.status === 401) {
         showToast("Session expired. Logging out soon.", "error");
         setShowSessionModal(true);
         setTimeout(() => {
