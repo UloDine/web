@@ -31,6 +31,10 @@ function General() {
     value: "123 Abc Road, Owerri West, Imo.",
   };
 
+  function updateData() {
+    setLoading(true);
+  }
+
   React.useEffect(() => {
     if (editing && nameRef.current) {
       const el = nameRef.current;
@@ -79,7 +83,7 @@ function General() {
           ref={nameRef}
           className={editing ? styles.active : ""}
           contentEditable={editing}
-          data-placeholder='Enter Restaurant Name'
+          data-placeholder="Enter Restaurant Name"
           suppressContentEditableWarning={true}
           autoFocus={editing}
           onInput={(e) => {
@@ -90,7 +94,8 @@ function General() {
         </h1>
         <div className={styles.edit_pen_container}>
           <EditPen
-            placeholder={name}
+            // placeholder={name}
+            loading={loading}
             editing={editing}
             setEditing={setEditing}
             value={name}
@@ -105,7 +110,7 @@ function General() {
           ref={descRef}
           className={editing ? styles.active : ""}
           contentEditable
-          data-placeholder='Edit description...'
+          data-placeholder="Edit description..."
           suppressContentEditableWarning={true}
           autoFocus={editing}
           onInput={(e) => {
@@ -115,7 +120,7 @@ function General() {
           {desc}
         </p>
       </div>
-      <Section title='Contact details'>
+      <Section title="Contact details">
         {contacts.map((contact, i) => (
           <div className={styles.section_edits_wrapper}>
             <div className={styles.inner_wrapper}>
@@ -124,7 +129,8 @@ function General() {
             </div>
             <div className={styles.edit_pen_container}>
               <EditPen
-                placeholder={name}
+                // placeholder={name}
+                loading={loading}
                 editing={editing}
                 setEditing={setEditing}
                 value={name}
@@ -136,7 +142,7 @@ function General() {
           </div>
         ))}
       </Section>
-      <Section title='Address'>
+      <Section title="Address">
         <div className={styles.section_edits_wrapper}>
           <div className={styles.inner_wrapper}>
             <span className={styles.icon}>{address.icon}</span>
@@ -144,7 +150,8 @@ function General() {
           </div>
           <div className={styles.edit_pen_container}>
             <EditPen
-              placeholder={name}
+              // placeholder={name}
+              loading={loading}
               editing={editing}
               setEditing={setEditing}
               value={name}

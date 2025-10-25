@@ -67,6 +67,18 @@
     }
 
     .right {
+      max-height: 80vh;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 0.4rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #e0e0e0;
+        border-radius: 1rem;
+      }
+
       .grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -78,6 +90,10 @@
         align-items: center;
         gap: 1rem;
         padding: 1rem 0;
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        background: #fff;
       }
     }
   }

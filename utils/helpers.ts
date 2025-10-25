@@ -110,3 +110,83 @@ export function getMonthsUpToCurrent(): string[] {
 
   return months.slice(0, currentMonthIndex + 1); // Get months from January to current month
 }
+
+export function capitalizeWord(str: string): string {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+/**
+ * Build a full URL with query parameters.
+ *
+ * @param baseUrl - The base endpoint (e.g. /api/menu/restaurant/123)
+ * @param params - Object containing any query parameters
+ * @returns Fully formatted URL string
+ */
+export function queryBuilder(
+  baseUrl: string,
+  params?: Record<string, any>
+): string {
+  if (!params || Object.keys(params).length === 0) return baseUrl;
+
+  const query = Object.entries(params)
+    .filter(([_, v]) => v !== undefined && v !== null && v !== "")
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        // For array params, like tags=["vegan","spicy"]
+        return value
+          .map((v) => `${encodeURIComponent(key)}=${encodeURIComponent(v)}`)
+          .join("&");
+      }
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+    })
+    .join("&");
+
+  return `${baseUrl}${baseUrl.includes("?") ? "&" : "?"}${query}`;
+}
+
+export function fileToDataURL(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      resolve(reader.result as string);
+    };
+
+    reader.onerror = (error) => {
+      reject(error);
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+export function isAllNullOrUndefined(obj: Record<string, any>): boolean {
+  return Object.values(obj).every(
+    (value) => value === null || value === undefined || value === ""
+  );
+}
+
+export function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
+}
+export function generateRandomString(length: number): string {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+export function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w\-]+/g, "") // Remove all non-word chars
+    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+}

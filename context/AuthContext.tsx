@@ -3,11 +3,14 @@ import { usePost } from "@/hooks/usePost";
 import { apiRoutes } from "@/lib/apiRoutes";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useAlert } from "./alert/AlertContext";
+import { useRouter } from "next/navigation";
+import { AUTH_ROUTES, RESTAURANT_MANAGEMENT_ROUTES } from "@/routes/RoutePaths";
 
 const AuthContext = createContext<AuthContext | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { addAlert } = useAlert();
+  const router = useRouter();
 
   const [personal, setPersonal] = useState<PersonalDetails>({
     firstName: "",
@@ -78,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: (res) => {
       localStorage.setItem("user", JSON.stringify(res.data));
       addAlert("success", res.message || "Login successful");
+      router.push(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW);
     },
     onError: (err) => {
       addAlert("error", err.message || "Login failed");
@@ -95,7 +99,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: (res) => {
       localStorage.setItem("user", JSON.stringify(res.data));
       addAlert("success", res.message || "Signup successful");
-      location.href = "/restaurant/management/overview";
+      localStorage.removeItem("email_verified");
+      router.push(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW);
     },
     onError: (err) => {
       addAlert("error", err.message || "Signup failed");
@@ -125,7 +130,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.removeItem("user");
     } finally {
-      window.location.href = "/restaurant/login";
+      router.push(AUTH_ROUTES.RES_LOGIN);
     }
   }
 

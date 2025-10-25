@@ -16,6 +16,7 @@ interface Button {
   disabled?: boolean;
   loading?: boolean;
   labelColor?: buttonColor;
+  icon?: React.ReactNode;
 }
 
 interface UloDineLink {

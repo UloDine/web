@@ -7,60 +7,61 @@ function Filter({
   action,
   filters,
   onClose,
-  selectedFilters,
+  selectedFilters = [],
   updateSelectedFilters,
 }: FilterProps) {
-  const [filtered, setFiltered] = useState<string[]>([]);
+  const [filtered, setFiltered] = useState<FilterOption[]>(selectedFilters);
+
+  const toggleFilter = (item: FilterOption) => {
+    setFiltered((prev) => {
+      const exists = prev.find(
+        (f) => f.key === item.key && f.value === item.value
+      );
+
+      let newList;
+      if (exists) {
+        newList = prev.filter(
+          (f) => !(f.key === item.key && f.value === item.value)
+        );
+      } else {
+        newList = [...prev, item];
+      }
+
+      if (updateSelectedFilters) updateSelectedFilters(newList);
+      return newList;
+    });
+  };
+
+  const isSelected = (item: FilterOption) =>
+    filtered.some((f) => f.key === item.key && f.value === item.value);
+
   return (
     <section className={styles.filter_con}>
       <div className={styles.filter_con_header}>
         <h3>Filter</h3>
         <span onClick={onClose}>{GeneralIcons.closeBlack}</span>
       </div>
-      {filters.map((filter, i) => (
+
+      {filters.map((group, i) => (
         <div key={i}>
-          <p>{filter.title}</p>
+          <p>{group.title}</p>
           <ul>
-            {filter.items.map((item, i) => (
-              <li
-                key={i}
-                onClick={() => {
-                  if (filtered.includes(item)) {
-                    setFiltered((prev) => {
-                      const newList = prev.filter((str) => str !== item);
-                      if (updateSelectedFilters) updateSelectedFilters(newList);
-                      return [...newList];
-                    });
-                  } else {
-                    setFiltered((prev) => [...prev, item]);
-                  }
-                }}
-              >
-                <span
-                  className={
-                    filtered.includes(item) || selectedFilters?.includes(item)
-                      ? styles.active
-                      : ""
-                  }
-                ></span>{" "}
-                <small
-                  className={
-                    filtered.includes(item) || selectedFilters?.includes(item)
-                      ? styles.active
-                      : ""
-                  }
-                >
-                  {item}
+            {group.items.map((item, j) => (
+              <li key={j} onClick={() => toggleFilter(item)}>
+                <span className={isSelected(item) ? styles.active : ""}></span>
+                <small className={isSelected(item) ? styles.active : ""}>
+                  {item.value}
                 </small>
               </li>
             ))}
           </ul>
         </div>
       ))}
+
       <UloDIneButton
-        color='green'
-        label='Apply filter'
-        type='secondary'
+        color="green"
+        label="Apply filter"
+        type="secondary"
         onClick={() => {
           action(filtered);
           onClose();

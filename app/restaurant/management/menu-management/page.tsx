@@ -2,66 +2,79 @@
 import PageTitleBar from "@/components/title";
 import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Filter from "@/components/filter/Filter";
-import menuList from "@/res/menu";
 import MenuCard from "./components/MenuCard";
 import { useMenuContext } from "@/context/menu/MenuContext";
+import { useProfile } from "@/context/ProfileContext";
+import { useFetch } from "@/hooks/useFetch";
+import { apiRoutes } from "@/lib/apiRoutes";
+import InPageLoader from "@/components/loaders/InPageLoader";
+import { queryBuilder } from "@/utils/helpers";
+import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 
 function MenuManagement() {
   const { toggleModal } = useMenuContext();
   const [menuData, setMenuData] = useState<Menu[]>([]);
   const [searched, setSearched] = useState<Menu[]>([]);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
+  const [keyword, setKeyword] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [sortBy, setSortBy] = useState<string>("date");
+  const [sortOrder, setSortOrder] = useState<"ASC" | "DESC">("ASC");
+  const [limit, setLimit] = useState<number>(20);
+  const [stockStatus, setStockStatus] = useState<string>("");
+  const [itemStatus, setItemStatus] = useState<string>("");
 
+  const { restaurant } = useProfile();
+  const id = restaurant?.id || "";
+  const { data, loading } = useFetch<ListData<Menu> | null>(
+    queryBuilder(apiRoutes.restaurant.menu.fetchAll(id), {
+      search: keyword,
+      // category: "Italian",
+      sortBy: sortBy,
+      sortOrder: sortOrder,
+      page: page,
+      limit: limit,
+      stockStatus: stockStatus,
+      itemStatus: itemStatus,
+    }),
+    null
+  );
+  // const {pagination } = data;
   const filterObjects = [
     {
       title: "Filter by Stock Status",
-      items: ["Available", "Out of Stock"],
+      items: [
+        { key: "stockStatus", value: "Available" },
+        { key: "stockStatus", value: "Out of Stock" },
+      ],
     },
     {
       title: "Filter by Status",
-      items: ["Pending", "In Progress", "Completed", "Canceled"],
+      items: [
+        { key: "itemStatus", value: "Pending" },
+        { key: "itemStatus", value: "In Progress" },
+        { key: "itemStatus", value: "Completed" },
+        { key: "itemStatus", value: "Canceled" },
+      ],
     },
   ];
-  function searchOrders(keyword: string | string[]) {
-    let filtered: Menu[] = [];
 
-    if (Array.isArray(keyword)) {
-      filtered = menuList.filter((menu) =>
-        keyword.some(
-          (item) =>
-            menu.status.toLowerCase() === item.toLowerCase() ||
-            menu.stockStatus.toLowerCase() === item.toLowerCase()
-        )
-      );
-    } else {
-      filtered = menuList.filter((menu) =>
-        menu.name.toLowerCase().includes(keyword.toLowerCase())
-      );
-    }
-
-    setSearched(filtered);
-  }
-
-  useEffect(() => {
-    setMenuData(menuList);
-  }, [searched]);
   return (
     <section className={styles.orders}>
       <PageTitleBar title="Menu Management" />
       <div className={styles.orders_header}>
         <div className={styles.orders_header_left}>
           <span className={styles.length}>
-            {searched.length > 0 ? searched.length : menuData.length} items
+            {data ? data.pagination.total : 0} items
           </span>
           <div className={styles.search}>
             {GeneralIcons.search}
             <input
               type="search"
               placeholder="Search menu..."
-              onChange={(e) => searchOrders(e.target.value)}
+              onChange={(e) => setKeyword(e.target.value)}
             />
           </div>
         </div>
@@ -77,8 +90,14 @@ function MenuManagement() {
               <Filter
                 filters={filterObjects}
                 action={(filters) => {
-                  searchOrders(filters);
-                  setSelectedFilter([...selectedFilter, ...filters]);
+                  console.log(filters);
+                  filters.forEach((filter) => {
+                    filter.key === "stockStatus"
+                      ? setStockStatus(filter.value)
+                      : setItemStatus(filter.value);
+                  });
+                  // searchOrders(filters);
+                  // setSelectedFilter([...selectedFilter, ...filters]);
                 }}
                 onClose={() => setOpenFilter((prev) => !prev)}
                 // selectedFilters={selectedFilter}
@@ -99,11 +118,23 @@ function MenuManagement() {
           </button>
         </div>
       </div>
-      <div className={styles.orders_wrapper}>
-        {searched.length > 0
-          ? searched.map((menu, i) => <MenuCard {...menu} key={i} />)
-          : menuData.map((menu, i) => <MenuCard {...menu} key={i} />)}
-      </div>
+      {loading || !data ? (
+        <InPageLoader text="Loading menu..." />
+      ) : data.result.length === 0 ? (
+        <EmptyScreen
+          title="No Menu Available Yet!"
+          subTitle="Start creating menu to appear here"
+          action={toggleModal}
+          showButton
+          buttonLabel="Add Menu"
+        />
+      ) : (
+        <div className={styles.orders_wrapper}>
+          {data.result.map((menu, i) => (
+            <MenuCard {...menu} key={i} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

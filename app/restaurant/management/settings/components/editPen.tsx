@@ -9,19 +9,20 @@ type editData = {
 };
 
 function EditPen({
-  placeholder,
+  // placeholder,
   editing,
   setEditing,
   value,
   onEdit,
+  loading,
 }: {
-  placeholder?: string;
+  // placeholder?: string;
   editing: boolean;
   value: string;
   setEditing: (editing: boolean) => void;
   onEdit?: (data: editData) => void;
+  loading: boolean;
 }) {
-  const [loading, setLoading] = React.useState(false);
   return (
     <button
       disabled={loading || (value === "" && editing)}

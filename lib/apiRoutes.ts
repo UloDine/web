@@ -1,86 +1,71 @@
-import { API_BASE_URL } from "@/env";
-
-export const BASE_API = {
-  restaurant: API_BASE_URL,
-};
-
 export const apiRoutes = {
   restaurant: {
     auth: {
       register: `/api/auth/restaurant/register`,
-      login: `/auth/restaurant/login`,
+      login: `/api/auth/restaurant/login`,
       request_otp: `/api/auth/otp/request`,
       verify_otp: `/api/auth/otp/verify`,
     },
-    fetchOverview: `${BASE_API.restaurant}/api/restaurants/overview`,
-    fetchById: (id: string) => `${BASE_API.restaurant}/api/restaurants/${id}`,
-    fetchByEmail: (email: string) =>
-      `${BASE_API.restaurant}/api/restaurants/${email}`,
-    updateBanner: (id: string) =>
-      `${BASE_API.restaurant}/api/restaurants/${id}/banner`,
-    updateDescription: (id: string) =>
-      `${BASE_API.restaurant}/api/restaurants/${id}/description`,
-    updateEmail: (id: string) =>
-      `${BASE_API.restaurant}/api/restaurants/${id}/email`,
-    updatePhone: (id: string) =>
-      `${BASE_API.restaurant}/api/restaurants/${id}/phone`,
-    updatePassword: (id: string) =>
-      `${BASE_API.restaurant}/api/restaurants/${id}/password`,
-    updateName: (id: string) =>
-      `${BASE_API.restaurant}/api/restaurants/${id}/name`,
-    block: (id: string) => `${BASE_API.restaurant}/api/restaurants/${id}/block`,
-    unblock: (id: string) =>
-      `${BASE_API.restaurant}/api/restaurants/${id}/unblock`,
-    delete: (id: string) => `${BASE_API.restaurant}/api/restaurants/${id}`,
+    fetchOverview: (id: string) =>
+      `/api/restaurant/overview?restaurantId=${id}`,
+    fetchById: (id: string) => `/api/restaurants/${id}`,
+    fetchByEmail: (email: string) => `/api/restaurants/${email}`,
+    updateBanner: (id: string) => `/api/restaurants/${id}/banner`,
+    updateDescription: (id: string) => `/api/restaurants/${id}/description`,
+    updateEmail: (id: string) => `/api/restaurants/${id}/email`,
+    updatePhone: (id: string) => `/api/restaurants/${id}/phone`,
+    updatePassword: (id: string) => `/api/restaurants/${id}/password`,
+    updateName: (id: string) => `/api/restaurants/${id}/name`,
+    block: (id: string) => `/api/restaurants/${id}/block`,
+    unblock: (id: string) => `/api/restaurants/${id}/unblock`,
+    delete: (id: string) => `/api/restaurants/${id}`,
     order: {
-      create: `${BASE_API.restaurant}/api/orders`,
+      create: `/api/restaurant/orders`,
       fetchById: (id: string, restaurantId: string) =>
-        `${BASE_API.restaurant}/api/orders/${id}/${restaurantId}`,
+        `/api/restaurant/orders/${id}/${restaurantId}`,
       fetchByReference: (reference: string, restaurantId: string) =>
-        `${BASE_API.restaurant}/api/orders/reference/${reference}/${restaurantId}`,
+        `/api/restaurant/orders/reference/${reference}/${restaurantId}`,
       fetchAllByRestaurant: (restaurantId: string) =>
-        `${BASE_API.restaurant}/api/orders/restaurant/${restaurantId}`,
+        `/api/restaurant/orders/all?restaurantId=${restaurantId}`,
       fetchAllByCustomer: (customerId: string) =>
-        `${BASE_API.restaurant}/api/orders/customer/${customerId}`,
+        `/api/restaurant/orders/customer/${customerId}`,
       cancelOrder: (customerId: string, id: string) =>
-        `${BASE_API.restaurant}/api/orders/cancel/${id}/${customerId}`,
+        `/api/restaurant/orders/cancel/${id}/${customerId}`,
       updateStatus: (id: string, restaurantId: string) =>
-        `${BASE_API.restaurant}/api/orders/update/${restaurantId}/${id}`,
+        `/api/restaurant/orders/update/${restaurantId}/${id}`,
       filterByStatus: (restaurantId: string, status: string) =>
-        `${BASE_API.restaurant}/api/orders/filter/status/${restaurantId}/${status}`,
-      filterByDate: `${BASE_API.restaurant}/api/orders/filter/date`,
-      fetchAll: `${BASE_API.restaurant}/api/orders`,
+        `/api/restaurant/orders/filter/status/${restaurantId}/${status}`,
+      filterByDate: `/api/orders/filter/date`,
+      fetchAll: `/api/orders`,
     },
     menu: {
       fetchAll: (restaurantId: string) =>
-        `${BASE_API.restaurant}/api/menu/restaurant/${restaurantId}`,
+        `/api/restaurant/menu/all?restaurantId=${restaurantId}`,
       fetchById: (id: string, restaurantId: string) =>
-        `${BASE_API.restaurant}/api/menu/${restaurantId}/${id}`,
-      create: `${BASE_API.restaurant}/api/menu/`,
-      update: (id: string) => `${BASE_API.restaurant}/api/menu/${id}`,
+        `/api/menu/${restaurantId}/${id}`,
+      create: (restaurantId: string) =>
+        `/api/restaurant/menu/create?restaurantId=${restaurantId}`,
+      update: (id: string) => `/api/menu/${id}`,
       search: (restaurantId: string, query: string) =>
-        `${
-          BASE_API.restaurant
-        }/api/menu/search/${restaurantId}/${encodeURIComponent(query)}`,
+        `/api/menu/search/${restaurantId}/${encodeURIComponent(query)}`,
       filterByStatus: (restaurantId: string, status: string) =>
-        `${BASE_API.restaurant}/api/menu/filter/status/${restaurantId}/${status}`,
+        `/api/menu/filter/status/${restaurantId}/${status}`,
       filterByStockStatus: (restaurantId: string, status: string) =>
-        `${BASE_API.restaurant}/api/menu/filter/stock/${restaurantId}/${status}`,
+        `/api/menu/filter/stock/${restaurantId}/${status}`,
       filterByCategory: (restaurantId: string, category: string) =>
-        `${BASE_API.restaurant}/api/menu/filter/category/${restaurantId}/${category}`,
+        `/api/menu/filter/category/${restaurantId}/${category}`,
       updateStatus: (id: string, restaurantId: string, status: string) =>
-        `${BASE_API.restaurant}/api/menu/status/${restaurantId}/${id}/${status}`,
+        `/api/menu/status/${restaurantId}/${id}/${status}`,
       updateStockStatus: (id: string, restaurantId: string, status: number) =>
-        `${BASE_API.restaurant}/api/menu/stock/${restaurantId}/${id}/${status}`,
+        `/api/menu/stock/${restaurantId}/${id}/${status}`,
       delete: (id: string, restaurantId: string) =>
-        `${BASE_API.restaurant}/api/menu/${restaurantId}/${id}`,
+        `/api/menu/${restaurantId}/${id}`,
     },
     qr: {
-      generate: `${BASE_API.restaurant}/api/qr/create/`,
-      update: (restaurantId: string) =>
-        `${BASE_API.restaurant}/api/qr/update/${restaurantId}`,
+      generate: `/api/qr/create/`,
+      update: (restaurantId: string) => `/api/qr/update/${restaurantId}`,
       delete: (restaurantId: string, id: string) =>
-        `${BASE_API.restaurant}/api/qr/delete/${restaurantId}/${id}`,
+        `/api/qr/delete/${restaurantId}/${id}`,
     },
   },
 };

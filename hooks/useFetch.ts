@@ -1,50 +1,43 @@
-import { useApiService } from "@/context/ApiServiceContext";
 import { useEffect, useState } from "react";
 
 export function useFetch<T>(endpoint: string, initialValue: T) {
-  const api = useApiService();
   const [data, setData] = useState<T>(initialValue);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  // ✅ Ensure endpoint always goes through Next.js API proxy
+  const resolvedEndpoint = endpoint.startsWith("/api/")
+    ? endpoint
+    : `/api${endpoint}`;
 
   async function fetchData() {
     setError(null);
     setLoading(true);
     try {
-      const res = await api.get<T>(endpoint);
-      if (res.data) {
-        setData(res.data);
+      const res = await fetch(resolvedEndpoint, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+
+      const json: BaseResponse<T> = await res.json();
+
+      if (res.ok && json.status === "success") {
+        setData(json.data ?? initialValue);
+      } else {
+        setError(json.message || "Failed to fetch data");
       }
-    } catch (error: any) {
-      setError(error);
+    } catch (err: any) {
+      setError(err.message || "Network error");
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    let isMounted = true;
-    const init = async () => {
-      setError(null);
-      setLoading(true);
-      try {
-        const res = await api.get<T>(endpoint);
-        if (res.data && isMounted) {
-          setData(res.data);
-        }
-      } catch (error: any) {
-        if (isMounted) setError(error);
-      } finally {
-        if (isMounted) setLoading(false);
-      }
-    };
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resolvedEndpoint]);
 
-    init();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [endpoint]);
-
-  return { loading, data, refetch: fetchData, error };
+  return { data, loading, error, refetch: fetchData };
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 function ToggleTheme() {
-  return <div>Theme</div>;
+  return <div></div>;
 }
 
 export default ToggleTheme;

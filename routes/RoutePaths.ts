@@ -18,7 +18,7 @@ export const RESTAURANT_MANAGEMENT_ROUTES = {
   ORDERS: "/restaurant/management/orders",
   MENU_MANAGEMENT: "/restaurant/management/menu-management",
   REPORTS: "/restaurant/management/reports-and-analytics",
-  QR_CODE: "/restaurant/management/qr_code",
+  QR_CODE: "/restaurant/management/qr-code",
   SETTINGS: "/restaurant/management/settings",
   LOGOUT: "/restaurant/management/logout",
 };

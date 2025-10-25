@@ -60,6 +60,17 @@
   margin-top: 2rem;
   cursor: pointer;
 }
+.modal .form .right {
+  max-height: 80vh;
+  overflow: auto;
+}
+.modal .form .right::-webkit-scrollbar {
+  width: 0.4rem;
+}
+.modal .form .right::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 1rem;
+}
 .modal .form .right .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -70,4 +81,8 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem 0;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  background: #fff;
 }/*# sourceMappingURL=index.module.css.map */

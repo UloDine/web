@@ -5,9 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import styles from "./styles/index.module.css";
+import { capitalizeWord } from "@/utils/helpers";
+import { useProfile } from "@/context/ProfileContext";
 
 function RestaurantSidebar() {
   const pathname = usePathname();
+  const { restaurant } = useProfile();
+  if (!restaurant) return null;
   const menu = [
     {
       icon: RestaurantIcons.overview,
@@ -51,8 +55,8 @@ function RestaurantSidebar() {
       <div className={styles.side_bar_header}>
         {RestaurantIcons.profilePlaceholder}
         <div className={styles.side_bar_header_right}>
-          <strong>{"businessName"}</strong>
-          <small>{"Free"}</small>
+          <strong>{restaurant.business_name}</strong>
+          <small>{capitalizeWord(restaurant.business_plan)}</small>
         </div>
       </div>
       <ul>

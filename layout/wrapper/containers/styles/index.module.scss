@@ -57,3 +57,161 @@
     font-weight: 600;
   }
 }
+
+// .container {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   min-height: 320px;
+//   padding: 3rem 1.25rem;
+//   width: 100%;
+
+//   // subtle decorative background: soft pattern + gradient
+//   background-image:
+//     radial-gradient(circle at 10% 20%, rgba(0,168,134,0.04) 0, transparent 20%),
+//     radial-gradient(circle at 80% 80%, rgba(0,168,134,0.03) 0, transparent 18%),
+//     linear-gradient(180deg, #ffffff 0%, #fbfffb 100%);
+// }
+
+// /* light repeating pattern across the background */
+// .container::before {
+//   content: "";
+//   position: absolute;
+//   inset: 0;
+//   background-image: repeating-linear-gradient(
+//     45deg,
+//     rgba(0,0,0,0.02) 0 1px,
+//     transparent 1px 12px
+//   );
+//   pointer-events: none;
+//   mix-blend-mode: overlay;
+//   opacity: 0.6;
+// }
+
+// /* container for the content with card-like feel */
+// .artboard {
+//   position: relative;
+//   z-index: 2;
+//   text-align: center;
+//   max-width: 760px;
+//   width: 100%;
+//   padding: 2.2rem;
+//   border-radius: 12px;
+//   backdrop-filter: blur(4px);
+//   box-shadow: 0 8px 28px rgba(7, 12, 10, 0.06);
+//   background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.72));
+//   border: 1px solid rgba(0,0,0,0.03);
+//   transition: transform 220ms ease, box-shadow 220ms ease;
+//   animation: floatUp 420ms ease both;
+// }
+
+// @keyframes floatUp {
+//   from {
+//     transform: translateY(8px);
+//     opacity: 0;
+//   }
+//   to {
+//     transform: translateY(0);
+//     opacity: 1;
+//   }
+// }
+
+// /* icon */
+// .iconWrapper {
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   width: 96px;
+//   height: 96px;
+//   margin: 0 auto 1.1rem auto;
+//   border-radius: 16px;
+//   background: linear-gradient(180deg, #f2fff7, #ffffff);
+//   box-shadow: 0 6px 18px rgba(0,168,134,0.06);
+//   transition: transform 260ms ease;
+// }
+
+// .iconWrapper svg {
+//   display: block;
+//   width: 72px;
+//   height: 72px;
+// }
+
+// /* title & subtitle */
+// .title {
+//   margin: 0;
+//   margin-top: 6px;
+//   font-size: 1.5rem;
+//   font-weight: 700;
+//   color: #06221b;
+//   letter-spacing: -0.01em;
+// }
+
+// .subtitle {
+//   margin: 0.6rem 0 1.3rem;
+//   color: #41534d;
+//   font-size: 0.98rem;
+//   line-height: 1.4;
+//   max-width: 64ch;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
+
+// /* action button */
+// .actionBtn {
+//   display: inline-flex;
+//   align-items: center;
+//   gap: 0.5rem;
+//   background: linear-gradient(180deg, #00b38a, #008f67);
+//   color: #fff;
+//   border: none;
+//   padding: 0.65rem 1.05rem;
+//   border-radius: 10px;
+//   font-weight: 600;
+//   cursor: pointer;
+//   box-shadow: 0 8px 20px rgba(0, 163, 136, 0.14);
+//   transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms;
+//   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+// }
+
+// .actionBtn:hover {
+//   transform: translateY(-3px);
+//   box-shadow: 0 12px 28px rgba(0, 163, 136, 0.18);
+// }
+
+// .actionBtn:active {
+//   transform: translateY(-1px) scale(0.997);
+// }
+
+// /* compact variant for tighter spaces */
+// .compact .artboard {
+//   padding: 1rem;
+// }
+
+// .compact .iconWrapper {
+//   width: 64px;
+//   height: 64px;
+// }
+
+// .compact .iconWrapper svg {
+//   width: 48px;
+//   height: 48px;
+// }
+
+// .compact .title {
+//   font-size: 1.125rem;
+// }
+
+// .compact .subtitle {
+//   font-size: 0.9rem;
+//   max-width: 44ch;
+// }
+
+// /* responsiveness */
+// @media (max-width: 640px) {
+//   .artboard {
+//     padding: 1.4rem;
+//   }
+//   .title {
+//     font-size: 1.25rem;
+//   }
+// }

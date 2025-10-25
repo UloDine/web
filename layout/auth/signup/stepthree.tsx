@@ -5,6 +5,7 @@ import styles from "@/styles/layout/Index.module.css";
 import { apiRoutes } from "@/lib/apiRoutes";
 import { useAlert } from "@/context/alert/AlertContext";
 import { useAuth } from "@/context/AuthContext";
+import { isStrongPassword } from "@/utils/helpers";
 
 function StepThree() {
   const alert = useAlert();
@@ -123,6 +124,10 @@ function StepThree() {
               label="Password"
               placeholder="Choose a strong alphanumeric password"
               strict
+              errorMessage={
+                !isStrongPassword(auth.password) ? "Password is too weak" : ""
+              }
+              invalid={!isStrongPassword(auth.password)}
             />
           </div>
           <div className={styles.input}>
@@ -135,8 +140,10 @@ function StepThree() {
               label="Retype your password"
               placeholder="Choose a strong alphanumeric password"
               strict
-              // errorMessage={errMessage}
-              // invalid={invalid}
+              errorMessage={
+                !isStrongPassword(auth.password) ? "Password is too weak" : ""
+              }
+              invalid={!isStrongPassword(auth.retypedpassword)}
             />
           </div>
         </div>

@@ -10,6 +10,7 @@ function UloDIneButton({
   disabled = false,
   loading,
   labelColor,
+  icon,
 }: Button) {
   return (
     <button
@@ -20,7 +21,13 @@ function UloDIneButton({
       style={style}
       onClick={onClick}
     >
-      {loading ? <span></span> : label}
+      {loading ? (
+        <span></span>
+      ) : (
+        [label, icon].map((item, index) =>
+          item ? <div key={index}>{item}</div> : null
+        )
+      )}
     </button>
   );
 }
