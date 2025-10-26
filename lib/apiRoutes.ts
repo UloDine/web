@@ -62,6 +62,7 @@ export const apiRoutes = {
         `/api/menu/${restaurantId}/${id}`,
     },
     qr: {
+      fetchOverview: (id: string) => `/api/restaurant/qr?restaurantId=${id}`,
       generate: `/api/qr/create/`,
       update: (restaurantId: string) => `/api/qr/update/${restaurantId}`,
       delete: (restaurantId: string, id: string) =>

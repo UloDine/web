@@ -129,8 +129,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   function logout() {
     try {
       localStorage.removeItem("user");
+      addAlert("success", "Logged out successfully");
     } finally {
-      router.push(AUTH_ROUTES.RES_LOGIN);
+      router.push(AUTH_ROUTES.RES_LOGOUT);
     }
   }
 

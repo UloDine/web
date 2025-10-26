@@ -213,3 +213,11 @@ interface Pagination {
   hasNextPage: boolean;
   hasPrevPage: boolean;
 }
+
+interface QRResponse {
+  qr_code: string;
+  restaurant_url: string;
+  business_name: string;
+  pdfPath: string;
+  imgPath: string;
+}

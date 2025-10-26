@@ -6,8 +6,10 @@ type buttonColor =
   | "transparent"
   | "red"
   | "white";
+
+  type buttonType = "primary"| "main" | "outline" | "secondary";
 interface Button {
-  type: string;
+  type: buttonType;
   label: string;
   onClick: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   color: buttonColor;

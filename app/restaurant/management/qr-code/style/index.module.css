@@ -52,6 +52,7 @@
 .qr_code .bottom img {
   height: 100%;
   display: block;
+  width: 40rem;
 }
 .qr_code .bottom .overlay {
   position: absolute;

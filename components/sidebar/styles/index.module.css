@@ -27,6 +27,7 @@
 }
 .side_bar ul {
   margin: 2rem 0;
+  flex: 1;
 }
 .side_bar ul li {
   list-style: none;
@@ -47,4 +48,16 @@
 .side_bar ul li .active {
   background: #f5f5f5;
   color: #00bb95;
+}
+.side_bar button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: #6b6a6a;
+}
+.side_bar button:hover {
+  background: #f5f5f5;
 }/*# sourceMappingURL=index.module.css.map */

@@ -11,6 +11,7 @@ export const PAGE_ROUTES = {
 export const AUTH_ROUTES = {
   RES_LOGIN: "/restaurant/login",
   RES_SIGNUP: "/restaurant/signup",
+  RES_LOGOUT: "/logout",
 };
 
 export const RESTAURANT_MANAGEMENT_ROUTES = {

@@ -6,78 +6,127 @@ import Image from "next/image";
 import UloDIneButton from "@/components/button/UloDIneButton";
 import UloDineCopyText from "@/components/button/UloDineCopyText";
 import { GeneralIcons } from "@/icons/general/icons";
+// import { useRouter } from "next/router";
+import { useProfile } from "@/context/ProfileContext";
+import { useFetch } from "@/hooks/useFetch";
+import { apiRoutes } from "@/lib/apiRoutes";
+import InPageLoader from "@/components/loaders/InPageLoader";
 
 function QrManagement() {
-  return (
-    <section className={styles.qr_code}>
-      <PageTitleBar title="QR Code" />
-      <p>
-        Let your customers easily access your menu and place orders by scanning
-        this QR code.
-      </p>
-      <div className={styles.top}>
-        <Image
-          src={"/file.svg"}
-          width={100}
-          height={100}
-          alt=""
-          quality={100}
-        />
-        <div className={styles.right}>
-          <div className={styles.inner_left}>
-            <p>Restaurant name: Mama Nkechi’s Kitchen</p>
-            <p>ID: #0243</p>
-            <UloDineCopyText
-              text={"Url: https://ulodine.com/restaurants/0243"}
-              textToCopy="https://ulodine.com/restaurants/0243"
-            />
-          </div>
-          <div className={styles.inner_right}>
-            <small>Download as:</small>
-            <div className={styles.buttons}>
-              <UloDIneButton
-                color="green"
-                label="PDF"
-                onClick={() => {}}
-                type="secondary"
+  // const router = useRouter();
+  const { restaurant } = useProfile();
+  const id = restaurant?.id || "";
+  const { data, loading } = useFetch<QRResponse | null>(
+    apiRoutes.restaurant.qr.fetchOverview(id),
+    null
+  );
+
+  if (loading || !data) {
+    return <InPageLoader text="Fetching your QR data..." />;
+  } else {
+    async function downloadAsset(url: string, type: "pdf" | "png") {
+      try {
+        const base = url.startsWith("http")
+          ? url
+          : process.env.NEXT_PUBLIC_API_URL + url;
+
+        const res = await fetch(base, { credentials: "include" });
+        if (!res.ok) throw new Error(`Failed to download: ${res.status}`);
+
+        const blob = await res.blob();
+        const ext = type === "pdf" ? "pdf" : "png";
+
+        // Create a filename from restaurant business name if available
+        const nameBase = (data?.business_name || "ulo-dine-qr")
+          .replace(/[^a-z0-9-_]/gi, "-")
+          .toLowerCase();
+        const filename = `${nameBase}.${ext}`;
+
+        const href = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = href;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        // release memory
+        URL.revokeObjectURL(href);
+      } catch (error: any) {
+        // basic fallback alert — app has toast/alert contexts if you want richer UX
+        alert(error?.message || "Failed to download asset");
+      }
+    }
+    return (
+      <section className={styles.qr_code}>
+        <PageTitleBar title="QR Code" />
+        <p>
+          Let your customers easily access your menu and place orders by
+          scanning this QR code.
+        </p>
+        <div className={styles.top}>
+          <Image
+            src={process.env.NEXT_PUBLIC_API_URL + data.qr_code}
+            width={100}
+            height={100}
+            alt={data.business_name + " QR Code"}
+            quality={100}
+          />
+          <div className={styles.right}>
+            <div className={styles.inner_left}>
+              <p>Restaurant name: {data.business_name}</p>
+              {/* <p>ID: #0243</p> */}
+              <UloDineCopyText
+                text={`Url: ${data.restaurant_url}`}
+                textToCopy={data.restaurant_url}
               />
-              <UloDIneButton
-                color="green"
-                label="PNG"
-                onClick={() => {}}
-                type="secondary"
-              />
+            </div>
+            <div className={styles.inner_right}>
+              <small>Download as:</small>
+              <div className={styles.buttons}>
+                <UloDIneButton
+                  color="green"
+                  label="PDF"
+                  onClick={() => downloadAsset(data.pdfPath, "pdf")}
+                  type="secondary"
+                />
+                <UloDIneButton
+                  color="green"
+                  label="PNG"
+                  onClick={() => downloadAsset(data.imgPath, "png")}
+                  type="secondary"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className={styles.bottom}>
-        <Image
-          src={"/file.svg"}
-          width={100}
-          height={100}
-          alt=""
-          quality={100}
-        />
-        <div className={styles.overlay}>
-          <div className={styles.wrapper}>
-            <p>
-              <strong>Tip:</strong> Display this QR code in your restaurant to
-              allow customers to scan and access your menu instantly.
-            </p>
-          </div>
-          <UloDIneButton
-            color="green"
-            label="Download poster"
-            onClick={() => {}}
-            type="primary"
-            icon={GeneralIcons.download_white}
-            style={{ padding: "2rem" }}
+        <div className={styles.bottom}>
+          <Image
+            src={process.env.NEXT_PUBLIC_API_URL + data.imgPath}
+            width={100}
+            height={100}
+            alt=""
+            quality={100}
           />
+          <div className={styles.overlay}>
+            <div className={styles.wrapper}>
+              <p>
+                <strong>Tip:</strong> Display this QR code in your restaurant to
+                allow customers to scan and access your menu instantly.
+              </p>
+            </div>
+            <UloDIneButton
+              color="green"
+              label="Download poster"
+              onClick={() => downloadAsset(data.imgPath, "png")}
+              type="primary"
+              icon={GeneralIcons.download_white}
+              style={{ padding: "2rem" }}
+            />
+          </div>
         </div>
-      </div>
-    </section>
-  );
+      </section>
+    );
+  }
 }
 
 export default QrManagement;

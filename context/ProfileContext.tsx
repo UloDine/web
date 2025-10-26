@@ -1,7 +1,12 @@
 "use client";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import { useRouter } from "next/navigation";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useLayoutEffect,
+  useState,
+} from "react";
 
 export const ProfileContext = createContext<Profile | null>(null);
 
@@ -16,7 +21,7 @@ function ProfileProvider({ children }: { children: React.ReactNode }) {
     setRestaurant(payload.restaurant);
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const storedData = localStorage.getItem("user");
     if (!storedData) {
       router.replace(AUTH_ROUTES.RES_LOGIN);

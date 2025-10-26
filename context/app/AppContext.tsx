@@ -17,6 +17,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     <AppContext.Provider value={{ windowSize, isOnline, theme, type, setType }}>
       {/* {!isOnline && <OfflineAlert />} */}
       {children}
+      
     </AppContext.Provider>
   );
 }

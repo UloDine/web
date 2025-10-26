@@ -2,14 +2,14 @@ import React from "react";
 import styles from "@/styles/components/button/Button.module.css";
 
 function UloDIneButton({
-  type,
+  type = "main",
   color,
   label,
   onClick,
   style,
   disabled = false,
   loading,
-  labelColor,
+  labelColor = "white",
   icon,
 }: Button) {
   return (

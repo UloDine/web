@@ -7,10 +7,14 @@ import React from "react";
 import styles from "./styles/index.module.css";
 import { capitalizeWord } from "@/utils/helpers";
 import { useProfile } from "@/context/ProfileContext";
+import { useAuth } from "@/context/AuthContext";
+import UloDineModal from "../modal/UloDineModal";
 
 function RestaurantSidebar() {
   const pathname = usePathname();
   const { restaurant } = useProfile();
+  const { logout } = useAuth();
+  const [isOpen, setIsOpen] = React.useState(false);
   if (!restaurant) return null;
   const menu = [
     {
@@ -50,6 +54,7 @@ function RestaurantSidebar() {
       path: RESTAURANT_MANAGEMENT_ROUTES.SETTINGS,
     },
   ];
+
   return (
     <nav className={styles.side_bar}>
       <div className={styles.side_bar_header}>
@@ -71,6 +76,22 @@ function RestaurantSidebar() {
           </li>
         ))}
       </ul>
+      <button className={styles.logout} onClick={() => setIsOpen(true)}>
+        {RestaurantIcons.logout} <span>Log Out</span>
+      </button>
+      <UloDineModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        title="Log out"
+        actionButtonText="Yes, Logout"
+        cancelButtonText="Cancel"
+        onAction={logout}
+        showActions={true}
+      >
+        <div>
+          <p>Are you sure you want to logout?</p>
+        </div>
+      </UloDineModal>
     </nav>
   );
 }
