@@ -10,9 +10,13 @@ export async function GET(req: NextRequest) {
       status: 400,
     });
 
+  const queryEntries = Array.from(searchParams.entries()).filter(
+    ([key]) => key !== "restaurantId"
+  );
+
   // Construct final API path
   const path = `/api/menu/restaurant/${restaurantId}${
-    queryString ? `?${queryString}` : ""
+    queryEntries ? `?${queryEntries}` : ""
   }`;
   return proxyRequest(req, path);
 }

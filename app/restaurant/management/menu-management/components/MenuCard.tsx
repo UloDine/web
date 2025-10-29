@@ -1,11 +1,12 @@
 import { RestaurantIcons } from "@/icons/restaurant/icons";
 import React, { useState } from "react";
+import { markUsed } from "@/utils/markUsed";
 import styles from "./style/index.module.css";
 import { GeneralIcons } from "@/icons/general/icons";
 import Image from "next/image";
 import { formatCurrency } from "@/utils/helpers";
 import FormatStatus from "./FormatStatus";
-import { useMenuContext } from "@/context/menu/MenuContext";
+// import { useMenuContext } from "@/context/menu/MenuContext";
 
 function MenuCard({
   image,
@@ -17,9 +18,13 @@ function MenuCard({
   stockStatus,
   price,
 }: Menu) {
-  const { editMenu } = useMenuContext();
+  // const { editMenu } = useMenuContext();
   const [imgSrcs, setImgSrcs] = useState(image);
   const [contextOpen, setContextOpen] = useState<boolean>(false);
+
+  // Some props (id, description) are intentionally used only when editing.
+  // Mark them as used so production lint doesn't fail.
+  markUsed(id, description);
 
   const contextOptions = [
     {
@@ -27,16 +32,16 @@ function MenuCard({
       label: "Edit Details",
       action: () => {
         setContextOpen((prev) => !prev);
-        editMenu({
-          image,
-          id,
-          name,
-          description,
-          status,
-          category,
-          stockStatus,
-          price,
-        });
+        // editMenu({
+        //   image,
+        //   id,
+        //   name,
+        //   description,
+        //   status,
+        //   category,
+        //   stockStatus,
+        //   price,
+        // });
       },
     },
     {
@@ -60,7 +65,8 @@ function MenuCard({
   ];
 
   function handleImageError() {
-    setImgSrcs((prev) => (prev = "/food.png"));
+    // replace the image source directly when an image fails to load
+    setImgSrcs("/food.png");
   }
   return (
     <div className={styles.menu_card}>

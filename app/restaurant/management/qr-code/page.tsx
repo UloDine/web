@@ -51,9 +51,10 @@ function QrManagement() {
         a.remove();
         // release memory
         URL.revokeObjectURL(href);
-      } catch (error: any) {
+      } catch (error: unknown) {
         // basic fallback alert — app has toast/alert contexts if you want richer UX
-        alert(error?.message || "Failed to download asset");
+        if (error instanceof Error) alert(error.message);
+        else alert(String(error) || "Failed to download asset");
       }
     }
     return (

@@ -69,7 +69,9 @@ export default function UloDineHybridEditor({
     <div className={styles.editor}>
       <div className={styles.editor_header}>
         {actions.map((btn, i) => (
-          <button onClick={btn.action}>{btn.icon}</button>
+          <button key={i} onClick={btn.action}>
+            {btn.icon}
+          </button>
         ))}
       </div>
 

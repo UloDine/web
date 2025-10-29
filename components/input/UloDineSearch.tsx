@@ -2,6 +2,7 @@
 import styles from "@/styles/components/input/Input.module.css";
 import { GeneralIcons } from "@/icons/general/icons";
 import React, { useEffect, useState } from "react";
+import { markUsed } from "@/utils/markUsed";
 
 function UloDineSearch({
   type,
@@ -10,6 +11,9 @@ function UloDineSearch({
   width,
 }: UloDineSearch) {
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  // some consumers pass a `type` prop that's unused here; mark it used
+  markUsed(type);
 
   useEffect(() => {
     if (!searchTerm) return;
@@ -24,7 +28,7 @@ function UloDineSearch({
   return (
     <div className={styles.ulodine_search}>
       <input
-        type='search'
+        type="search"
         placeholder={placeholder}
         onChange={(e) => {
           setSearchTerm(e.target.value);

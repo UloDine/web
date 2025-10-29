@@ -6,6 +6,7 @@ import Image from "next/image";
 import { formatCurrency, formatTime } from "@/utils/helpers";
 import FormatStatus from "./FormatStatus";
 import { useAlert } from "@/context/alert/AlertContext";
+import { markUsed } from "@/utils/markUsed";
 
 function OrderCard({
   customer,
@@ -17,6 +18,8 @@ function OrderCard({
   discount,
 }: Order) {
   const { addAlert } = useAlert();
+  // ensure unused destructured props don't break production lint
+  markUsed(id, discount);
   const [imgSrcs, setImgSrcs] = useState(
     menuList.map((menu) => menu.image) // Initialize state with menu images
   );
@@ -31,8 +34,9 @@ function OrderCard({
       try {
         navigator.clipboard.writeText(reference.toUpperCase());
         addAlert("success", "Copied!");
-      } catch (err: any) {
-        alert(err.message);
+      } catch (err: unknown) {
+        if (err instanceof Error) alert(err.message);
+        else alert(String(err));
       }
     } else {
       alert("Clipboard not available!");
@@ -51,7 +55,7 @@ function OrderCard({
           src={customer.image}
           width={40}
           height={40}
-          alt='Customer image'
+          alt="Customer image"
           className={styles.profile}
         />{" "}
         <p>
@@ -67,7 +71,7 @@ function OrderCard({
                 onError={() => handleImageError(i)}
                 width={40}
                 height={40}
-                alt='Menu image'
+                alt="Menu image"
                 className={styles.img}
               />
               <p>

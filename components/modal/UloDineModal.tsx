@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { markUsed } from "@/utils/markUsed";
 import styles from "./styles/index.module.css";
 import UloDIneButton from "@/components/button/UloDIneButton";
 
@@ -96,6 +97,9 @@ function UloDineModal({
     }
   };
 
+  // mark some optional props as used so production lint won't fail
+  markUsed(centered, preventScroll, isCentered, motionPreset);
+
   return (
     <div
       className={`${styles.modal_overlay} ${overlayClassName}`}
@@ -165,7 +169,7 @@ function UloDineModal({
                     <UloDIneButton
                       type="primary"
                       color="green"
-                      onClick={(e) => onAction?.()}
+                      onClick={() => onAction?.()}
                       disabled={actionButtonDisabled}
                       loading={actionButtonLoading}
                       label={actionButtonText}

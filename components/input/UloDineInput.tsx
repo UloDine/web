@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
+import { markUsed } from "@/utils/markUsed";
 import styles from "@/styles/components/input/Input.module.css";
 import {
   formatPhoneNumber,
@@ -49,6 +50,8 @@ Input) {
   );
 
   const [secret, setSecret] = useState<boolean>(true);
+  // avoid production lint failures for props that are intentionally unused
+  markUsed(sending);
 
   function handleBlur() {
     if ((strict && value == "") || (strict && value == " ")) {

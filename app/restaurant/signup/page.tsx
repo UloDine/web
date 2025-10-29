@@ -114,9 +114,7 @@ function Page() {
           <UloDIneButton
             color="transparent"
             label="Prev"
-            onClick={(e) => {
-              setStep(prev);
-            }}
+            onClick={() => setStep(prev)}
             type="minor"
             disabled={step <= 1}
           />

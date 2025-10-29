@@ -7,7 +7,7 @@ type buttonColor =
   | "red"
   | "white";
 
-  type buttonType = "primary"| "main" | "outline" | "secondary";
+type buttonType = "primary" | "main" | "outline" | "secondary" | "minor";
 interface Button {
   type: buttonType;
   label: string;

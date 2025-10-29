@@ -14,7 +14,7 @@ export async function proxyRequest<T>(
 
     const contentType = req.headers.get("content-type") || "";
 
-    let data: any;
+    let data: unknown;
 
     if (method !== "GET" && method !== "HEAD") {
       // Detect multipart/form-data or JSON
@@ -114,16 +114,30 @@ export async function proxyRequest<T>(
     }
 
     return res;
-  } catch (error: any) {
-    console.error("Proxy error:", error.response?.data || error.message);
+  } catch (error: unknown) {
+    // Normalize the error so we don't use `any`
+    let message = "Internal Server Error";
+    let statusCode = 500;
+
+    if (error instanceof Error) {
+      message = error.message;
+    } else if (error && typeof error === "object" && "response" in error) {
+      // best-effort when axios error object is present
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const e = error as any;
+      message = e.response?.data || e.message || message;
+      statusCode = e.response?.status || statusCode;
+    }
+
+    console.error("Proxy error:", message);
 
     return NextResponse.json<BaseResponse<T>>(
       {
-        message: error.message || "Internal Server Error",
+        message,
         status: "failed",
         data: null,
       },
-      { status: error.response?.status || 500 }
+      { status: statusCode }
     );
   }
 }

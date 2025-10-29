@@ -32,7 +32,13 @@ function UloDineEditor({
     };
   };
 
-  const restoreSelection = (selectionInfo: any) => {
+  const restoreSelection = (
+    selectionInfo: {
+      range?: Range;
+      startOffset?: number;
+      endOffset?: number;
+    } | null
+  ) => {
     if (!selectionInfo || !editorRef.current) return;
 
     const selection = window.getSelection();
@@ -49,11 +55,11 @@ function UloDineEditor({
     if (!textNode) return;
 
     const start = Math.min(
-      selectionInfo.startOffset,
+      selectionInfo.startOffset ?? 0,
       textNode.textContent?.length ?? 0
     );
     const end = Math.min(
-      selectionInfo.endOffset,
+      selectionInfo.endOffset ?? 0,
       textNode.textContent?.length ?? 0
     );
 

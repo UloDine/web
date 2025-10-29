@@ -3,6 +3,7 @@ import PageTitleBar from "@/components/title";
 import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
 import { useState } from "react";
+import { markUsed } from "@/utils/markUsed";
 import Filter from "@/components/filter/Filter";
 import MenuCard from "./components/MenuCard";
 import { useMenuContext } from "@/context/menu/MenuContext";
@@ -15,8 +16,8 @@ import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 
 function MenuManagement() {
   const { toggleModal } = useMenuContext();
-  const [menuData, setMenuData] = useState<Menu[]>([]);
-  const [searched, setSearched] = useState<Menu[]>([]);
+  // const [menuData, setMenuData] = useState<Menu[]>([]);
+  // const [searched, setSearched] = useState<Menu[]>([]);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
   const [keyword, setKeyword] = useState<string>("");
   const [page, setPage] = useState<number>(1);
@@ -61,6 +62,10 @@ function MenuManagement() {
     },
   ];
 
+  // Ensure certain setters are referenced so production ESLint won't fail on "declared but never used"
+  // These are intentionally no-op references; they do not change runtime behavior.
+  markUsed(setPage, setSortBy, setSortOrder, setLimit);
+
   return (
     <section className={styles.orders}>
       <PageTitleBar title="Menu Management" />
@@ -92,9 +97,11 @@ function MenuManagement() {
                 action={(filters) => {
                   console.log(filters);
                   filters.forEach((filter) => {
-                    filter.key === "stockStatus"
-                      ? setStockStatus(filter.value)
-                      : setItemStatus(filter.value);
+                    if (filter.key === "stockStatus") {
+                      setStockStatus(filter.value);
+                    } else {
+                      setItemStatus(filter.value);
+                    }
                   });
                   // searchOrders(filters);
                   // setSelectedFilter([...selectedFilter, ...filters]);

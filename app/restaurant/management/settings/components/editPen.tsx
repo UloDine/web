@@ -5,7 +5,8 @@ import styles from "../style/index.module.css";
 type editData = {
   value: string;
   loading: boolean;
-  response: any;
+  // response can be of any shape; prefer unknown instead of `any`
+  response: unknown;
 };
 
 function EditPen({

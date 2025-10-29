@@ -27,7 +27,12 @@ function Orders() {
   const filterObjects = [
     {
       title: "Filter by Status",
-      items: ["Pending", "In Progress", "Completed", "Canceled"],
+      items: [
+        { key: "status", value: "Pending" },
+        { key: "status", value: "In Progress" },
+        { key: "status", value: "Completed" },
+        { key: "status", value: "Canceled" },
+      ],
     },
   ];
   function searchOrders(keyword: string | string[]) {
@@ -85,8 +90,9 @@ function Orders() {
                 <Filter
                   filters={filterObjects}
                   action={(filters) => {
-                    searchOrders(filters);
-                    setSelectedFilter([...selectedFilter, ...filters]);
+                    const values = filters.map((f) => f.value);
+                    searchOrders(values);
+                    setSelectedFilter([...selectedFilter, ...values]);
                   }}
                   onClose={() => setOpenFilter((prev) => !prev)}
                   // selectedFilters={selectedFilter}

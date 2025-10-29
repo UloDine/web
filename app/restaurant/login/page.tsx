@@ -10,7 +10,7 @@ import UloDineInput from "@/components/input/UloDineInput";
 import { isStrongPassword } from "@/utils/helpers";
 import { useAuth } from "@/context/AuthContext";
 
-function page() {
+function Page() {
   const { businessLogin, setBusinessLogin, login, sending } = useAuth();
   const socials = [
     {
@@ -128,4 +128,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

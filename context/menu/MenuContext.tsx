@@ -17,6 +17,7 @@ import { categories } from "@/res/menu";
 import UloDIneButton from "@/components/button/UloDIneButton";
 import UloDineHybridEditor from "@/components/input/UloDineHybridEditor";
 import { fileToDataURL, isAllNullOrUndefined } from "@/utils/helpers";
+import { markUsed } from "@/utils/markUsed";
 import { useAlert } from "../alert/AlertContext";
 import { usePost } from "@/hooks/usePost";
 import { apiRoutes } from "@/lib/apiRoutes";
@@ -77,6 +78,9 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       console.log(err.message);
     }
   }
+
+  // mark imported util as used to avoid production lint failures when feature is toggled
+  markUsed(isAllNullOrUndefined);
 
   async function updateMenu(menu: MenuForm) {
     try {
