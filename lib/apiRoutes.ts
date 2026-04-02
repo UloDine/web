@@ -43,8 +43,7 @@ export const apiRoutes = {
         `/api/restaurant/menu/all?restaurantId=${restaurantId}`,
       fetchById: (id: string, restaurantId: string) =>
         `/api/menu/${restaurantId}/${id}`,
-      create: (restaurantId: string) =>
-        `/api/restaurant/menu/create?restaurantId=${restaurantId}`,
+      create: `/api/restaurant/menu/create`,
       update: (id: string) => `/api/menu/${id}`,
       search: (restaurantId: string, query: string) =>
         `/api/menu/search/${restaurantId}/${encodeURIComponent(query)}`,

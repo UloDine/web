@@ -41,10 +41,49 @@ interface Menu {
   price: number;
 }
 
+interface MenuData {
+  id: string;
+  item_name: string;
+  category: string;
+  restaurant_id: string;
+  price: string;
+  item_description: string;
+  prep_status: string;
+  stock_status: string;
+  discount: number;
+  menu_image: string;
+  date_created: string;
+  updated_at: string;
+}
+
 interface MenuContextProps {
+  // Modal controls
   toggleModal: () => void;
-  createMenu: (menu: MenuForm) => void;
-  updateMenu: (details: any) => void;
+  createMenu: () => Promise<void>;
+  updateMenu: (menu: MenuForm) => Promise<void>;
+
+  // Data and loading
+  data: ListData<MenuData> | null;
+  loading: boolean;
+  refetch: () => void;
+
+  // Filter states
+  keyword: string;
+  setKeyword: (keyword: string) => void;
+  page: number;
+  setPage: (page: number) => void;
+  sortBy: string;
+  setSortBy: (sortBy: string) => void;
+  sortOrder: "ASC" | "DESC";
+  setSortOrder: (order: "ASC" | "DESC") => void;
+  limit: number;
+  setLimit: (limit: number) => void;
+  stockStatus: string;
+  setStockStatus: (status: string) => void;
+  itemStatus: string;
+  setItemStatus: (status: string) => void;
+  openFilter: boolean;
+  setOpenFilter: (open: boolean) => void;
 }
 
 interface MenuForm {
@@ -57,4 +96,5 @@ interface MenuForm {
   stockStatus: string;
   price: string;
   discount: string;
+  restaurantId: string;
 }

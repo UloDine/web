@@ -3,45 +3,28 @@ import PageTitleBar from "@/components/title";
 import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
 import { useState } from "react";
-import { markUsed } from "@/utils/markUsed";
 import Filter from "@/components/filter/Filter";
 import MenuCard from "./components/MenuCard";
 import { useMenuContext } from "@/context/menu/MenuContext";
-import { useProfile } from "@/context/ProfileContext";
-import { useFetch } from "@/hooks/useFetch";
-import { apiRoutes } from "@/lib/apiRoutes";
 import InPageLoader from "@/components/loaders/InPageLoader";
-import { queryBuilder } from "@/utils/helpers";
 import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 
 function MenuManagement() {
-  const { toggleModal } = useMenuContext();
+  const {
+    data,
+    loading,
+    // refetch,
+    // keyword,
+    setKeyword,
+    // page,
+    // setPage,
+    setItemStatus,
+    setStockStatus,
+    toggleModal,
+  } = useMenuContext();
   // const [menuData, setMenuData] = useState<Menu[]>([]);
   // const [searched, setSearched] = useState<Menu[]>([]);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
-  const [keyword, setKeyword] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
-  const [sortBy, setSortBy] = useState<string>("date");
-  const [sortOrder, setSortOrder] = useState<"ASC" | "DESC">("ASC");
-  const [limit, setLimit] = useState<number>(20);
-  const [stockStatus, setStockStatus] = useState<string>("");
-  const [itemStatus, setItemStatus] = useState<string>("");
-
-  const { restaurant } = useProfile();
-  const id = restaurant?.id || "";
-  const { data, loading } = useFetch<ListData<Menu> | null>(
-    queryBuilder(apiRoutes.restaurant.menu.fetchAll(id), {
-      search: keyword,
-      // category: "Italian",
-      sortBy: sortBy,
-      sortOrder: sortOrder,
-      page: page,
-      limit: limit,
-      stockStatus: stockStatus,
-      itemStatus: itemStatus,
-    }),
-    null
-  );
   // const {pagination } = data;
   const filterObjects = [
     {
@@ -61,10 +44,6 @@ function MenuManagement() {
       ],
     },
   ];
-
-  // Ensure certain setters are referenced so production ESLint won't fail on "declared but never used"
-  // These are intentionally no-op references; they do not change runtime behavior.
-  markUsed(setPage, setSortBy, setSortOrder, setLimit);
 
   return (
     <section className={styles.orders}>

@@ -13,21 +13,34 @@ import Image from "next/image";
 import UloDineInput from "@/components/input/UloDineInput";
 import UloDineSelect from "@/components/input/UloDineSelect";
 import { categories } from "@/res/menu";
-// import UloDineEditor from "@/components/input/UloDineEditor";
 import UloDIneButton from "@/components/button/UloDIneButton";
 import UloDineHybridEditor from "@/components/input/UloDineHybridEditor";
 import { fileToDataURL, isAllNullOrUndefined } from "@/utils/helpers";
 import { markUsed } from "@/utils/markUsed";
 import { useAlert } from "../alert/AlertContext";
 import { usePost } from "@/hooks/usePost";
+import { useFetch } from "@/hooks/useFetch";
 import { apiRoutes } from "@/lib/apiRoutes";
 import { useProfile } from "../ProfileContext";
+import { queryBuilder } from "@/utils/helpers";
 
 const MenuContext = createContext<MenuContextProps | undefined>(undefined);
 
 export function MenuProvider({ children }: { children: ReactNode }) {
   const { addAlert } = useAlert();
   const { restaurant } = useProfile();
+
+  // Filter states
+  const [openFilter, setOpenFilter] = useState<boolean>(false);
+  const [keyword, setKeyword] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [sortBy, setSortBy] = useState<string>("date");
+  const [sortOrder, setSortOrder] = useState<"ASC" | "DESC">("ASC");
+  const [limit, setLimit] = useState<number>(20);
+  const [stockStatus, setStockStatus] = useState<string>("");
+  const [itemStatus, setItemStatus] = useState<string>("");
+
+  // Modal state
   const [open, setOpen] = useState<boolean>(false);
   const [form, setForm] = useState<MenuForm>({
     title: "Add New Menu Item",
@@ -39,17 +52,45 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     stockStatus: "Available",
     price: "",
     discount: "0",
+    restaurantId: restaurant?.id || "",
   });
   const [previewUrl, setPreviewUrl] = useState<string>("/placeholder.png");
   const skipImageEffectRef = useRef(false);
 
+  // Fetch menu data with filters
+  const id = restaurant?.id || "";
+  const { data, loading, refetch } = useFetch<ListData<MenuData> | null>(
+    queryBuilder(apiRoutes.restaurant.menu.fetchAll(id), {
+      search: keyword,
+      sortBy: sortBy,
+      sortOrder: sortOrder,
+      page: page,
+      limit: limit,
+      stockStatus: stockStatus,
+      itemStatus: itemStatus,
+    }),
+    null
+  );
+
   function toggleModal() {
-    setForm({ ...form });
+    setForm({
+      title: "Add New Menu Item",
+      image: null,
+      name: "",
+      description: "",
+      status: "Not Ready",
+      category: "African",
+      stockStatus: "Available",
+      price: "",
+      discount: "0",
+      restaurantId: restaurant?.id || "",
+    });
+    setPreviewUrl("/placeholder.png");
     setOpen((prev) => !prev);
   }
 
-  const { postData: postMenu, loading } = usePost<MenuForm>({
-    endpoint: apiRoutes.restaurant.menu.create(restaurant?.id as string),
+  const { postData: postMenu, loading: createLoading } = usePost<MenuForm>({
+    endpoint: apiRoutes.restaurant.menu.create,
     onError: (err) => {
       addAlert("error", err.message);
     },
@@ -57,6 +98,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       console.log(data);
       toggleModal();
       addAlert("success", "Menu item created successfully.");
+      refetch();
     },
   });
 
@@ -64,28 +106,30 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     try {
       const formData = new FormData();
       Object.entries(form).forEach(([key, value]) => {
-        if (key !== "image") formData.append(key, value ?? "");
+        if (key !== "image" && key !== "title") {
+          formData.append(key, value ?? "");
+        }
       });
 
-      // append image if available
       if (form.image) {
         formData.append("image", form.image);
       }
 
-      await postMenu(formData as unknown as MenuForm);
+      await postMenu(formData as any);
     } catch (err: any) {
       addAlert("error", "Failed to create menu item.");
       console.log(err.message);
     }
   }
 
-  // mark imported util as used to avoid production lint failures when feature is toggled
   markUsed(isAllNullOrUndefined);
 
   async function updateMenu(menu: MenuForm) {
     try {
       setForm({ ...menu });
       toggleModal();
+      // TODO: Implement actual update API call here
+      // After successful update, call refetch()
     } catch (err: any) {
       addAlert("error", "Failed to update menu item.");
       console.log(err.message);
@@ -104,7 +148,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       reader.onload = () => {
         const dataUrl = reader.result as string;
         skipImageEffectRef.current = true;
-        setPreviewUrl(dataUrl); // ✅ Let React handle re-render
+        setPreviewUrl(dataUrl);
         setForm((prev) => ({ ...prev, image: file }));
       };
       reader.readAsDataURL(file);
@@ -114,8 +158,8 @@ export function MenuProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (skipImageEffectRef.current) {
-      skipImageEffectRef.current = false; // reset for next time
-      return; // 🚫 stop effect from overwriting preview
+      skipImageEffectRef.current = false;
+      return;
     }
     const loadImage = async () => {
       if (form?.image instanceof File) {
@@ -130,7 +174,32 @@ export function MenuProvider({ children }: { children: ReactNode }) {
   }, [form?.image]);
 
   return (
-    <MenuContext.Provider value={{ toggleModal, createMenu, updateMenu }}>
+    <MenuContext.Provider
+      value={{
+        toggleModal,
+        createMenu,
+        updateMenu,
+        data,
+        loading: loading || createLoading,
+        refetch,
+        keyword,
+        setKeyword,
+        page,
+        setPage,
+        sortBy,
+        setSortBy,
+        sortOrder,
+        setSortOrder,
+        limit,
+        setLimit,
+        stockStatus,
+        setStockStatus,
+        itemStatus,
+        setItemStatus,
+        openFilter,
+        setOpenFilter,
+      }}
+    >
       {children}
       {open && (
         <section className={styles.modal}>
@@ -257,13 +326,6 @@ export function MenuProvider({ children }: { children: ReactNode }) {
                     </div>
                   </div>
                 </div>
-                {/* <UloDineEditor
-                  placeholder="Write a short description about this menu item..."
-                  value={menuData.description ?? ""}
-                  onChange={(value) => {
-                    setMenuData((prev) => ({ ...prev, description: value }));
-                  }}
-                /> */}
                 <UloDineHybridEditor
                   markdown={form.description}
                   onChange={(val) =>
@@ -278,10 +340,10 @@ export function MenuProvider({ children }: { children: ReactNode }) {
                     label="Save"
                     onClick={() => {
                       console.log(form);
+                      createMenu();
                     }}
                     style={{ width: 70 }}
-                    // disabled={!isAllNullOrUndefined(form)}
-                    loading={loading}
+                    loading={createLoading}
                   />
                   <UloDIneButton
                     type="primary"
@@ -306,7 +368,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
 export function useMenuContext() {
   const context = useContext(MenuContext);
   if (!context) {
-    throw new Error("useMenuContext must be used within an AlertProvider");
+    throw new Error("useMenuContext must be used within a MenuProvider");
   }
   return context;
 }

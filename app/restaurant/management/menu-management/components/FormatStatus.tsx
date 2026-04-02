@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./style/index.module.css";
 
 interface FormatMenuStatus {
-  status: "Not Ready" | "Ready";
-  stockStatus: "Available" | "Out of Stock";
+  status: string;
+  stockStatus: string;
 }
 
 function FormatStatus({ status, stockStatus }: FormatMenuStatus) {
@@ -13,8 +13,12 @@ function FormatStatus({ status, stockStatus }: FormatMenuStatus) {
       key={index}
       className={`${styles.status} ${
         index == 0
-          ? styles[status.toLowerCase().replace(" ", "")]
-          : styles[stockStatus.toLowerCase().replaceAll(" ", "")]
+          ? styles[status !== null ? status.toLowerCase().replace(" ", "") : ""]
+          : styles[
+              stockStatus !== null
+                ? stockStatus.toLowerCase().replaceAll(" ", "")
+                : ""
+            ]
       }`}
     >
       {item}

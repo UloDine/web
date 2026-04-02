@@ -9,22 +9,22 @@ import FormatStatus from "./FormatStatus";
 // import { useMenuContext } from "@/context/menu/MenuContext";
 
 function MenuCard({
-  image,
+  menu_image,
   id,
-  name,
-  description,
-  status,
+  item_name,
+  item_description,
+  stock_status,
   category,
-  stockStatus,
+  prep_status,
   price,
-}: Menu) {
+}: MenuData) {
   // const { editMenu } = useMenuContext();
-  const [imgSrcs, setImgSrcs] = useState(image);
+  const [imgSrcs, setImgSrcs] = useState(menu_image);
   const [contextOpen, setContextOpen] = useState<boolean>(false);
 
   // Some props (id, description) are intentionally used only when editing.
   // Mark them as used so production lint doesn't fail.
-  markUsed(id, description);
+  markUsed(id, item_description);
 
   const contextOptions = [
     {
@@ -46,15 +46,17 @@ function MenuCard({
     },
     {
       icon:
-        stockStatus == "Available"
+        stock_status == "Available"
           ? RestaurantIcons.umark
           : RestaurantIcons.mark,
-      label: stockStatus == "Available" ? "Mark Unavailable" : "Mark Available",
+      label:
+        stock_status == "Available" ? "Mark Unavailable" : "Mark Available",
       action: () => {},
     },
     {
-      icon: status == "Ready" ? RestaurantIcons.umark : RestaurantIcons.mark,
-      label: status == "Ready" ? "Mark Not Ready" : "Mark Ready",
+      icon:
+        prep_status == "Ready" ? RestaurantIcons.umark : RestaurantIcons.mark,
+      label: prep_status == "Ready" ? "Mark Not Ready" : "Mark Ready",
       action: () => {},
     },
     {
@@ -71,7 +73,7 @@ function MenuCard({
   return (
     <div className={styles.menu_card}>
       <Image
-        src={imgSrcs}
+        src={process.env.NEXT_PUBLIC_API_URL + imgSrcs}
         width={40}
         height={40}
         alt="Customer image"
@@ -80,16 +82,16 @@ function MenuCard({
       />
 
       <div className={styles.menu_card_name}>
-        <p>{name}</p>
+        <p>{item_name}</p>
       </div>
       <div className={styles.menu_card_category}>
         <span>#{category}</span>
       </div>
       <div className={styles.menu_card_status}>
-        <FormatStatus status={status} stockStatus={stockStatus} />
+        <FormatStatus status={prep_status} stockStatus={stock_status} />
       </div>
       <div className={styles.menu_card_price}>
-        <b>{formatCurrency(price, "ngn")}</b>
+        <b>{formatCurrency(Number(price), "ngn")}</b>
         <div className={styles.menu_card_price_right}>
           <button
             className={styles.button}

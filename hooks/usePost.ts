@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 interface UsePostOptions<TBody, TResponse> {
-  endpoint: string; // e.g. "/auth/restaurant/login" (relative to /api)
+  endpoint: string;
   onSuccess?: (data: TResponse) => void;
   onError?: (error: Error) => void;
 }
@@ -22,14 +22,16 @@ export function usePost<TBody = any, TResponse = any>({
     setError(null);
 
     try {
-      // ✅ Always hit Next.js API route
+      // ✅ Detect if body is FormData
+      const isFormData = body instanceof FormData;
+
       const res = await fetch(`${endpoint}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // important for JWT cookie passing
-        body: JSON.stringify(body),
+        headers: isFormData
+          ? {} // Let browser set Content-Type with boundary for FormData
+          : { "Content-Type": "application/json" }, // Use JSON for regular objects
+        credentials: "include",
+        body: isFormData ? (body as FormData) : JSON.stringify(body),
       });
 
       if (!res.ok) {
