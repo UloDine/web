@@ -18,7 +18,7 @@ export default function Overview() {
   const id = restaurant?.id || "";
   const { data, loading } = useFetch<DashboardOverview | null>(
     apiRoutes.restaurant.fetchOverview(id),
-    null
+    null,
   );
 
   if (loading || !data) {
@@ -90,7 +90,6 @@ export default function Overview() {
       // feedbacks: feedbacks,
     };
 
-    console.log(data);
     return (
       <section className={styles.overview}>
         <PageTitleBar

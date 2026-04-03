@@ -32,7 +32,8 @@
     transition: all 0.2s;
     background: #ffffff;
     border-radius: 1rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
       0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
     &.inside {
@@ -103,6 +104,17 @@
     } // 576px
     &.full {
       max-width: 100%;
+    }
+  }
+
+  &_actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+
+    button {
+      width: 100%;
     }
   }
 }

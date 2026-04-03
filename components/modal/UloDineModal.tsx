@@ -158,7 +158,7 @@ function UloDineModal({
             <div className={styles.modal_panel_footer}>
               {footer ||
                 (showActions && (
-                  <>
+                  <div className={styles.modal_actions}>
                     <UloDIneButton
                       type="secondary"
                       color="grey"
@@ -174,7 +174,7 @@ function UloDineModal({
                       loading={actionButtonLoading}
                       label={actionButtonText}
                     />
-                  </>
+                  </div>
                 ))}
             </div>
           )}

@@ -20,11 +20,53 @@ export function isEmpty(value: string) {
 
 export async function getCountryDetails(): Promise<IPGeolocation> {
   const response = await fetch(
-    `https://api.ipgeolocation.io/ipgeo?apiKey=${IPGEOLOCATION_API_KEY}`
+    `https://api.ipgeolocation.io/ipgeo?apiKey=${IPGEOLOCATION_API_KEY}`,
   );
   const data: IPGeolocation = await response.json();
 
   return data;
+}
+
+function shouldProxyAsset(path: string): boolean {
+  return (
+    path.startsWith("/uploads/") ||
+    path.startsWith("/api/media/") ||
+    path.startsWith("/api/media?")
+  );
+}
+
+export function resolveAssetUrl(path?: string | null): string {
+  if (!path) return "";
+
+  const baseUrl = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "");
+
+  if (/^https?:\/\//i.test(path)) {
+    try {
+      const url = new URL(path);
+      const baseHost = baseUrl ? new URL(baseUrl).host : "";
+
+      if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
+        return `/api/image-proxy?url=${encodeURIComponent(path)}`;
+      }
+
+      if (baseHost && url.host === baseHost) {
+        return `/api/image-proxy?url=${encodeURIComponent(path)}`;
+      }
+    } catch {
+      // Fall through to the original URL for malformed values.
+    }
+
+    return path;
+  }
+
+  if (shouldProxyAsset(path)) {
+    const assetPath = path.startsWith("/") ? path : `/${path}`;
+    const targetUrl = `${baseUrl}${assetPath}`;
+
+    return `/api/image-proxy?url=${encodeURIComponent(targetUrl)}`;
+  }
+
+  return path;
 }
 
 export const countryPhoneLengths: Record<string, number> = {
@@ -54,7 +96,7 @@ export function formatPhoneNumber(input: string, maxLength: number): string {
 export function formatCurrency(
   amount: number,
   symbol?: string,
-  locale?: string
+  locale?: string,
 ) {
   return amount.toLocaleString(locale ?? "en-NG", {
     style: "currency",
@@ -64,7 +106,7 @@ export function formatCurrency(
 
 export function formatTime(
   date: Date | string | number,
-  format: "short" | "long" | "full" = "short"
+  format: "short" | "long" | "full" = "short",
 ): string {
   const d = new Date(date);
   if (isNaN(d.getTime())) throw new Error("Invalid date provided");
@@ -125,7 +167,7 @@ export function capitalizeWord(str: string): string {
  */
 export function queryBuilder(
   baseUrl: string,
-  params?: Record<string, any>
+  params?: Record<string, any>,
 ): string {
   if (!params || Object.keys(params).length === 0) return baseUrl;
 
@@ -163,7 +205,7 @@ export function fileToDataURL(file: File): Promise<string> {
 
 export function isAllNullOrUndefined(obj: Record<string, any>): boolean {
   return Object.values(obj).every(
-    (value) => value === null || value === undefined || value === ""
+    (value) => value === null || value === undefined || value === "",
   );
 }
 

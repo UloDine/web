@@ -44,7 +44,8 @@ export const apiRoutes = {
       fetchById: (id: string, restaurantId: string) =>
         `/api/menu/${restaurantId}/${id}`,
       create: `/api/restaurant/menu/create`,
-      update: (id: string) => `/api/menu/${id}`,
+      update: (id: string, restaurantId: string) =>
+        `/api/restaurant/menu/update?restaurantId=${restaurantId}&menuId=${id}`,
       search: (restaurantId: string, query: string) =>
         `/api/menu/search/${restaurantId}/${encodeURIComponent(query)}`,
       filterByStatus: (restaurantId: string, status: string) =>
@@ -54,11 +55,11 @@ export const apiRoutes = {
       filterByCategory: (restaurantId: string, category: string) =>
         `/api/menu/filter/category/${restaurantId}/${category}`,
       updateStatus: (id: string, restaurantId: string, status: string) =>
-        `/api/menu/status/${restaurantId}/${id}/${status}`,
-      updateStockStatus: (id: string, restaurantId: string, status: number) =>
-        `/api/menu/stock/${restaurantId}/${id}/${status}`,
+        `/api/restaurant/menu/status?restaurantId=${restaurantId}&menuId=${id}&status=${encodeURIComponent(status)}`,
+      updateStockStatus: (id: string, restaurantId: string, status: string) =>
+        `/api/restaurant/menu/stock?restaurantId=${restaurantId}&menuId=${id}&status=${encodeURIComponent(status)}`,
       delete: (id: string, restaurantId: string) =>
-        `/api/menu/${restaurantId}/${id}`,
+        `/api/restaurant/menu/delete?restaurantId=${restaurantId}&menuId=${id}`,
     },
     qr: {
       fetchOverview: (id: string) => `/api/restaurant/qr?restaurantId=${id}`,

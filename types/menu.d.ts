@@ -60,7 +60,19 @@ interface MenuContextProps {
   // Modal controls
   toggleModal: () => void;
   createMenu: () => Promise<void>;
-  updateMenu: (menu: MenuForm) => Promise<void>;
+  updateMenu: (menu?: MenuForm) => Promise<void>;
+  editMenu: (menu: MenuEditDraft) => void;
+  deleteMenu: (menuId: string, restaurantId: string) => Promise<void>;
+  updateMenuStatus: (
+    menuId: string,
+    restaurantId: string,
+    status: string,
+  ) => Promise<void>;
+  updateMenuStockStatus: (
+    menuId: string,
+    restaurantId: string,
+    status: string,
+  ) => Promise<void>;
 
   // Data and loading
   data: ListData<MenuData> | null;
@@ -97,4 +109,17 @@ interface MenuForm {
   price: string;
   discount: string;
   restaurantId: string;
+}
+
+interface MenuEditDraft {
+  id: string;
+  restaurant_id: string;
+  item_name: string;
+  item_description: string;
+  category: string;
+  stock_status: string;
+  prep_status: string;
+  price: string | number;
+  discount?: number | string;
+  menu_image: string;
 }

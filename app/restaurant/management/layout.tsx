@@ -12,10 +12,10 @@ export default function RestaurantDashboard({
 }) {
   // useAuthGuard();
   return (
-    <MenuProvider>
-      <AlertProvider>
+    <AlertProvider>
+      <MenuProvider>
         <RestaurantLayout>{children}</RestaurantLayout>
-      </AlertProvider>
-    </MenuProvider>
+      </MenuProvider>
+    </AlertProvider>
   );
 }

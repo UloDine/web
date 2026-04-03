@@ -37,7 +37,6 @@ export function usePost<TBody = any, TResponse = any>({
       if (!res.ok) {
         const errBody = await res.json().catch(() => ({}));
         const message = errBody.message || res.statusText;
-        console.log(`HTTP ${res.status}: ${message}`);
         throw new Error(`${message}`);
       }
 

@@ -1,6 +1,6 @@
 "use client";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, {
   createContext,
   useContext,
@@ -12,6 +12,7 @@ export const ProfileContext = createContext<Profile | null>(null);
 
 function ProfileProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
 
@@ -23,12 +24,24 @@ function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   useLayoutEffect(() => {
     const storedData = localStorage.getItem("user");
-    if (!storedData) {
+    const isProtectedRestaurantRoute = pathname.startsWith(
+      "/restaurant/management",
+    );
+
+    if (!storedData && isProtectedRestaurantRoute) {
       router.replace(AUTH_ROUTES.RES_LOGIN);
     }
-    setUser(JSON.parse(storedData ?? "{}").user);
-    setRestaurant(JSON.parse(storedData ?? "{}").restaurant);
-  }, []);
+
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setUser(parsedData.user ?? null);
+      setRestaurant(parsedData.restaurant ?? null);
+      return;
+    }
+
+    setUser(null);
+    setRestaurant(null);
+  }, [pathname, router]);
 
   return (
     <ProfileContext.Provider

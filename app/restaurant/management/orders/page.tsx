@@ -3,7 +3,6 @@ import PageTitleBar from "@/components/title";
 import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
 import { useEffect, useState } from "react";
-import orders from "@/res/orders";
 import OrderCard from "./components/OrderCard";
 import Filter from "@/components/filter/Filter";
 import { useFetch } from "@/hooks/useFetch";
@@ -15,13 +14,12 @@ function Orders() {
   const [ordersData, setOrdersData] = useState<Order[]>([]);
   const [searched, setSearched] = useState<Order[]>([]);
   const [openFilter, setOpenFilter] = useState<boolean>(false);
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
 
   const { restaurant } = useProfile();
   const id = restaurant?.id || "";
   const { data, loading } = useFetch<Order[]>(
     apiRoutes.restaurant.order.fetchAllByRestaurant(id),
-    []
+    [],
   );
 
   const filterObjects = [
@@ -35,28 +33,33 @@ function Orders() {
       ],
     },
   ];
+
   function searchOrders(keyword: string | string[]) {
-    let filtered: Order[] = [];
+    const source = ordersData;
+    let filtered: Order[] = source;
 
     if (Array.isArray(keyword)) {
-      filtered = orders.filter((order) =>
+      filtered = source.filter((order) =>
         keyword.some(
-          (item) => order.status.toLowerCase() === item.toLowerCase()
-        )
+          (item) => order.status.toLowerCase() === item.toLowerCase(),
+        ),
       );
     } else {
-      filtered = orders.filter((order) =>
-        order.reference.toLowerCase().includes(keyword.toLowerCase())
-      );
+      const normalized = keyword.trim().toLowerCase();
+      filtered = !normalized
+        ? source
+        : source.filter((order) =>
+            order.reference.toLowerCase().includes(normalized),
+          );
     }
 
     setSearched(filtered);
   }
-  console.log(crypto.randomUUID());
 
   useEffect(() => {
-    setOrdersData(orders);
-  }, [searched]);
+    setOrdersData(data ?? []);
+    setSearched(data ?? []);
+  }, [data]);
 
   if (loading || !data) {
     return <InPageLoader text="Fetching your delicious orders..." />;
@@ -82,7 +85,7 @@ function Orders() {
             <div className={styles.filter_wrapper}>
               <button
                 className={styles.filter}
-                onClick={() => setOpenFilter((prev) => !prev)}
+                onClick={() => setOpenFilter(!openFilter)}
               >
                 {GeneralIcons.filter}
               </button>
@@ -92,9 +95,9 @@ function Orders() {
                   action={(filters) => {
                     const values = filters.map((f) => f.value);
                     searchOrders(values);
-                    setSelectedFilter([...selectedFilter, ...values]);
+                    setOpenFilter(false);
                   }}
-                  onClose={() => setOpenFilter((prev) => !prev)}
+                  onClose={() => setOpenFilter(false)}
                   // selectedFilters={selectedFilter}
                   // updateSelectedFilters={(newList) =>
                   //   setSelectedFilter((prev) =>
@@ -114,9 +117,9 @@ function Orders() {
           </div>
         </div>
         <div className={styles.orders_wrapper}>
-          {searched.length > 0
-            ? searched.map((order, i) => <OrderCard {...order} key={i} />)
-            : ordersData.map((order, i) => <OrderCard {...order} key={i} />)}
+          {(searched.length > 0 ? searched : ordersData).map((order, i) => (
+            <OrderCard {...order} key={order.id || i} />
+          ))}
         </div>
       </section>
     );

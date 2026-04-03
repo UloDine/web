@@ -1,47 +1,56 @@
 import { RestaurantIcons } from "@/icons/restaurant/icons";
 import React, { useState } from "react";
-import { markUsed } from "@/utils/markUsed";
 import styles from "./style/index.module.css";
 import { GeneralIcons } from "@/icons/general/icons";
 import Image from "next/image";
 import { formatCurrency } from "@/utils/helpers";
 import FormatStatus from "./FormatStatus";
-// import { useMenuContext } from "@/context/menu/MenuContext";
+import { resolveAssetUrl } from "@/utils/helpers";
+import { useMenuContext } from "@/context/menu/MenuContext";
+
+function getSafeImageSrc(path?: string | null, fallback = "/food.png") {
+  if (!path || !String(path).trim()) {
+    return fallback;
+  }
+
+  const resolved = resolveAssetUrl(path);
+  return resolved && resolved.trim() ? resolved : fallback;
+}
 
 function MenuCard({
   menu_image,
   id,
   item_name,
   item_description,
+  restaurant_id,
   stock_status,
   category,
   prep_status,
   price,
 }: MenuData) {
-  // const { editMenu } = useMenuContext();
-  const [imgSrcs, setImgSrcs] = useState(menu_image);
+  const { editMenu, deleteMenu, updateMenuStatus, updateMenuStockStatus } =
+    useMenuContext();
+  const [imgSrcs, setImgSrcs] = useState(getSafeImageSrc(menu_image));
   const [contextOpen, setContextOpen] = useState<boolean>(false);
-
-  // Some props (id, description) are intentionally used only when editing.
-  // Mark them as used so production lint doesn't fail.
-  markUsed(id, item_description);
 
   const contextOptions = [
     {
       icon: RestaurantIcons.edit,
       label: "Edit Details",
       action: () => {
-        setContextOpen((prev) => !prev);
-        // editMenu({
-        //   image,
-        //   id,
-        //   name,
-        //   description,
-        //   status,
-        //   category,
-        //   stockStatus,
-        //   price,
-        // });
+        setContextOpen(false);
+        editMenu({
+          restaurant_id,
+          id,
+          menu_image: imgSrcs,
+          item_name,
+          item_description,
+          category,
+          stock_status,
+          prep_status,
+          price: String(price),
+          discount: 0,
+        });
       },
     },
     {
@@ -51,18 +60,35 @@ function MenuCard({
           : RestaurantIcons.mark,
       label:
         stock_status == "Available" ? "Mark Unavailable" : "Mark Available",
-      action: () => {},
+      action: () => {
+        setContextOpen(false);
+        updateMenuStockStatus(
+          id,
+          restaurant_id,
+          stock_status == "Available" ? "Out of Stock" : "Available",
+        );
+      },
     },
     {
       icon:
         prep_status == "Ready" ? RestaurantIcons.umark : RestaurantIcons.mark,
       label: prep_status == "Ready" ? "Mark Not Ready" : "Mark Ready",
-      action: () => {},
+      action: () => {
+        setContextOpen(false);
+        updateMenuStatus(
+          id,
+          restaurant_id,
+          prep_status == "Ready" ? "Not ready" : "Ready",
+        );
+      },
     },
     {
       icon: RestaurantIcons.trash,
       label: "Delete Product",
-      action: () => {},
+      action: () => {
+        setContextOpen(false);
+        deleteMenu(id, restaurant_id);
+      },
     },
   ];
 
@@ -73,12 +99,13 @@ function MenuCard({
   return (
     <div className={styles.menu_card}>
       <Image
-        src={process.env.NEXT_PUBLIC_API_URL + imgSrcs}
+        src={getSafeImageSrc(imgSrcs)}
         width={40}
         height={40}
         alt="Customer image"
         className={styles.menu_card_image}
         onError={() => handleImageError()}
+        quality={100}
       />
 
       <div className={styles.menu_card_name}>
@@ -94,6 +121,7 @@ function MenuCard({
         <b>{formatCurrency(Number(price), "ngn")}</b>
         <div className={styles.menu_card_price_right}>
           <button
+            type="button"
             className={styles.button}
             onClick={() => setContextOpen((prev) => !prev)}
           >
@@ -102,7 +130,7 @@ function MenuCard({
           {contextOpen && (
             <div className={styles.menu_card_price_right_context_container}>
               {contextOptions.map((item, i) => (
-                <button key={i} onClick={item.action}>
+                <button key={i} type="button" onClick={item.action}>
                   {item.icon} <p>{item.label}</p>
                 </button>
               ))}

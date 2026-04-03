@@ -11,6 +11,12 @@ import { useProfile } from "@/context/ProfileContext";
 import { useFetch } from "@/hooks/useFetch";
 import { apiRoutes } from "@/lib/apiRoutes";
 import InPageLoader from "@/components/loaders/InPageLoader";
+import { resolveAssetUrl } from "@/utils/helpers";
+
+function getSafeImageSrc(path?: string | null, fallback = "/placeholder.png") {
+  const resolved = resolveAssetUrl(path);
+  return resolved && resolved.trim() ? resolved : fallback;
+}
 
 function QrManagement() {
   // const router = useRouter();
@@ -18,7 +24,7 @@ function QrManagement() {
   const id = restaurant?.id || "";
   const { data, loading } = useFetch<QRResponse | null>(
     apiRoutes.restaurant.qr.fetchOverview(id),
-    null
+    null,
   );
 
   if (loading || !data) {
@@ -26,9 +32,14 @@ function QrManagement() {
   } else {
     async function downloadAsset(url: string, type: "pdf" | "png") {
       try {
-        const base = url.startsWith("http")
-          ? url
-          : process.env.NEXT_PUBLIC_API_URL + url;
+        if (!url || !url.trim()) {
+          throw new Error("Asset is not available yet.");
+        }
+
+        const base = resolveAssetUrl(url);
+        if (!base || !base.trim()) {
+          throw new Error("Asset is not available yet.");
+        }
 
         const res = await fetch(base, { credentials: "include" });
         if (!res.ok) throw new Error(`Failed to download: ${res.status}`);
@@ -66,7 +77,7 @@ function QrManagement() {
         </p>
         <div className={styles.top}>
           <Image
-            src={process.env.NEXT_PUBLIC_API_URL + data.qr_code}
+            src={getSafeImageSrc(data.qr_code)}
             width={100}
             height={100}
             alt={data.business_name + " QR Code"}
@@ -102,10 +113,10 @@ function QrManagement() {
         </div>
         <div className={styles.bottom}>
           <Image
-            src={process.env.NEXT_PUBLIC_API_URL + data.imgPath}
+            src={getSafeImageSrc(data.imgPath)}
             width={100}
             height={100}
-            alt=""
+            alt={data.business_name + " poster"}
             quality={100}
           />
           <div className={styles.overlay}>

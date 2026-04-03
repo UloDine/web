@@ -73,7 +73,7 @@ function StepThree() {
     } catch (error: any) {
       alert.addAlert(
         "error",
-        "Failed to request OTP. Please try again. " + error.message
+        "Failed to request OTP. Please try again. " + error.message,
       );
     } finally {
       setLoading(false);
@@ -98,9 +98,7 @@ function StepThree() {
       <div className={styles.input}>
         <UloDineInput
           value={email}
-          onChange={(e) => {
-            console.log(e);
-
+          onChange={() => {
             // setBusiness({ ...business, businessName: e.target.value });
           }}
           type="email"
@@ -157,9 +155,7 @@ function StepThree() {
             <div className={styles.input}>
               <UloDineInput
                 value={business.businessAddress}
-                onChange={(e) => {
-                  console.log(e);
-                }}
+                onChange={() => {}}
                 type="otp"
                 sending={loading}
                 otpLoading={verifying}

@@ -137,17 +137,16 @@ function Page() {
               label="Next"
               onClick={() => {
                 setStep(next);
-                console.log(personal);
               }}
               type="minor"
               disabled={
                 !personal.complete && step === 1
                   ? true
                   : !business.complete && step == 2
-                  ? true
-                  : !auth.complete && step == 3
-                  ? true
-                  : false
+                    ? true
+                    : !auth.complete && step == 3
+                      ? true
+                      : false
               }
             />
           ) : null}

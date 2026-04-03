@@ -33,9 +33,7 @@ function HeaderNavLayout() {
         <UloDineSearch
           type="home-page"
           placeholder="Search something"
-          onSearchChange={(query) => {
-            console.log(query);
-          }}
+          onSearchChange={() => {}}
           width={"25rem"}
         />
       </div>

@@ -2,7 +2,6 @@
 import PageTitleBar from "@/components/title";
 import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
-import { useState } from "react";
 import Filter from "@/components/filter/Filter";
 import MenuCard from "./components/MenuCard";
 import { useMenuContext } from "@/context/menu/MenuContext";
@@ -13,19 +12,14 @@ function MenuManagement() {
   const {
     data,
     loading,
-    // refetch,
-    // keyword,
     setKeyword,
-    // page,
-    // setPage,
     setItemStatus,
     setStockStatus,
     toggleModal,
+    openFilter,
+    setOpenFilter,
   } = useMenuContext();
-  // const [menuData, setMenuData] = useState<Menu[]>([]);
-  // const [searched, setSearched] = useState<Menu[]>([]);
-  const [openFilter, setOpenFilter] = useState<boolean>(false);
-  // const {pagination } = data;
+
   const filterObjects = [
     {
       title: "Filter by Stock Status",
@@ -37,10 +31,9 @@ function MenuManagement() {
     {
       title: "Filter by Status",
       items: [
-        { key: "itemStatus", value: "Pending" },
-        { key: "itemStatus", value: "In Progress" },
-        { key: "itemStatus", value: "Completed" },
-        { key: "itemStatus", value: "Canceled" },
+        { key: "itemStatus", value: "Ready" },
+        { key: "itemStatus", value: "Preparing" },
+        { key: "itemStatus", value: "Not ready" },
       ],
     },
   ];
@@ -66,7 +59,7 @@ function MenuManagement() {
           <div className={styles.filter_wrapper}>
             <button
               className={styles.filter}
-              onClick={() => setOpenFilter((prev) => !prev)}
+              onClick={() => setOpenFilter(!openFilter)}
             >
               {GeneralIcons.filter}
             </button>
@@ -74,7 +67,6 @@ function MenuManagement() {
               <Filter
                 filters={filterObjects}
                 action={(filters) => {
-                  console.log(filters);
                   filters.forEach((filter) => {
                     if (filter.key === "stockStatus") {
                       setStockStatus(filter.value);
@@ -82,20 +74,9 @@ function MenuManagement() {
                       setItemStatus(filter.value);
                     }
                   });
-                  // searchOrders(filters);
-                  // setSelectedFilter([...selectedFilter, ...filters]);
+                  setOpenFilter(false);
                 }}
-                onClose={() => setOpenFilter((prev) => !prev)}
-                // selectedFilters={selectedFilter}
-                // updateSelectedFilters={(newList) =>
-                //   setSelectedFilter((prev) =>
-                //     prev.filter((item) => {
-                //       if (!newList.includes(item)) {
-                //         return item;
-                //       }
-                //     })
-                //   )
-                // }
+                onClose={() => setOpenFilter(false)}
               />
             )}
           </div>

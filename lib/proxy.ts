@@ -4,35 +4,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function proxyRequest<T>(
   req: NextRequest,
-  endpoint: string
+  endpoint: string,
 ): Promise<NextResponse<BaseResponse<T>> | NextResponse> {
   const method = req.method as Method;
 
   try {
     const contentType = req.headers.get("content-type") || "";
 
-    // ADD THIS DEBUG LOG
-    console.log("[proxy] Method:", method);
-    console.log("[proxy] Content-Type header:", contentType);
-    console.log("[proxy] All headers:", Object.fromEntries(req.headers));
-
     let data: unknown;
 
     if (method !== "GET" && method !== "HEAD") {
-      console.log("[proxy] Checking body type...");
-
       if (contentType.includes("multipart/form-data")) {
-        console.log("[proxy] MATCHED multipart/form-data");
         const buffer = await req.arrayBuffer();
         data = Buffer.from(buffer);
-
-        console.log("[proxy] Original Content-Type:", contentType);
-        console.log("[proxy] Buffer size:", buffer.byteLength);
       } else if (contentType.includes("application/json")) {
-        console.log("[proxy] MATCHED application/json");
         data = await req.json();
       } else {
-        console.log("[proxy] Fallback to text, contentType was:", contentType);
         data = await req.text();
       }
     }
@@ -133,7 +120,7 @@ export async function proxyRequest<T>(
         status: "failed",
         data: null,
       },
-      { status: statusCode }
+      { status: statusCode },
     );
   }
 }

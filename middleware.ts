@@ -6,8 +6,6 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const token = req.cookies.get("token")?.value;
 
-  console.log("[Middleware] Path:", pathname, "Token:", token);
-
   // --- Skip static files, images, and Next internals ---
   if (
     pathname.startsWith("/_next") ||
@@ -45,7 +43,7 @@ export function middleware(req: NextRequest) {
           status: "failed",
           message: "Authentication required",
         }),
-        { status: 401, headers: { "Content-Type": "application/json" } }
+        { status: 401, headers: { "Content-Type": "application/json" } },
       );
     }
     return NextResponse.next();
@@ -66,7 +64,7 @@ export function middleware(req: NextRequest) {
     if (token && restaurantPublicPaths.includes(pathname)) {
       // Logged in, trying to access login/signup page
       return NextResponse.redirect(
-        new URL(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW, req.url)
+        new URL(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW, req.url),
       );
     }
   }

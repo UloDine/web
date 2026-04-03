@@ -1,5 +1,4 @@
 import React from "react";
-import { markUsed } from "@/utils/markUsed";
 import { ImagePlaceholder } from "../placeholder";
 import UploadFileButton from "../uploadButton";
 import styles from "../../style/index.module.css";
@@ -11,9 +10,7 @@ function General() {
   const [name, setName] = React.useState("Mama Nkechi's Kitchen");
   const [desc, setDesc] = React.useState("Assorted Nigerian Dishes and More");
   const [editing, setEditing] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  // mark unused setter as used so production lint doesn't fail
-  markUsed(setLoading);
+  const [loading] = React.useState(false);
 
   const nameRef = React.useRef<HTMLHeadingElement>(null);
   const descRef = React.useRef<HTMLParagraphElement>(null);

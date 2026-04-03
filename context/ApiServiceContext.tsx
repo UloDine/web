@@ -23,7 +23,7 @@ export const ApiServiceProvider: React.FC<{ children: React.ReactNode }> = ({
   const [showSessionModal, setShowSessionModal] = useState(false);
 
   const handleResponse = async <T,>(
-    res: Response
+    res: Response,
   ): Promise<BaseResponse<T>> => {
     const json = await res.json();
 
@@ -48,23 +48,29 @@ export const ApiServiceProvider: React.FC<{ children: React.ReactNode }> = ({
   const api = {
     get: <T,>(url: string) =>
       fetch(url, { credentials: "include" }).then((res) =>
-        handleResponse<T>(res)
+        handleResponse<T>(res),
       ),
-    post: <T,>(url: string, data?: any) =>
-      fetch(url, {
-        method: "POST",
-        body: JSON.stringify(data),
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      }).then((res) => handleResponse<T>(res)),
+    post: <T,>(url: string, data?: any) => {
+      const isFormData = data instanceof FormData;
 
-    put: <T,>(url: string, data?: any) =>
-      fetch(url, {
-        method: "PUT",
-        body: JSON.stringify(data),
+      return fetch(url, {
+        method: "POST",
+        body: isFormData ? data : JSON.stringify(data),
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      }).then((res) => handleResponse<T>(res)),
+        headers: isFormData ? {} : { "Content-Type": "application/json" },
+      }).then((res) => handleResponse<T>(res));
+    },
+
+    put: <T,>(url: string, data?: any) => {
+      const isFormData = data instanceof FormData;
+
+      return fetch(url, {
+        method: "PUT",
+        body: isFormData ? data : JSON.stringify(data),
+        credentials: "include",
+        headers: isFormData ? {} : { "Content-Type": "application/json" },
+      }).then((res) => handleResponse<T>(res));
+    },
 
     del: <T,>(url: string) =>
       fetch(url, {

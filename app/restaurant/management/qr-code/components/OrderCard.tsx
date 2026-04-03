@@ -6,27 +6,30 @@ import Image from "next/image";
 import { formatCurrency, formatTime } from "@/utils/helpers";
 import FormatStatus from "./FormatStatus";
 import { useAlert } from "@/context/alert/AlertContext";
-import { markUsed } from "@/utils/markUsed";
+
+function getSafeImageSrc(path?: string | null, fallback = "/placeholder.png") {
+  if (!path || !String(path).trim()) {
+    return fallback;
+  }
+
+  return path;
+}
 
 function OrderCard({
   customer,
-  id,
   menuList,
   reference,
   status,
   totalPrice,
-  discount,
 }: Order) {
   const { addAlert } = useAlert();
-  // make sure unused destructured props don't break production lint
-  markUsed(id, discount);
   const [imgSrcs, setImgSrcs] = useState(
-    menuList.map((menu) => menu.image) // Initialize state with menu images
+    menuList.map((menu) => getSafeImageSrc(menu.image, "/food.png")), // Initialize state with menu images
   );
 
   function handleImageError(index: number) {
     setImgSrcs(
-      (prev) => prev.map((src, i) => (i === index ? "/food.png" : src)) // Replace only the failed image
+      (prev) => prev.map((src, i) => (i === index ? "/food.png" : src)), // Replace only the failed image
     );
   }
   function copy() {
@@ -52,7 +55,7 @@ function OrderCard({
       </div>
       <div className={styles.order_card_customer}>
         <Image
-          src={customer.image}
+          src={getSafeImageSrc(customer.image, "/small.png")}
           width={40}
           height={40}
           alt="Customer image"
@@ -67,7 +70,7 @@ function OrderCard({
           {menuList.map((menu, i) => (
             <li key={i}>
               <Image
-                src={imgSrcs[i]}
+                src={getSafeImageSrc(imgSrcs[i], "/food.png")}
                 onError={() => handleImageError(i)}
                 width={40}
                 height={40}
