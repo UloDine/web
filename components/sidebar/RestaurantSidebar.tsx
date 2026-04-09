@@ -9,12 +9,14 @@ import { capitalizeWord } from "@/utils/helpers";
 import { useProfile } from "@/context/ProfileContext";
 import { useAuth } from "@/context/AuthContext";
 import UloDineModal from "../modal/UloDineModal";
+import { useCustomNavigation } from "@/context/NavigationContext";
 
 function RestaurantSidebar() {
   const pathname = usePathname();
   const { restaurant } = useProfile();
   const { logout } = useAuth();
   const [isOpen, setIsOpen] = React.useState(false);
+  const { openSidebar, setOpenSidebar } = useCustomNavigation();
   if (!restaurant) return null;
   const menu = [
     {
@@ -56,43 +58,48 @@ function RestaurantSidebar() {
   ];
 
   return (
-    <nav className={styles.side_bar}>
-      <div className={styles.side_bar_header}>
-        {RestaurantIcons.profilePlaceholder}
-        <div className={styles.side_bar_header_right}>
-          <strong>{restaurant.business_name}</strong>
-          <small>{capitalizeWord(restaurant.business_plan)}</small>
+    <>
+      <nav className={`${styles.side_bar} ${!openSidebar ? styles.close : ""}`}>
+        <div className={styles.side_bar_header}>
+          {RestaurantIcons.profilePlaceholder}
+          <div className={styles.side_bar_header_right}>
+            <strong>{restaurant.business_name}</strong>
+            <small>{capitalizeWord(restaurant.business_plan)}</small>
+          </div>
         </div>
-      </div>
-      <ul>
-        {menu.map((m, i) => (
-          <li key={i}>
-            <Link
-              href={m.path}
-              className={pathname == m.path ? styles.active : ""}
-            >
-              {pathname == m.path ? m.activeIcon : m.icon} {m.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <button className={styles.logout} onClick={() => setIsOpen(true)}>
-        {RestaurantIcons.logout} <span>Log Out</span>
-      </button>
-      <UloDineModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        title="Log out"
-        actionButtonText="Yes, Logout"
-        cancelButtonText="Cancel"
-        onAction={logout}
-        showActions={true}
-      >
-        <div>
-          <p>Are you sure you want to logout?</p>
-        </div>
-      </UloDineModal>
-    </nav>
+        <ul>
+          {menu.map((m, i) => (
+            <li key={i}>
+              <Link
+                href={m.path}
+                className={pathname == m.path ? styles.active : ""}
+              >
+                {pathname == m.path ? m.activeIcon : m.icon} {m.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <button className={styles.logout} onClick={() => setIsOpen(true)}>
+          {RestaurantIcons.logout} <span>Log Out</span>
+        </button>
+        <UloDineModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          title="Log out"
+          actionButtonText="Yes, Logout"
+          cancelButtonText="Cancel"
+          onAction={logout}
+          showActions={true}
+        >
+          <div>
+            <p>Are you sure you want to logout?</p>
+          </div>
+        </UloDineModal>
+      </nav>
+      {openSidebar && (
+        <div className={styles.overlay} onClick={() => setOpenSidebar(false)} />
+      )}
+    </>
   );
 }
 

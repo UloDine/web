@@ -7,6 +7,7 @@ import { ToastProvider } from "@/context/ToastContext";
 import AppProvider from "@/context/app/AppContext";
 import { AlertProvider } from "@/context/alert/AlertContext";
 import ProfileProvider from "@/context/ProfileContext";
+import { NavigationProvider } from "@/context/NavigationContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -53,18 +54,20 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.variable}>
       <body>
-        <AppProvider>
-          <AlertProvider>
-            <ProfileProvider>
-              {/* <ProgressBar /> */}
-              <AuthProvider>
-                <ToastProvider>
-                  <ApiServiceProvider>{children}</ApiServiceProvider>
-                </ToastProvider>
-              </AuthProvider>
-            </ProfileProvider>
-          </AlertProvider>
-        </AppProvider>
+        <NavigationProvider>
+          <AppProvider>
+            <AlertProvider>
+              <ProfileProvider>
+                {/* <ProgressBar /> */}
+                <AuthProvider>
+                  <ToastProvider>
+                    <ApiServiceProvider>{children}</ApiServiceProvider>
+                  </ToastProvider>
+                </AuthProvider>
+              </ProfileProvider>
+            </AlertProvider>
+          </AppProvider>
+        </NavigationProvider>
       </body>
     </html>
   );

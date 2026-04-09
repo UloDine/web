@@ -4,12 +4,30 @@
   display: flex;
   align-items: center;
 }
+@media screen and (max-width: 500px) {
+  .hero {
+    flex-direction: column;
+    height: 100%;
+  }
+}
 .hero .inner_wrapper {
   padding: 2rem;
+}
+@media screen and (max-width: 500px) {
+  .hero .inner_wrapper {
+    padding: 1rem;
+  }
 }
 .hero .inner_wrapper h1 {
   font-size: 5rem;
   font-weight: 500;
+}
+@media screen and (max-width: 500px) {
+  .hero .inner_wrapper h1 {
+    font-size: 2rem;
+    margin: 0.5rem 0;
+    font-weight: 600;
+  }
 }
 .hero .inner_wrapper h1 em {
   color: #00bb95;
@@ -22,10 +40,26 @@
   color: #6b6a6a;
   margin-top: 2rem;
 }
+@media screen and (max-width: 500px) {
+  .hero .inner_wrapper p {
+    width: 100%;
+  }
+}
 .hero .inner_wrapper .inner_actions {
   display: flex;
   gap: 2rem;
   margin-top: 2rem;
+}
+@media screen and (max-width: 500px) {
+  .hero .inner_wrapper .inner_actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+  .hero .inner_wrapper .inner_actions .extended {
+    width: 100% !important;
+    text-align: center !important;
+  }
 }
 .hero .hero_png {
   width: 60%;
@@ -36,6 +70,17 @@
   bottom: -15%;
   z-index: -1;
 }
+@media screen and (max-width: 500px) {
+  .hero .hero_png {
+    width: 100%;
+    bottom: -35%;
+  }
+  .hero .hero_png img {
+    -o-object-fit: contain;
+       object-fit: contain;
+    opacity: 0.5;
+  }
+}
 
 .about {
   position: relative;
@@ -43,6 +88,12 @@
 @media screen and (min-width: 760px) {
   .about {
     padding: 4rem;
+  }
+}
+@media screen and (max-width: 500px) {
+  .about {
+    padding: 5rem 1rem;
+    margin: 5rem 0;
   }
 }
 @media screen and (min-width: 760px) {
@@ -98,6 +149,11 @@
   padding: 2rem;
   border-radius: 1rem;
 }
+@media screen and (max-width: 500px) {
+  .why .why_cards .why_card {
+    margin: 1rem 0;
+  }
+}
 .why .why_cards .why_card .why_image_wrapper {
   position: relative;
   width: 100%;
@@ -140,6 +196,12 @@
   grid-template-columns: 1fr 2fr;
   gap: 1rem;
   align-items: center;
+}
+@media screen and (max-width: 500px) {
+  .how_it_works .how_cards .how_card {
+    display: flex;
+    flex-direction: column;
+  }
 }
 .how_it_works .how_cards .how_card .how_image_wrapper {
   position: relative;
@@ -195,6 +257,11 @@
   box-shadow: 0px 4px 25.7px 5px rgba(44, 84, 70, 0.1);
   padding: 2rem;
   height: 33rem;
+}
+@media screen and (max-width: 500px) {
+  .pricing .pricing_wrapper .pricing_card {
+    margin: 1.5rem 0;
+  }
 }
 .pricing .pricing_wrapper .pricing_card h2 {
   font-size: 3rem;

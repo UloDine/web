@@ -3,9 +3,19 @@
   position: relative;
   overflow: auto;
 }
+@media screen and (max-width: 500px) {
+  .overview {
+    height: auto;
+  }
+}
 .overview .action_buttons {
   display: flex;
   gap: 1rem;
+}
+@media screen and (max-width: 500px) {
+  .overview .action_buttons {
+    overflow: auto;
+  }
 }
 .overview .action_buttons button {
   padding: 0.5rem;
@@ -25,6 +35,11 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
+}
+@media screen and (max-width: 500px) {
+  .overview .scrollable .cards {
+    grid-template-columns: 1fr;
+  }
 }
 .overview_feedbacks {
   background: #ffffff;

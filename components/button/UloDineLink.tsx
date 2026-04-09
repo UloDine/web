@@ -12,12 +12,13 @@ function UloDineLink({
   icon,
   underline = true,
   labelColor = "white",
+  className,
 }: UloDineLink) {
   return (
     <div
       className={`${styles.ulodine_link} ${styles[type as string]} ${
         styles[color]
-      } ${disabled ? styles.disabled : ""}`}
+      } ${className} ${disabled ? styles.disabled : ""}`}
       style={style}
     >
       <Link
@@ -28,10 +29,10 @@ function UloDineLink({
             labelColor === "green"
               ? "#00BB95"
               : labelColor === "green-light"
-              ? "#E8FFFA"
-              : labelColor === "grey"
-              ? "#6B6A6A"
-              : "#ffffff",
+                ? "#E8FFFA"
+                : labelColor === "grey"
+                  ? "#6B6A6A"
+                  : "#ffffff",
         }}
       >
         {label} {icon ?? null}

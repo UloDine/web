@@ -5,11 +5,13 @@ import { GeneralIcons } from "@/icons/general/icons";
 import { AUTH_ROUTES, HOME_ROUTES } from "@/routes/RoutePaths";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style/index.module.css";
 
 function HeaderNavLayout() {
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [width, setWidth] = useState(0);
   const navList: NavElement[] = [
     {
       label: "Home",
@@ -24,6 +26,16 @@ function HeaderNavLayout() {
       path: HOME_ROUTES.PRICING,
     },
   ];
+
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <header className={styles.header_nav}>
       <div className={styles.home_left}>
@@ -34,45 +46,61 @@ function HeaderNavLayout() {
           type="home-page"
           placeholder="Search something"
           onSearchChange={() => {}}
-          width={"25rem"}
+          width={width > 500 ? "25rem" : "22rem"}
         />
       </div>
 
       <nav>
-        <ul>
-          {navList.map((nav, i) => {
-            return (
-              <li key={i}>
-                <Link
-                  href={nav.path}
-                  className={nav.path == pathname ? styles.active : ""}
-                >
-                  {nav.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        <div className={styles.action_buttons}>
-          <UloDineLink
-            color="green"
-            label="Login"
-            path={AUTH_ROUTES.RES_LOGIN}
-            underline={false}
-            type="main"
-            labelColor="green"
-            style={{ background: "#f5f5f5", borderRadius: "2rem" }}
-          />
+        <div
+          className={`${styles.menu} ${!open ? styles.close : ""}`}
+          onClick={() => setOpen((pr) => !pr)}
+        >
+          <ul>
+            {navList.map((nav, i) => {
+              return (
+                <li key={i}>
+                  <Link
+                    href={nav.path}
+                    className={nav.path == pathname ? styles.active : ""}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {nav.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <div
+            className={styles.action_buttons}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <UloDineLink
+              color="green"
+              label="Login"
+              path={AUTH_ROUTES.RES_LOGIN}
+              underline={false}
+              type="main"
+              labelColor="green"
+              style={{ background: "#f5f5f5", borderRadius: "2rem" }}
+              className={styles.extended}
+            />
 
-          <UloDineLink
-            color="white"
-            label="Signup"
-            path={AUTH_ROUTES.RES_SIGNUP}
-            underline={false}
-            type="main"
-            style={{ borderRadius: "2rem" }}
-          />
+            <UloDineLink
+              color="white"
+              label="Signup"
+              path={AUTH_ROUTES.RES_SIGNUP}
+              underline={false}
+              type="main"
+              style={{ borderRadius: "2rem" }}
+              className={styles.extended}
+            />
+          </div>
         </div>
+        <button onClick={() => setOpen((pr) => !pr)}>
+          <span />
+          <span />
+          <span />
+        </button>
       </nav>
     </header>
   );

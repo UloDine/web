@@ -32,4 +32,5 @@ interface UloDineLink {
   icon?: React.ReactNode;
   underline?: boolean;
   labelColor?: buttonColor;
+  className?: string;
 }

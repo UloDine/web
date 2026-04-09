@@ -3,9 +3,17 @@
   position: relative;
   overflow: auto;
 
+  @media screen and (max-width: 500px) {
+    height: auto;
+  }
+
   .action_buttons {
     display: flex;
     gap: 1rem;
+
+    @media screen and (max-width: 500px) {
+      overflow: auto;
+    }
 
     button {
       padding: 0.5rem;
@@ -27,6 +35,10 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 2rem;
+
+      @media screen and (max-width: 500px) {
+        grid-template-columns: 1fr;
+      }
     }
   }
 

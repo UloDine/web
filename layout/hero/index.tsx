@@ -74,21 +74,23 @@ function Hero() {
           <div className={styles.inner_actions}>
             <UloDineLink
               path={AUTH_ROUTES.RES_SIGNUP}
-              color='green'
-              label='Get Started Free'
-              labelColor='white'
+              color="green"
+              label="Get Started Free"
+              labelColor="white"
               underline={false}
               style={{ borderRadius: "2rem", width: "15rem", height: "4rem" }}
-              type='main'
+              type="main"
+              className={styles.extended}
             />
             <UloDineLink
               path={AUTH_ROUTES.RES_SIGNUP}
-              color='green'
-              label='Watch Demo'
-              labelColor='green'
+              color="green"
+              label="Watch Demo"
+              labelColor="green"
               underline={false}
-              type='outline'
+              type="outline"
               style={{ width: "15rem", height: "4rem" }}
+              className={styles.extended}
             />
           </div>
         </div>
@@ -119,7 +121,7 @@ function Hero() {
             <Image
               fill
               quality={100}
-              alt='UloDine restaurant showcase'
+              alt="UloDine restaurant showcase"
               src={"/about.png"}
               className={styles.about_png}
             />
@@ -154,12 +156,12 @@ function Hero() {
               </p>
             </div>
             <UloDineLink
-              color='green'
-              label='Get Started Free'
+              color="green"
+              label="Get Started Free"
               path={AUTH_ROUTES.RES_SIGNUP}
               underline={false}
-              type='outline'
-              labelColor='green'
+              type="outline"
+              labelColor="green"
               style={{ width: "fit-content", padding: "1.5rem" }}
             />
           </div>
