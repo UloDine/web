@@ -165,6 +165,7 @@ function UloDineModal({
                       onClick={onClose}
                       disabled={cancelButtonDisabled}
                       label={cancelButtonText}
+                      style={{ height: "4rem" }}
                     />
                     <UloDIneButton
                       type="primary"
@@ -173,6 +174,7 @@ function UloDineModal({
                       disabled={actionButtonDisabled}
                       loading={actionButtonLoading}
                       label={actionButtonText}
+                      style={{ height: "4rem" }}
                     />
                   </div>
                 ))}
