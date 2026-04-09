@@ -28,6 +28,11 @@
   flex-direction: column;
   justify-content: space-between;
 }
+@media screen and (max-width: 500px) {
+  .auth_img_bg_login {
+    display: none;
+  }
+}
 .auth_logo {
   display: flex;
   align-items: center;
@@ -64,6 +69,11 @@
   padding: 2rem;
   position: relative;
 }
+@media screen and (max-width: 500px) {
+  .auth_form {
+    height: 100%;
+  }
+}
 .auth_form_header {
   display: flex;
   align-items: center;
@@ -87,6 +97,18 @@
   justify-content: space-between;
   align-items: center;
   width: 90%;
+}
+@media screen and (max-width: 500px) {
+  .auth_form_bottom {
+    justify-content: center;
+    gap: 1rem;
+    bottom: 5rem;
+  }
+  .auth_form_bottom div {
+    width: 100%;
+    border: none !important;
+    height: 4rem;
+  }
 }
 
 @media screen and (min-width: 900px) {

@@ -8,7 +8,8 @@
   }
 
   &_img_bg {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
       url(../../public/signup.png);
     background-size: cover;
     background-position: center;
@@ -19,7 +20,8 @@
     justify-content: space-between;
   }
   &_img_bg_login {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
       url(../../public/login.png);
     background-size: cover;
     background-position: center;
@@ -28,6 +30,10 @@
     align-items: flex-start;
     flex-direction: column;
     justify-content: space-between;
+
+    @media screen and (max-width: 500px) {
+      display: none;
+    }
   }
 
   &_logo {
@@ -72,6 +78,10 @@
     padding: 2rem;
     position: relative;
 
+    @media screen and (max-width: 500px) {
+      height: 100%;
+    }
+
     &_header {
       display: flex;
       align-items: center;
@@ -98,6 +108,19 @@
       justify-content: space-between;
       align-items: center;
       width: 90%;
+
+      @media screen and (max-width: 500px) {
+        // width: 100%;
+        justify-content: center;
+        gap: 1rem;
+        bottom: 5rem;
+
+        div {
+          width: 100%;
+          border: none !important;
+          height: 4rem;
+        }
+      }
     }
   }
 }

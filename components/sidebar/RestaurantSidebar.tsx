@@ -73,6 +73,7 @@ function RestaurantSidebar() {
               <Link
                 href={m.path}
                 className={pathname == m.path ? styles.active : ""}
+                onClick={() => setOpenSidebar(false)}
               >
                 {pathname == m.path ? m.activeIcon : m.icon} {m.label}
               </Link>

@@ -21,6 +21,9 @@
     width: 100%;
     height: 100%;
     border-radius: 0;
+    overflow: auto;
+    position: relative;
+    padding-top: 0;
   }
 }
 .modal .form .header {
@@ -28,6 +31,16 @@
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+}
+@media screen and (max-width: 500px) {
+  .modal .form .header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 10;
+    left: 0;
+    padding-top: 1.5rem;
+  }
 }
 .modal .form .header button {
   display: flex;
@@ -44,7 +57,6 @@
 @media screen and (max-width: 500px) {
   .modal .form .main {
     grid-template-columns: 1fr;
-    overflow: auto;
   }
 }
 .modal .form .main .space {
@@ -85,6 +97,7 @@
 @media screen and (max-width: 500px) {
   .modal .form .right {
     overflow: unset;
+    max-height: unset;
   }
 }
 .modal .form .right::-webkit-scrollbar {

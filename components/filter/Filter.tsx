@@ -1,5 +1,5 @@
 import { GeneralIcons } from "@/icons/general/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style/index.module.css";
 import UloDIneButton from "../button/UloDIneButton";
 
@@ -12,24 +12,27 @@ function Filter({
 }: FilterProps) {
   const [filtered, setFiltered] = useState<FilterOption[]>(selectedFilters);
 
+  useEffect(() => {
+    setFiltered(selectedFilters);
+  }, [selectedFilters]);
+
   const toggleFilter = (item: FilterOption) => {
-    setFiltered((prev) => {
-      const exists = prev.find(
-        (f) => f.key === item.key && f.value === item.value
+    const exists = filtered.find(
+      (f) => f.key === item.key && f.value === item.value,
+    );
+
+    let newList: FilterOption[];
+    if (exists) {
+      newList = filtered.filter(
+        (f) => !(f.key === item.key && f.value === item.value),
       );
+    } else {
+      // Keep one selected value per filter key so each group behaves like a single-select option.
+      newList = [...filtered.filter((f) => f.key !== item.key), item];
+    }
 
-      let newList;
-      if (exists) {
-        newList = prev.filter(
-          (f) => !(f.key === item.key && f.value === item.value)
-        );
-      } else {
-        newList = [...prev, item];
-      }
-
-      if (updateSelectedFilters) updateSelectedFilters(newList);
-      return newList;
-    });
+    setFiltered(newList);
+    if (updateSelectedFilters) updateSelectedFilters(newList);
   };
 
   const isSelected = (item: FilterOption) =>

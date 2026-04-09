@@ -1,5 +1,5 @@
 import { RestaurantIcons } from "@/icons/restaurant/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style/index.module.css";
 import { GeneralIcons } from "@/icons/general/icons";
 import Image from "next/image";
@@ -96,20 +96,31 @@ function MenuCard({
     // replace the image source directly when an image fails to load
     setImgSrcs("/food.png");
   }
+
+  useEffect(() => {
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(`.${styles.menu_card_price_right}`)) {
+        setContextOpen(false);
+      }
+    });
+  }, []);
+
   return (
     <div className={styles.menu_card}>
       <Image
         src={getSafeImageSrc(imgSrcs)}
-        width={40}
-        height={40}
-        alt="Customer image"
+        width={1200}
+        height={800}
+        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+        alt={item_name || "Menu item image"}
         className={styles.menu_card_image}
         onError={() => handleImageError()}
         quality={100}
       />
 
       <div className={styles.menu_card_name}>
-        <p>{item_name}</p>
+        <h3>{item_name}</h3>
       </div>
       <div className={styles.menu_card_category}>
         <span>#{category}</span>

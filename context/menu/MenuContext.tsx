@@ -421,7 +421,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
         <section className={styles.modal}>
           <div className={styles.form}>
             <div className={styles.header}>
-              <p>{form.title}</p>
+              <h4>{form.title}</h4>
               <button onClick={toggleModal}>{GeneralIcons.closeBlack}</button>
             </div>
             <div className={styles.main}>

@@ -3,6 +3,10 @@
   position: relative;
   overflow: auto;
 
+  @media screen and (max-width: 500px) {
+    overflow: unset;
+  }
+
   .orders_header {
     display: flex;
     align-items: center;
@@ -94,6 +98,13 @@
         color: #959595;
         border-radius: 0.4rem;
         cursor: pointer;
+        flex-shrink: 0;
+
+        @media screen and (max-width: 500px) {
+          span {
+            display: none;
+          }
+        }
       }
     }
   }

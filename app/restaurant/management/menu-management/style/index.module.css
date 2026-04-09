@@ -3,6 +3,11 @@
   position: relative;
   overflow: auto;
 }
+@media screen and (max-width: 500px) {
+  .orders {
+    overflow: unset;
+  }
+}
 .orders .orders_header {
   display: flex;
   align-items: center;
@@ -90,6 +95,12 @@
   color: #959595;
   border-radius: 0.4rem;
   cursor: pointer;
+  flex-shrink: 0;
+}
+@media screen and (max-width: 500px) {
+  .orders .orders_header_right .add_btn span {
+    display: none;
+  }
 }
 .orders_wrapper {
   display: grid;
