@@ -31,7 +31,13 @@ function MenuCard({
   const { editMenu, deleteMenu, updateMenuStatus, updateMenuStockStatus } =
     useMenuContext();
   const [imgSrcs, setImgSrcs] = useState(getSafeImageSrc(menu_image));
+  const [imageLoaded, setImageLoaded] = useState(false);
   const [contextOpen, setContextOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    setImgSrcs(getSafeImageSrc(menu_image));
+    setImageLoaded(false);
+  }, [menu_image]);
 
   const contextOptions = [
     {
@@ -95,6 +101,7 @@ function MenuCard({
   function handleImageError() {
     // replace the image source directly when an image fails to load
     setImgSrcs("/food.png");
+    setImageLoaded(false);
   }
 
   useEffect(() => {
@@ -108,16 +115,22 @@ function MenuCard({
 
   return (
     <div className={styles.menu_card}>
-      <Image
-        src={getSafeImageSrc(imgSrcs)}
-        width={1200}
-        height={800}
-        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-        alt={item_name || "Menu item image"}
-        className={styles.menu_card_image}
-        onError={() => handleImageError()}
-        quality={100}
-      />
+      <div className={styles.menu_card_image_wrapper}>
+        {!imageLoaded && <div className={styles.menu_card_image_skeleton} />}
+        <Image
+          src={getSafeImageSrc(imgSrcs)}
+          width={1200}
+          height={800}
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          alt={item_name || "Menu item image"}
+          className={`${styles.menu_card_image} ${
+            imageLoaded ? styles.menu_card_image_loaded : ""
+          }`}
+          onLoad={() => setImageLoaded(true)}
+          onError={() => handleImageError()}
+          quality={100}
+        />
+      </div>
 
       <div className={styles.menu_card_name}>
         <h3>{item_name}</h3>

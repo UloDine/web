@@ -115,6 +115,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
   } | null>(null);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [previewUrl, setPreviewUrl] = useState<string>("/placeholder.png");
+  const [previewLoaded, setPreviewLoaded] = useState<boolean>(false);
   const skipImageEffectRef = useRef(false);
 
   function resetForm() {
@@ -123,6 +124,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       restaurantId: restaurant?.id || "",
     });
     setPreviewUrl("/placeholder.png");
+    setPreviewLoaded(false);
     setSelectedMenuId(null);
   }
 
@@ -151,6 +153,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       restaurantId: menu.restaurant_id,
     });
     setPreviewUrl(resolveAssetUrl(menu.menu_image) || "/placeholder.png");
+    setPreviewLoaded(false);
     setOpen(true);
   }
 
@@ -357,6 +360,10 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     loadImage();
   }, [form?.image, selectedMenuId]);
 
+  useEffect(() => {
+    setPreviewLoaded(false);
+  }, [previewUrl]);
+
   return (
     <MenuContext.Provider
       value={{
@@ -426,7 +433,8 @@ export function MenuProvider({ children }: { children: ReactNode }) {
             </div>
             <div className={styles.main}>
               <div className={styles.left}>
-                <div>
+                <div className={styles.image_wrapper}>
+                  {!previewLoaded && <div className={styles.image_skeleton} />}
                   <Image
                     src={previewUrl}
                     width={100}
@@ -434,7 +442,10 @@ export function MenuProvider({ children }: { children: ReactNode }) {
                     alt="Image preview"
                     unoptimized
                     priority
-                    className={styles.product_image}
+                    className={`${styles.product_image} ${
+                      previewLoaded ? styles.product_image_loaded : ""
+                    }`}
+                    onLoad={() => setPreviewLoaded(true)}
                     placeholder="blur"
                     blurDataURL="/placeholder.png"
                   />

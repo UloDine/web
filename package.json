@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
-    "dev:secure": "ngrok http --url=https://trusty-lacewing-conversely.ngrok-free.app 4000"
+    "dev:secure": "ngrok http --url=https://dawson-unawarded-nonresonantly.ngrok-free.dev 4000"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

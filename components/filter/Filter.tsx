@@ -47,7 +47,7 @@ function Filter({
 
       {filters.map((group, i) => (
         <div key={i}>
-          <p>{group.title}</p>
+          <h4>{group.title}</h4>
           <ul>
             {group.items.map((item, j) => (
               <li key={j} onClick={() => toggleFilter(item)}>
