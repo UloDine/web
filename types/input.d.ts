@@ -16,6 +16,7 @@ interface Input {
   otpLoading?: boolean;
   timer?: number;
   onResend?: () => void;
+  otpChange?: (value: string) => void;
 }
 
 type item = {

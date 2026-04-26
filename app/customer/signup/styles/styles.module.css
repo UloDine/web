@@ -1,0 +1,37 @@
+.customer_signup {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+.customer_signup h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.customer_signup h1 span {
+  background: linear-gradient(253deg, #02d0a7 23.96%, #013f32 76.04%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: normal;
+}
+.customer_signup .inputs {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.customer_signup .inputs .input {
+  width: 100%;
+}
+.customer_signup a {
+  color: #00bb95;
+}/*# sourceMappingURL=styles.module.css.map */

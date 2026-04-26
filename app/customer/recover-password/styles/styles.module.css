@@ -1,0 +1,26 @@
+.recover_password {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2rem;
+}
+.recover_password h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  width: 100%;
+}
+.recover_password .input {
+  width: 100%;
+}
+.recover_password a {
+  color: #00bb95;
+}
+.recover_password .link {
+  width: 100%;
+}/*# sourceMappingURL=styles.module.css.map */

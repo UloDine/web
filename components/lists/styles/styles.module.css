@@ -1,0 +1,54 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.list h3 {
+  width: 100%;
+}
+.list .wrapper {
+  width: 100%;
+}
+.list .wrapper a {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  text-decoration: none;
+}
+.list .wrapper a:not(:last-child) {
+  border-bottom: 0.1rem solid #dfdfdf;
+}
+.list .wrapper a img {
+  display: block;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.list .wrapper a .restaurantInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.list .wrapper a .restaurantInfo p {
+  color: #000000;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.list .wrapper a .restaurantInfo div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list .wrapper a .restaurantInfo div small {
+  display: block;
+  color: var(--text);
+}/*# sourceMappingURL=styles.module.css.map */

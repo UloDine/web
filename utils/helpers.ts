@@ -104,6 +104,15 @@ export function formatCurrency(
   });
 }
 
+export function calculateDiscountedPrice(
+  price: number,
+  discount?: number,
+): number {
+  if (!discount || discount <= 0) return price;
+  const discountedPrice = price - (price * discount) / 100;
+  return Math.max(discountedPrice, 0); // Ensure price doesn't go below 0
+}
+
 export function formatTime(
   date: Date | string | number,
   format: "short" | "long" | "full" = "short",
@@ -151,11 +160,6 @@ export function getMonthsUpToCurrent(): string[] {
   const currentMonthIndex = new Date().getMonth(); // Get current month (0-based index)
 
   return months.slice(0, currentMonthIndex + 1); // Get months from January to current month
-}
-
-export function capitalizeWord(str: string): string {
-  if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
 /**
@@ -231,4 +235,9 @@ export function slugify(text: string): string {
     .replace(/\s+/g, "-") // Replace spaces with -
     .replace(/[^\w\-]+/g, "") // Remove all non-word chars
     .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+}
+
+export function capitalizeWord(str: string): string {
+  if (!str) return "";
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
 }

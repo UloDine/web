@@ -220,3 +220,24 @@
 //     font-size: 1.25rem;
 //   }
 // }
+
+.bottom_bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: #fff;
+  gap: 1rem;
+  height: 6rem;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  flex-shrink: 0;
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+}

@@ -12,6 +12,12 @@ export const AUTH_ROUTES = {
   RES_LOGIN: "/restaurant/login",
   RES_SIGNUP: "/restaurant/signup",
   RES_LOGOUT: "/logout",
+  CUS_LOGIN: "/customer/login",
+  CUS_SIGNUP: "/customer/signup",
+  CUS_LOGOUT: "/customer/logout",
+  CUS_VERIFY_EMAIL: "/customer/verify-email",
+  CUS_RECOVER_PASSWORD: "/customer/recover-password",
+  CUS_NEW_PASSWORD: "/customer/new-password",
 };
 
 export const RESTAURANT_MANAGEMENT_ROUTES = {
@@ -74,3 +80,12 @@ export const RESTAURANT_API_ROUTES = {
   UPDATE_MENU_STOCK_STATUS: "/api/restaurant/menu/stock",
   DELETE_MENU: "/api/restaurant/menu/delete",
 };
+
+export const CUSTOMER_ROUTES = {
+  HOME: "/customer/home",
+  ORDERS: "/customer/orders",
+  BROWSE: "/customer/restaurants",
+  PROFILE: "/customer/profile",
+  SETTINGS: "/customer/settings",
+  LOGOUT: "/customer/logout",
+} as const;

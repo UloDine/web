@@ -1,0 +1,11 @@
+export { default as HomeIcon } from "./Home";
+export { default as OrdersIcon } from "./Orders";
+export { default as ProfileIcon } from "./Profile";
+export { default as BrowseIcon } from "./Browse";
+export { default as ScanIcon } from "./Scan";
+export { default as BellIcon } from "./Bell";
+export { default as MapMarkerIcon } from "./MapMarker";
+export { default as StarIcon } from "./Star";
+export { default as CopyIcon } from "./Copy";
+export { default as ChevronLeftIcon } from "./ChevronLeft";
+export { default as CreditCardIcon } from "./CreditCard";

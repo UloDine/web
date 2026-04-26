@@ -35,6 +35,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     complete: false,
   });
 
+  const [userSignup, setUserSignup] = useState<UserSignup>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phone: "",
+    acceptedTerm: false,
+  });
+
   const [userLogin, setUserLogin] = useState<UserLogin>({
     email: "",
     password: "",
@@ -46,6 +56,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     password: "",
     pin: "",
     role: "restaurant",
+  });
+
+  const [verifyEmail, setVerifyEmail] = useState<VerifyEmailPayload>({
+    email: "",
+    otp: "",
   });
 
   const [step, setStep] = useState<number>(1);
@@ -156,6 +171,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         emailVerified,
         updateEmailStatus,
         sending,
+        userSignup,
+        setUserSignup,
+        verifyEmail,
+        setVerifyEmail,
       }}
     >
       {children}

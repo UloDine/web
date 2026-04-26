@@ -1,0 +1,154 @@
+.restaurant_card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+  min-width: 17rem;
+  max-width: 22rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: #ffffff;
+  text-decoration: none;
+}
+.restaurant_card .image_wrapper {
+  width: 100%;
+  height: 15rem;
+  position: relative;
+}
+.restaurant_card .image_wrapper .banner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.restaurant_card .image_wrapper .logo {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  border: 0.5rem solid #fff;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+}
+.restaurant_card h4 {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0 1rem;
+  color: #000000;
+}
+.restaurant_card p {
+  width: 100%;
+  padding: 0 1rem;
+  color: var(--text);
+}
+.restaurant_card .bottom {
+  width: 100%;
+  padding: 0 1rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.restaurant_card .bottom small {
+  display: block;
+  color: var(--text);
+}
+.restaurant_card .bottom .left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.restaurant_card .bottom .left small {
+  display: block;
+  font-weight: 500;
+  color: #000000;
+}
+
+.customer_order_card {
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-direction: column;
+}
+.customer_order_card .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.customer_order_card .header h3 {
+  font-size: 1.3rem;
+}
+.customer_order_card .header button {
+  width: 2.3rem;
+  height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background: #f5f5f5;
+}
+.customer_order_card .restaurant_name {
+  width: 100%;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+.customer_order_card .restaurant_name span {
+  color: #000000;
+  font-weight: 500;
+}
+.customer_order_card .status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  background: var(--bg);
+  color: var(--color);
+}
+.customer_order_card .items {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+.customer_order_card .items .item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.customer_order_card .items .item div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.customer_order_card .items .item div img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: block;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.customer_order_card .footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.customer_order_card .footer small {
+  display: block;
+  color: var(--text);
+}/*# sourceMappingURL=styles.module.css.map */

@@ -26,14 +26,22 @@ function UloDineSearch({
   }, [searchTerm]);
 
   return (
-    <div className={styles.ulodine_search}>
+    <div
+      className={styles.ulodine_search}
+      style={{
+        width: width
+          ? typeof width === "number"
+            ? `${width}%`
+            : width
+          : "100%",
+      }}
+    >
       <input
         type="search"
         placeholder={placeholder}
         onChange={(e) => {
           setSearchTerm(e.target.value);
         }}
-        style={{ width: width ? width : "100%" }}
       />
       <button onClick={() => onSearchChange(searchTerm)}>
         {GeneralIcons.search_white}

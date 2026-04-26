@@ -28,13 +28,14 @@ function UloDineInput({
   disabled = false,
   otpLoading = false,
   onResend,
+  otpChange,
 }: // eslint-disable-next-line @typescript-eslint/no-unused-vars
 Input) {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [timeLeft, setTimeLeft] = useState(5 * 60); // 5 minutes in seconds
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [otpComplete, setOtpComplete] = useState<boolean>(
-    Object.values(otp).every((v) => v !== "")
+    Object.values(otp).every((v) => v !== ""),
   );
   const [inputValue, setInputValue] = useState<string>("");
   const [alertMessage, setAlertMessage] = useState<InputError>({
@@ -42,11 +43,11 @@ Input) {
     message: errorMessage ?? "Value cannot be empty",
   });
   const [error, setError] = useState<boolean>(
-    isValidEmail(value) || isStrongPassword(value)
+    isValidEmail(value) || isStrongPassword(value),
   );
 
   const [countryDetails, setCountryDetails] = useState<IPGeolocation | null>(
-    null
+    null,
   );
 
   const [secret, setSecret] = useState<boolean>(true);
@@ -110,9 +111,11 @@ Input) {
 
     const handleChange = (index: number, value: string) => {
       if (isNaN(Number(value))) return; // Only allow numbers
+
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
+      otpChange?.(newOtp.join(""));
 
       // Move focus to next input if value is entered
       if (value && index < otp.length - 1) {
@@ -122,8 +125,10 @@ Input) {
 
     const handleKeyDown = (
       index: number,
-      e: React.KeyboardEvent<HTMLInputElement>
+      e: React.KeyboardEvent<HTMLInputElement>,
     ) => {
+      if (otp.every((val) => val !== "") && e.key !== "Backspace")
+        e.preventDefault();
       if (e.key === "Backspace" && !otp[index] && index > 0) {
         inputRefs.current[index - 1]?.focus();
       }
@@ -132,7 +137,7 @@ Input) {
     return (
       <div className={styles.otp}>
         <span className={styles.otp_label}>
-          Enter the OTP sent your email j***@***.com
+          Enter the OTP sent your email ***@***.com
         </span>
         <div className={styles.otp_inputs}>
           {otp.map((item, index) => (
@@ -224,8 +229,8 @@ Input) {
               type == "password" && error
                 ? styles.error
                 : (error && value == "") || (error && value == " ")
-                ? styles.error
-                : ""
+                  ? styles.error
+                  : ""
             }`}
           >
             <input
@@ -247,8 +252,8 @@ Input) {
               (type == "email" && error) || (type == "password" && error)
                 ? styles.error
                 : (error && value == "") || (error && value == " ")
-                ? styles.error
-                : ""
+                  ? styles.error
+                  : ""
             }`}
             value={value ?? inputValue}
             onChange={(e) => {

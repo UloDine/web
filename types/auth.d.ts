@@ -24,6 +24,16 @@ interface AuthDetails {
   complete: boolean;
 }
 
+interface UserSignup {
+  email: string;
+  phone?: string;
+  password: string;
+  confirmPassword: string;
+  firstName: string;
+  lastName: string;
+  acceptedTerm: boolean;
+}
+
 interface UserLogin {
   email: string;
   password: string;
@@ -44,6 +54,11 @@ interface LoggedUser {
   role: Role;
 }
 
+interface VerifyEmailPayload {
+  email: string;
+  otp: string;
+}
+
 interface BaseResponse<T> {
   status: string;
   message: string;
@@ -58,6 +73,12 @@ interface AuthContext {
   setPersonal: React.Dispatch<React.SetStateAction<PersonalDetails>>;
   setBusiness: React.Dispatch<React.SetStateAction<BusinessDetails>>;
   setAuth: React.Dispatch<React.SetStateAction<AuthDetails>>;
+  userSignup: UserSignup;
+  setUserSignup: React.Dispatch<React.SetStateAction<UserSignup>>;
+
+  // Email verification state
+  verifyEmail: VerifyEmailPayload;
+  setVerifyEmail: React.Dispatch<React.SetStateAction<VerifyEmailPayload>>;
 
   // Login state
   userLogin: UserLogin;
