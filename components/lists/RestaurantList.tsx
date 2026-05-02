@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import styles from "./styles/styles.module.css";
+import { RESTAURANT_ROUTES } from "@/routes/RoutePaths";
 
 function RestaurantList({
   list,
@@ -15,7 +16,10 @@ function RestaurantList({
       <h3>{title}</h3>
       <div className={styles.wrapper}>
         {list.map((restaurant) => (
-          <Link href={""} key={restaurant.id}>
+          <Link
+            href={RESTAURANT_ROUTES.DETAILS(restaurant.id)}
+            key={restaurant.id}
+          >
             <Image
               src={restaurant.banner}
               alt={`${restaurant.name} banner`}

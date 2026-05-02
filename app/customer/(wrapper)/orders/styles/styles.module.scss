@@ -24,6 +24,8 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  width: 100%;
+  overflow: auto;
 
   a {
     display: flex;
@@ -34,6 +36,7 @@
     color: var(--tab-color);
     font-weight: 500;
     border-bottom: 0.15rem solid var(--tab-border);
+    white-space: nowrap;
   }
 }
 

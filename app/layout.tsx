@@ -8,6 +8,7 @@ import AppProvider from "@/context/app/AppContext";
 import { AlertProvider } from "@/context/alert/AlertContext";
 import ProfileProvider from "@/context/ProfileContext";
 import { NavigationProvider } from "@/context/NavigationContext";
+import { CartProvider } from "@/context/CartContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -57,14 +58,16 @@ export default function RootLayout({
         <NavigationProvider>
           <AppProvider>
             <AlertProvider>
-              <ProfileProvider>
-                {/* <ProgressBar /> */}
-                <AuthProvider>
-                  <ToastProvider>
-                    <ApiServiceProvider>{children}</ApiServiceProvider>
-                  </ToastProvider>
-                </AuthProvider>
-              </ProfileProvider>
+              <CartProvider>
+                <ProfileProvider>
+                  {/* <ProgressBar /> */}
+                  <AuthProvider>
+                    <ToastProvider>
+                      <ApiServiceProvider>{children}</ApiServiceProvider>
+                    </ToastProvider>
+                  </AuthProvider>
+                </ProfileProvider>
+              </CartProvider>
             </AlertProvider>
           </AppProvider>
         </NavigationProvider>

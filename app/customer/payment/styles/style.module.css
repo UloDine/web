@@ -1,0 +1,118 @@
+.success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+  gap: 2rem;
+}
+.success .body {
+  width: 100%;
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background-color: #ffffff;
+  -webkit-mask: url("/ticket.svg") no-repeat center/100% 100%;
+  mask: url("/ticket.svg") no-repeat center/100% 100%;
+}
+.success .body .marker_wrapper {
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  background-color: #e3fff9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.success .body .marker_wrapper div {
+  width: 4.5rem;
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #39f0cb;
+  position: relative;
+}
+.success .body .marker_wrapper div span {
+  width: 2rem;
+  height: 1rem;
+  border-left: 0.3rem solid #ffffff;
+  border-bottom: 0.3rem solid #ffffff;
+  transform: rotate(-45deg);
+  position: absolute;
+  top: 1.5rem;
+}
+.success .body .title {
+  font-size: 1.5rem;
+}
+.success .body .paragraph {
+  color: var(--text);
+}
+.success .body .paragraph strong {
+  color: #000000;
+}
+.success .body .wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+}
+.success .body .wrapper p {
+  color: #000000;
+  width: 100%;
+  font-weight: 500;
+}
+.success .body .wrapper ul {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+}
+.success .body .wrapper ul li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.success .body .wrapper ul li span {
+  color: var(--text);
+}
+.success .body .restaurant {
+  width: 100%;
+}
+.success .body .order_reference {
+  width: 100%;
+}
+.success .body .order_reference h1 {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.success .buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  gap: 1rem;
+}
+.success .buttons .share {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background-color: #eaeaea;
+}
+.success .buttons .share svg {
+  width: 1.5rem;
+}/*# sourceMappingURL=style.module.css.map */

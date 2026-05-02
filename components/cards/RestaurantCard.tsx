@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import styles from "./styles/styles.module.css";
 import Link from "next/link";
+import { RESTAURANT_ROUTES } from "@/routes/RoutePaths";
 
 function RestaurantCard({
   id,
@@ -17,7 +18,7 @@ function RestaurantCard({
     <Link
       key={id}
       className={styles.restaurant_card}
-      href={`/restaurants/${id}`}
+      href={RESTAURANT_ROUTES.DETAILS(id)}
     >
       <div className={styles.image_wrapper}>
         <Image

@@ -1,0 +1,180 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  height: 92vh;
+  overflow: auto;
+  position: relative;
+}
+.profile .header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+.profile .body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+}
+.profile .body .wrapper {
+  width: 100%;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.profile .body .wrapper .user_icon {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile .body .wrapper .contact {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+.profile .body .wrapper .contact small {
+  display: block;
+  color: var(--text);
+}
+.profile .body .wrapper .contact span {
+  display: block;
+  color: #d9d9d9;
+}
+.profile .body .wrapper ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+.profile .body .wrapper ul li {
+  width: 100%;
+  list-style: none;
+}
+.profile .body .wrapper ul li a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  text-decoration: none;
+  color: var(--text);
+}
+.profile .body .wrapper ul li a div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 92vh;
+  overflow: auto;
+  position: relative;
+}
+.page .header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+.page .header button {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.page .body {
+  width: 100%;
+  padding: 1rem;
+  position: relative;
+  flex: 1;
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-direction: column;
+}
+.actions .action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.actions .action_card {
+  width: 100%;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 0.7rem;
+  flex-direction: column;
+  justify-content: center;
+}
+.actions .action_card .bottom {
+  border-top: 0.1rem solid #f1f1f1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+}
+.actions .action_card .bottom .left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.actions .action_card .bottom .left button {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.actions .action_card .bottom .right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.add_new {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem;
+  background: #ffffff;
+}
+
+.modal_wrapper {
+  position: relative;
+}
+.modal_wrapper .input_wrapper {
+  margin: 0.5rem 0;
+}/*# sourceMappingURL=style.module.css.map */

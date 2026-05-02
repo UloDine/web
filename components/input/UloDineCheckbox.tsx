@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/components/input/Input.module.css";
 
 function UloDineCheckbox({
@@ -13,6 +13,10 @@ function UloDineCheckbox({
   disabled?: boolean;
 }) {
   const [isChecked, setIsChecked] = useState<boolean>(checked);
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
 
   function handleCheck(value: boolean) {
     setIsChecked((prev) => (prev = value));

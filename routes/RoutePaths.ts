@@ -86,6 +86,15 @@ export const CUSTOMER_ROUTES = {
   ORDERS: "/customer/orders",
   BROWSE: "/customer/restaurants",
   PROFILE: "/customer/profile",
+  CART: "/customer/cart",
+  CHECKOUT: "/customer/cart/checkout",
+  PAYMENT_SUCCESS: "/customer/payment/success",
+  PAYMENT_FAILED: "/customer/payment/failed",
   SETTINGS: "/customer/settings",
   LOGOUT: "/customer/logout",
+} as const;
+
+export const RESTAURANT_ROUTES = {
+  DETAILS: (id: string | number) => `/restaurants/${id}`,
+  REVIEWS: (id: string | number) => `/restaurants/reviews/${id}`,
 } as const;

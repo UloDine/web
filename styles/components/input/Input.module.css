@@ -320,9 +320,35 @@
   transform: rotate(45deg);
 }
 
-.checkbox_wrapper {
+.checkbox_wrapper,
+.radio_wrapper {
   display: flex;
   align-items: center;
   gap: 1rem;
   width: 100%;
+}
+
+.radio {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 0.1rem solid #00bb95;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+.radio input {
+  position: absolute;
+  opacity: 0;
+}
+.radio input:checked ~ .marker {
+  background: #00bb95;
+}
+.radio .marker {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  pointer-events: none;
 }/*# sourceMappingURL=Input.module.css.map */
