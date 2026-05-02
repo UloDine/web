@@ -6,17 +6,15 @@ import styles from "./styles/styles.module.css";
 import Link from "next/link";
 import UloDineInput from "@/components/input/UloDineInput";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 
 function VerifyEmail() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [disabled, setDisabled] = useState<boolean>(true);
   const { verifyEmail, setVerifyEmail } = useAuth();
-
-  const params = new URLSearchParams(window.location.search);
-
-  const destination = params.get("to") || AUTH_ROUTES.CUS_NEW_PASSWORD;
+  const destination = searchParams?.get("to") || AUTH_ROUTES.CUS_NEW_PASSWORD;
 
   useEffect(() => {
     if (verifyEmail.otp.length === 6) {
@@ -37,7 +35,7 @@ function VerifyEmail() {
         type="otp"
         value={verifyEmail.otp}
         otpChange={(value) => setVerifyEmail({ ...verifyEmail, otp: value })}
-        onComplete={(val) => {
+        onComplete={() => {
           router.push(destination);
         }}
       />

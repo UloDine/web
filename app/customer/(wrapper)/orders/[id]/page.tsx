@@ -23,7 +23,7 @@ import styles from "../styles/styles.module.css";
 function OrderDetails() {
   const router = useRouter();
   const pathname = usePathname();
-  const id = pathname.split("/").pop();
+  const id = pathname?.split("/").pop() ?? "";
   const order = sample.find((o) => o.id === id);
   return (
     <section className={styles.order_details}>
@@ -109,7 +109,7 @@ function OrderDetails() {
             <MapMarkerIcon />
             <p>Pickup at Restaurant</p>
           </div>
-          <UloDineCheckbox onChange={(val) => {}} checked disabled />
+          <UloDineCheckbox onChange={() => {}} checked disabled />
         </div>
         <DashedLine />
         <div className={styles.payment}>
@@ -117,7 +117,7 @@ function OrderDetails() {
             <CreditCardIcon />
             <p>Bank Transfer</p>
           </div>
-          <UloDineCheckbox onChange={(val) => {}} checked disabled />
+          <UloDineCheckbox onChange={() => {}} checked disabled />
         </div>
       </div>
     </section>

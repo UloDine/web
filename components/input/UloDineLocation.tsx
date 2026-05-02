@@ -5,6 +5,7 @@ function UloDineLocation({
 }: {
   region: "local" | "state" | "country";
 }) {
+  void region;
   return <div>UloDineLocation</div>;
 }
 

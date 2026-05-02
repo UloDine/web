@@ -30,7 +30,7 @@ function Notifications() {
           {actions.map((a, i) => (
             <div key={i} className={styles.action}>
               <p>{a.label}</p>
-              <UloDineCheckbox onChange={(val) => {}} checked />
+              <UloDineCheckbox onChange={() => {}} checked />
             </div>
           ))}
         </div>

@@ -51,7 +51,7 @@ function RecoverPassword() {
         <Link href={AUTH_ROUTES.CUS_LOGIN}>Back to login</Link>
       </div>
       <p className={styles.link}>
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link href={AUTH_ROUTES.CUS_SIGNUP}>Create one</Link>
       </p>
     </section>

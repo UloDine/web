@@ -6,7 +6,7 @@ import ChevronLeft from "@/icons/customer/ChevronLeft";
 import { formatCurrency } from "@/utils/helpers";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../styles/style.module.css";
 import UloDIneButton from "@/components/button/UloDIneButton";
 import UloDineInput from "@/components/input/UloDineInput";
@@ -26,14 +26,9 @@ function Checkout() {
     phone: "",
   });
   const { selectedItems, calculateTotal } = useCart();
-  const id = params.get("restaurant_id") as string;
+  const id = (params?.get("restaurant_id") as string) || "";
 
-  //   console.log(selectedItems[id]);
-  const query = new URLSearchParams({
-    restaurant_id: id,
-  });
-
-  const items = selectedItems[id];
+  const items = selectedItems[id] ?? [];
   const discount = items.reduce(
     (sum, item) => sum + item.discount * item.quantity,
     0,

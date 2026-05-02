@@ -19,7 +19,7 @@ function UloDineCheckbox({
   }, [checked]);
 
   function handleCheck(value: boolean) {
-    setIsChecked((prev) => (prev = value));
+    setIsChecked(value);
     onChange(value);
   }
   return label ? (

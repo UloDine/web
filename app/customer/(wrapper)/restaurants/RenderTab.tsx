@@ -6,7 +6,7 @@ import styles from "./styles/restaurants.module.css";
 
 function RenderTab() {
   const params = useSearchParams();
-  const tab = params.get("tab") || "home";
+  const tab = params?.get("tab") || "home";
   function normalizeSlug(slug: string) {
     return slug
       .replace(/-/g, " ")

@@ -108,7 +108,7 @@ function Notifications() {
                   </div>
                   <div className={styles.right}>
                     <p>Set as Default</p>
-                    <UloDineRadioButton onChange={(val) => {}} name={a.name} />
+                    <UloDineRadioButton onChange={() => {}} name={a.name} />
                   </div>
                 </div>
               </div>

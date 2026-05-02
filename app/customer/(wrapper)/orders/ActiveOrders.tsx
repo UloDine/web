@@ -1,14 +1,10 @@
 import { OrderCard } from "@/components/cards";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./styles/styles.module.css";
 import EmptyList from "./EmptyList";
 
-function ActiveOrders({
-  filters,
-}: {
-  filters?: { status?: string; search?: string };
-}) {
-  const [data, setData] = useState<CustomerOrder[]>([]);
+function ActiveOrders() {
+  const data: CustomerOrder[] = [];
   return (
     <div className={styles.active_orders}>
       {data.length === 0 ? (

@@ -10,7 +10,9 @@ import { useSearchParams } from "next/navigation";
 
 function Browse() {
   const params = useSearchParams();
-  const [activeTab, setActiveTab] = React.useState(params.get("tab") || "home");
+  const [activeTab, setActiveTab] = React.useState(
+    params?.get("tab") || "home",
+  );
   return (
     <section className={styles.home}>
       <TopBar onTabChange={setActiveTab} activeTab={activeTab} />

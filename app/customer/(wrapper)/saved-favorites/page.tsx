@@ -3,11 +3,9 @@ import React from "react";
 import styles from "./styles/style.module.css";
 import ChevronLeft from "@/icons/customer/ChevronLeft";
 import { useRouter } from "next/navigation";
-import UloDineRadioButton from "@/components/input/UloDineRadioButton";
 import UloDIneButton from "@/components/button/UloDIneButton";
-import { EditIcon, TrashIcon } from "@/icons/customer";
+import { TrashIcon } from "@/icons/customer";
 import UloDineModal from "@/components/modal/UloDineModal";
-import UloDineInput from "@/components/input/UloDineInput";
 import { SEEDED_SAVED_FAVORITES } from "./favorites";
 import Image from "next/image";
 import { formatCurrency } from "@/utils/helpers";
@@ -38,17 +36,6 @@ function Notifications() {
     setOpen(true);
     const newList = addresses.filter((_, i) => i !== index);
     setAddresses(newList);
-  }
-
-  function handleEdit(index: number) {
-    const address = addresses[index];
-    setActiveEditing({
-      label: address.label,
-      zip: address.zip,
-      city: address.city,
-      state: address.state,
-    });
-    setOpen(true);
   }
 
   function handleSave() {

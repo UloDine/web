@@ -27,7 +27,7 @@ function RestaurantDetails() {
   const router = useRouter();
   const params = useParams();
   const { addItem, totalItems } = useCart();
-  const id = params.id as string;
+  const id = (params?.id as string) || "";
   const query = new URLSearchParams({
     restaurant_id: id,
   });
@@ -80,7 +80,7 @@ function RestaurantDetails() {
         <h3>Menu</h3>
         <UloDineSearch
           type="normal"
-          onSearchChange={(val) => {}}
+          onSearchChange={() => {}}
           placeholder={`Search for meals in ${restaurant.name}`}
           width={"100%"}
         />

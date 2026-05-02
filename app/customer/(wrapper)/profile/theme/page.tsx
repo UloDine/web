@@ -40,7 +40,7 @@ function Notifications() {
           {actions.map((a, i) => (
             <div key={i} className={styles.action}>
               <p>{a.label}</p>
-              <UloDineRadioButton onChange={(val) => {}} name={a.name} />
+              <UloDineRadioButton onChange={() => {}} name={a.name} />
             </div>
           ))}
         </div>

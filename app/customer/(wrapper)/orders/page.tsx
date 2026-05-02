@@ -29,7 +29,7 @@ function Orders() {
         />
         <div className={styles.search}>
           <UloDineSearch
-            onSearchChange={(value) => {}}
+            onSearchChange={() => {}}
             placeholder="Search orders"
             type="normal"
           />

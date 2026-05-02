@@ -16,7 +16,7 @@ import { CUSTOMER_ROUTES } from "@/routes/RoutePaths";
 function Cart() {
   const router = useRouter();
   const param = useSearchParams();
-  const id = param.get("restaurant_id") as string;
+  const id = (param?.get("restaurant_id") as string) || "";
   const {
     cart,
     incrementQty,
@@ -24,7 +24,6 @@ function Cart() {
     removeItem,
     selectItem,
     selectedItems,
-    total,
     calculateTotal,
   } = useCart();
   const query = new URLSearchParams({
@@ -33,7 +32,6 @@ function Cart() {
   const restaurant = SEEDED_RESTAURANTS_WITH_FULL_DETAILS.find(
     (r) => r.id === id,
   );
-  const subtotal = id ? total(id) : 0;
   const restaurantSelectedItems = id ? (selectedItems[id] ?? []) : [];
   return id && restaurant ? (
     <section className={styles.cart}>
@@ -41,7 +39,7 @@ function Cart() {
         <button onClick={() => router.back()}>
           <ChevronLeft />
         </button>
-        <h2>{restaurant.name}'s Cart</h2>
+        <h2>{restaurant.name}&apos;s Cart</h2>
       </div>
       <div className={styles.list}>
         {cart[id] && cart[id].length > 0 ? (

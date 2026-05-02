@@ -61,7 +61,7 @@ function Login() {
         style={{ width: "100%", height: "4rem" }}
       />
       <p>
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link href={AUTH_ROUTES.CUS_SIGNUP}>Signup here!</Link>
       </p>
     </section>

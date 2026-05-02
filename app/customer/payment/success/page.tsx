@@ -13,7 +13,7 @@ function PaymentSuccess() {
   const params = useSearchParams();
   const { selectedItems, calculateTotal } = useCart();
 
-  const id = (params.get("restaurant_id") as string) || "";
+  const id = (params?.get("restaurant_id") as string) || "";
 
   const items = selectedItems[id] ?? [];
   const discount = items.reduce(

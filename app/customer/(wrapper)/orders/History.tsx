@@ -3,11 +3,7 @@ import React from "react";
 import styles from "./styles/styles.module.css";
 import { sample } from "./seed";
 
-function History({
-  filters,
-}: {
-  filters?: { status?: string; search?: string };
-}) {
+function History() {
   return (
     <div className={styles.active_orders}>
       {sample.map((order) => (

@@ -24,7 +24,7 @@ function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   useLayoutEffect(() => {
     const storedData = localStorage.getItem("user");
-    const isProtectedRestaurantRoute = pathname.startsWith(
+    const isProtectedRestaurantRoute = pathname?.startsWith(
       "/restaurant/management",
     );
 

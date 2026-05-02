@@ -17,7 +17,7 @@ function TabLayout({
 }) {
   const pathname = usePathname();
   const params = useSearchParams();
-  const currentTab = params.get("tab") || activeTab;
+  const currentTab = params?.get("tab") || activeTab;
 
   useEffect(() => {
     onTabChange(currentTab);

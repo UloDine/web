@@ -38,7 +38,7 @@ function TopBar({
         </div>
       </div>
       <UloDineSearch
-        onSearchChange={(val) => {}}
+        onSearchChange={() => {}}
         placeholder="Search for restaurants or meals…"
         type="normal"
         width={"100%"}
