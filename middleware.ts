@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { AUTH_ROUTES, RESTAURANT_MANAGEMENT_ROUTES } from "./routes/RoutePaths";
+import {
+  AUTH_ROUTES,
+  RESTAURANT_MANAGEMENT_ROUTES,
+  CUSTOMER_ROUTES,
+} from "./routes/RoutePaths";
 
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -28,6 +32,13 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
+  // --- Customer logout handling ---
+  if (pathname === "/customer/logout") {
+    const res = NextResponse.redirect(new URL(AUTH_ROUTES.CUS_LOGIN, req.url));
+    res.cookies.delete("token");
+    return res;
+  }
+
   // --- API routes ---
   if (pathname.startsWith("/api/")) {
     const publicApiPaths = [
@@ -35,6 +46,9 @@ export function middleware(req: NextRequest) {
       "/api/auth/restaurant/register",
       "/api/auth/otp/request",
       "/api/auth/otp/verify",
+      "/api/auth/user/logout",
+      "/api/auth/user/login",
+      "/api/auth/user/register",
     ];
 
     if (!publicApiPaths.includes(pathname) && !token) {
@@ -69,6 +83,30 @@ export function middleware(req: NextRequest) {
     }
   }
 
+  // --- Customer routes ---
+  if (pathname.startsWith("/customer")) {
+    const customerPublicPaths = [
+      CUSTOMER_ROUTES.HOME,
+      AUTH_ROUTES.CUS_LOGIN,
+      AUTH_ROUTES.CUS_SIGNUP,
+      AUTH_ROUTES.CUS_VERIFY_EMAIL,
+      AUTH_ROUTES.CUS_RECOVER_PASSWORD,
+      AUTH_ROUTES.CUS_NEW_PASSWORD,
+    ];
+
+    if (!token && !customerPublicPaths.includes(pathname)) {
+      return NextResponse.redirect(new URL(AUTH_ROUTES.CUS_LOGIN, req.url));
+    }
+
+    if (
+      token &&
+      (pathname === AUTH_ROUTES.CUS_LOGIN ||
+        pathname === AUTH_ROUTES.CUS_SIGNUP)
+    ) {
+      return NextResponse.redirect(new URL(CUSTOMER_ROUTES.HOME, req.url));
+    }
+  }
+
   // --- Default: allow everything else ---
   return NextResponse.next();
 }
@@ -77,6 +115,7 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: [
     "/restaurant/:path*", // restaurant pages
+    "/customer/:path*", // customer pages
     "/api/:path*", // API routes
     "/logout", // logout
     "/", // root page

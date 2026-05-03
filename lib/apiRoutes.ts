@@ -1,4 +1,14 @@
 export const apiRoutes = {
+  customer: {
+    auth: {
+      register: `/api/auth/user/register`,
+      login: `/api/auth/user/login`,
+      logout: `/api/auth/user/logout`,
+      me: `/api/auth/me`,
+      request_otp: `/api/auth/otp/request`,
+      verify_otp: `/api/auth/otp/verify`,
+    },
+  },
   restaurant: {
     auth: {
       register: `/api/auth/restaurant/register`,

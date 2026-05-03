@@ -6,15 +6,21 @@ import styles from "./styles/styles.module.css";
 import Link from "next/link";
 import UloDineInput from "@/components/input/UloDineInput";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 
 function VerifyEmail() {
-  const router = useRouter();
+  // const router = useRouter();
   const searchParams = useSearchParams();
   const [disabled, setDisabled] = useState<boolean>(true);
-  const { verifyEmail, setVerifyEmail } = useAuth();
-  const destination = searchParams?.get("to") || AUTH_ROUTES.CUS_NEW_PASSWORD;
+  const [otpRequested, setOtpRequested] = useState<boolean>(false);
+  const {
+    verifyEmail,
+    setVerifyEmail,
+    handleVerifyEmail,
+    requestOTP,
+    sending,
+  } = useAuth();
 
   useEffect(() => {
     if (verifyEmail.otp.length === 6) {
@@ -23,6 +29,22 @@ function VerifyEmail() {
       setDisabled(true);
     }
   }, [verifyEmail.otp]);
+
+  useEffect(() => {
+    // Auto-request OTP when page loads
+    if (!otpRequested) {
+      const from = searchParams?.get("from");
+      if (from === AUTH_ROUTES.CUS_RECOVER_PASSWORD) {
+        setVerifyEmail({ ...verifyEmail, purpose: "password_reset" });
+        requestOTP("password_reset");
+      } else {
+        setVerifyEmail({ ...verifyEmail, purpose: "account_verification" });
+        requestOTP();
+      }
+      setOtpRequested(true);
+    }
+  }, [otpRequested, requestOTP, searchParams, verifyEmail, setVerifyEmail]);
+
   return (
     <section className={styles.customer_signup}>
       <h1>Verify Your Email!</h1>
@@ -35,21 +57,40 @@ function VerifyEmail() {
         type="otp"
         value={verifyEmail.otp}
         otpChange={(value) => setVerifyEmail({ ...verifyEmail, otp: value })}
-        onComplete={() => {
-          router.push(destination);
-        }}
+        onComplete={() => {}}
       />
 
       <UloDIneButton
         color="green"
         label="Verify"
-        onClick={() => {}}
+        onClick={handleVerifyEmail}
         type="primary"
-        disabled={disabled}
+        disabled={disabled || sending}
+        loading={sending}
         style={{ width: "100%", height: "4rem" }}
       />
+
       <p>
-        Already have an account? <Link href={""}>Login here!</Link>
+        Didn&apos;t receive OTP?{" "}
+        <button
+          onClick={() => requestOTP()}
+          style={{
+            background: "none",
+            border: "none",
+            color: "#22c55e",
+            cursor: "pointer",
+            textDecoration: "underline",
+            fontSize: "inherit",
+          }}
+          disabled={sending}
+        >
+          Resend OTP
+        </button>
+      </p>
+
+      <p>
+        Already have an account?{" "}
+        <Link href={AUTH_ROUTES.CUS_LOGIN}>Login here!</Link>
       </p>
     </section>
   );

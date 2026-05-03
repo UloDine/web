@@ -8,6 +8,8 @@ import { SEEDED_RESTAURANTS } from "../home/seed";
 import RenderTab from "./RenderTab";
 import { useSearchParams } from "next/navigation";
 
+// Note: Metadata must be exported from server component. Create a layout file for static metadata.
+
 function Browse() {
   const params = useSearchParams();
   const [activeTab, setActiveTab] = React.useState(

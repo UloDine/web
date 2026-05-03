@@ -11,6 +11,8 @@ import {
 } from "@/icons/customer";
 import UloDineModal from "@/components/modal/UloDineModal";
 
+// Note: Metadata must be exported from server component. Create a layout file for static metadata.
+
 function HelpCenter() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);

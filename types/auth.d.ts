@@ -26,7 +26,7 @@ interface AuthDetails {
 
 interface UserSignup {
   email: string;
-  phone?: string;
+  phone: string;
   password: string;
   confirmPassword: string;
   firstName: string;
@@ -54,9 +54,21 @@ interface LoggedUser {
   role: Role;
 }
 
+interface MeUser extends LoggedUser {
+  firstName?: string;
+  lastName?: string;
+  email_verified?: boolean;
+}
+
+interface MeResponsePayload {
+  loggedIn: boolean;
+  user: MeUser | null;
+}
+
 interface VerifyEmailPayload {
   email: string;
   otp: string;
+  purpose?: string;
 }
 
 interface BaseResponse<T> {
@@ -88,8 +100,13 @@ interface AuthContext {
 
   // Actions
   login: (loginDetails: BusinessLogin | UserLogin) => Promise<void>;
+  loginCustomer: (userLoginDetails: UserLogin) => Promise<void>;
   register: () => Promise<void>;
+  handleUserSignup: () => Promise<void>;
+  handleVerifyEmail: () => Promise<void>;
+  requestOTP: (purpose?: string) => Promise<void>;
   logout: () => void;
+  getMe: () => Promise<MeResponsePayload>;
 
   // Shared
   step: number;

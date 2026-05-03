@@ -9,8 +9,13 @@ import UloDIneButton from "@/components/button/UloDIneButton";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 
 function Login() {
-  const { userLogin, setUserLogin } = useAuth();
+  const { userLogin, setUserLogin, loginCustomer, sending } = useAuth();
   const disabled = Object.values(userLogin).every((val) => val !== "");
+
+  const handleLogin = async () => {
+    await loginCustomer(userLogin);
+  };
+
   return (
     <section className={styles.customer_signup}>
       <div>
@@ -55,9 +60,10 @@ function Login() {
       <UloDIneButton
         color="green"
         label="Login"
-        onClick={() => {}}
+        onClick={handleLogin}
         type="primary"
-        disabled={!disabled}
+        disabled={!disabled || sending}
+        loading={sending}
         style={{ width: "100%", height: "4rem" }}
       />
       <p>

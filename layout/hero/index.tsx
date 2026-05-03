@@ -83,9 +83,9 @@ function Hero() {
               className={styles.extended}
             />
             <UloDineLink
-              path={AUTH_ROUTES.RES_SIGNUP}
+              path={AUTH_ROUTES.CUS_SIGNUP}
               color="green"
-              label="Watch Demo"
+              label="Find your favorite restaurant"
               labelColor="green"
               underline={false}
               type="outline"

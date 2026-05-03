@@ -4,7 +4,11 @@ import { apiRoutes } from "@/lib/apiRoutes";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { useAlert } from "./alert/AlertContext";
 import { useRouter } from "next/navigation";
-import { AUTH_ROUTES, RESTAURANT_MANAGEMENT_ROUTES } from "@/routes/RoutePaths";
+import {
+  AUTH_ROUTES,
+  RESTAURANT_MANAGEMENT_ROUTES,
+  CUSTOMER_ROUTES,
+} from "@/routes/RoutePaths";
 
 const AuthContext = createContext<AuthContext | undefined>(undefined);
 
@@ -103,6 +107,52 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
   });
 
+  const { postData: postUserLogin } = usePost<
+    UserLogin,
+    BaseResponse<LoggedUser>
+  >({
+    endpoint: apiRoutes.customer.auth.login,
+    onSuccess: (res) => {
+      localStorage.setItem("user", JSON.stringify(res.data));
+      addAlert("success", res.message || "Login successful");
+      router.push(CUSTOMER_ROUTES.HOME);
+    },
+    onError: (err) => {
+      addAlert("error", err.message || "Login failed");
+    },
+  });
+
+  const { postData: postUserSignup } = usePost<
+    {
+      firstName: string;
+      lastName: string;
+      email: string;
+      phone: string;
+      password: string;
+    },
+    BaseResponse<{
+      id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      email_verified: boolean;
+    }>
+  >({
+    endpoint: apiRoutes.customer.auth.register,
+    onSuccess: (res) => {
+      localStorage.setItem("user", JSON.stringify(res.data!));
+      addAlert(
+        "success",
+        res.message || "Account created! Please verify your email.",
+      );
+      localStorage.setItem("email_to_verify", res.data!.email);
+      router.push(AUTH_ROUTES.CUS_VERIFY_EMAIL);
+    },
+    onError: (err) => {
+      addAlert("error", err.message || "Signup failed");
+    },
+  });
+
   const { postData: postRegister } = usePost<
     {
       personal: PersonalDetails & { password: string };
@@ -122,10 +172,124 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
   });
 
+  const { postData: postVerifyOTP } = usePost<
+    VerifyEmailPayload,
+    BaseResponse<{ email_verified: boolean }>
+  >({
+    endpoint: apiRoutes.customer.auth.verify_otp,
+    onSuccess: (res) => {
+      updateEmailStatus(true);
+      addAlert("success", res.message || "Email verified successfully!");
+      router.push(CUSTOMER_ROUTES.HOME);
+    },
+    onError: (err) => {
+      addAlert("error", err.message || "OTP verification failed");
+    },
+  });
+
+  const { postData: postRequestOTP } = usePost<
+    { email: string; accountType?: string; purpose?: string },
+    BaseResponse<{ expiration: string; user_email: string }>
+  >({
+    endpoint: apiRoutes.customer.auth.request_otp,
+    onSuccess: (res) => {
+      addAlert("success", res.message || "OTP sent to your email");
+    },
+    onError: (err) => {
+      addAlert("error", err.message || "Failed to send OTP");
+    },
+  });
+
+  const { postData: postLogout } = usePost<{}, BaseResponse<null>>({
+    endpoint: apiRoutes.customer.auth.logout,
+    onSuccess: (res) => {
+      // Logout endpoint will clear cookies on backend
+      // Frontend clears localStorage in the logout function
+    },
+    onError: (err) => {
+      // Even if logout request fails, still clear frontend state
+      console.error("Logout error:", err.message);
+    },
+  });
+
+  async function getMe(): Promise<MeResponsePayload> {
+    const response = await fetch(apiRoutes.customer.auth.me, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    const json = (await response.json()) as BaseResponse<MeResponsePayload>;
+
+    if (!response.ok) {
+      throw new Error(json.message || "Failed to fetch auth state");
+    }
+
+    if (!json.data) {
+      throw new Error("Failed to fetch auth state");
+    }
+
+    return json.data;
+  }
+
   // ----- Auth Actions -----
   async function login(loginDetails: BusinessLogin | UserLogin) {
     setSending(true);
     await postLogin(loginDetails);
+    setSending(false);
+  }
+
+  async function loginCustomer(userLoginDetails: UserLogin) {
+    setSending(true);
+    await postUserLogin(userLoginDetails);
+    setSending(false);
+  }
+
+  async function handleUserSignup() {
+    setSending(true);
+    await postUserSignup({
+      firstName: userSignup.firstName,
+      lastName: userSignup.lastName,
+      email: userSignup.email,
+      phone: userSignup.phone,
+      password: userSignup.password,
+    });
+    setSending(false);
+  }
+
+  async function handleVerifyEmail() {
+    if (!verifyEmail.otp || verifyEmail.otp.length !== 6) {
+      addAlert("error", "Please enter a valid 6-digit OTP");
+      return;
+    }
+    setSending(true);
+    const emailToVerify =
+      localStorage.getItem("email_to_verify") || verifyEmail.email;
+    await postVerifyOTP({
+      email: emailToVerify,
+      otp: verifyEmail.otp,
+      purpose: verifyEmail.purpose || "account_verification",
+    });
+    setSending(false);
+  }
+
+  async function requestOTP(purpose: string = "account_verification") {
+    const emailToVerify =
+      localStorage.getItem("email_to_verify") || verifyEmail.email;
+
+    if (!emailToVerify) {
+      addAlert("error", "No email found. Please sign up again.");
+      return;
+    }
+
+    setSending(true);
+    await postRequestOTP({
+      email: emailToVerify,
+      accountType: "user",
+      purpose,
+    });
     setSending(false);
   }
 
@@ -143,10 +307,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   function logout() {
     try {
+      const storedUser = localStorage.getItem("user");
+      const user = storedUser ? JSON.parse(storedUser) : null;
+      const userRole = user?.role;
+
+      // Call backend logout endpoint to clear cookies
+      postLogout({});
+
+      // Clear frontend state
+      localStorage.removeItem("user");
+      localStorage.removeItem("email_verified");
+      localStorage.removeItem("email_to_verify");
+      addAlert("success", "Logged out successfully");
+
+      // Route based on user role
+      if (userRole === "user") {
+        router.push(AUTH_ROUTES.CUS_LOGIN);
+      } else {
+        router.push(AUTH_ROUTES.RES_LOGIN);
+      }
+    } catch (error) {
+      // If parsing fails, default to customer login
       localStorage.removeItem("user");
       addAlert("success", "Logged out successfully");
-    } finally {
-      router.push(AUTH_ROUTES.RES_LOGOUT);
+      router.push(AUTH_ROUTES.CUS_LOGIN);
     }
   }
 
@@ -164,7 +348,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         businessLogin,
         setBusinessLogin,
         login,
+        loginCustomer,
         register,
+        handleUserSignup,
+        handleVerifyEmail,
+        requestOTP,
         logout,
         step,
         setStep,
@@ -175,6 +363,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUserSignup,
         verifyEmail,
         setVerifyEmail,
+        getMe,
       }}
     >
       {children}

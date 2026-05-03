@@ -6,6 +6,9 @@ import ActiveOrders from "./ActiveOrders";
 import styles from "./styles/styles.module.css";
 import History from "./History";
 
+// Note: Metadata must be exported from the server component. This file uses "use client" so metadata cannot be applied directly.
+// Create a layout or parent component if static metadata is required.
+
 function Orders() {
   const [activeTab, setActiveTab] = useState("active-orders");
   const tabs = [

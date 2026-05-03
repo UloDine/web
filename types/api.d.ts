@@ -44,7 +44,7 @@ interface LoggedUser {
   id: string;
   fullName: string;
   email: string;
-  // role: "user" | "restaurant" | "admin";
+  role: "user" | "restaurant" | "admin";
 }
 
 interface LoginResponse extends BaseResponse<LoggedUser> {}

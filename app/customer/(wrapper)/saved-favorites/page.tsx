@@ -10,6 +10,8 @@ import { SEEDED_SAVED_FAVORITES } from "./favorites";
 import Image from "next/image";
 import { formatCurrency } from "@/utils/helpers";
 
+// Note: Metadata must be exported from server component. Create a layout file for static metadata.
+
 interface SavedAddress {
   label: string;
   name: string;

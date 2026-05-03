@@ -10,7 +10,7 @@ import UloDIneButton from "@/components/button/UloDIneButton";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 
 function Signup() {
-  const { userSignup, setUserSignup } = useAuth();
+  const { userSignup, setUserSignup, handleUserSignup, sending } = useAuth();
   const disabled =
     Object.values(userSignup).every((val) => val !== "") &&
     userSignup.password === userSignup.confirmPassword &&
@@ -109,10 +109,10 @@ function Signup() {
       />
       <UloDIneButton
         color="green"
-        label="Signup"
-        onClick={() => {}}
+        label={sending ? "Signing up..." : "Signup"}
+        onClick={handleUserSignup}
         type="primary"
-        disabled={!disabled}
+        disabled={!disabled || sending}
         style={{ width: "100%", height: "4rem" }}
       />
       <p>

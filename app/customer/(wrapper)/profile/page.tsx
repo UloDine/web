@@ -7,6 +7,8 @@ import { PROFILE_LINKS } from "./links";
 import styles from "./styles/style.module.css";
 import UloDineModal from "@/components/modal/UloDineModal";
 
+// Note: Metadata must be exported from server component. Create a layout file for static metadata.
+
 function Profile() {
   const [open, setOpen] = React.useState(false);
 

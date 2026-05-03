@@ -33,6 +33,7 @@ function StepThree() {
           email: personal.email,
           accountType: "restaurant",
           otp,
+          purpose: "account_verification",
         }),
       });
 
@@ -60,6 +61,7 @@ function StepThree() {
         body: JSON.stringify({
           email: personal.email,
           accountType: "restaurant",
+          purpose: "account_verification",
         }),
       });
 
