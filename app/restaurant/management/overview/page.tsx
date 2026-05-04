@@ -16,14 +16,29 @@ export default function Overview() {
   const router = useRouter();
   const { restaurant } = useProfile();
   const id = restaurant?.id || "";
-  const { data, loading } = useFetch<DashboardOverview | null>(
+  const { data, loading, error } = useFetch<DashboardOverview | null>(
     apiRoutes.restaurant.fetchOverview(id),
     null,
+    { accountType: "restaurant" },
   );
 
-  if (loading || !data) {
+  // Show loading while restaurant ID is being fetched
+  if (!id || loading) {
     return <InPageLoader text="Fetching your dashboard data..." />;
-  } else {
+  }
+
+  if (error || !data) {
+    return (
+      <EmptyScreen
+        title="Unable to Load Dashboard"
+        subTitle={
+          error || "Failed to fetch dashboard data. Please try again later."
+        }
+      />
+    );
+  }
+
+  {
     const overview = data as DashboardOverview;
     const actions = [
       {

@@ -159,7 +159,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
 
   // Fetch menu data with filters
   const id = restaurant?.id || "";
-  const { data, loading, refetch } = useFetch<ListData<MenuData> | null>(
+  const { data, loading, error, refetch } = useFetch<ListData<MenuData> | null>(
     queryBuilder(apiRoutes.restaurant.menu.fetchAll(id), {
       search: keyword,
       sortBy: sortBy,
@@ -170,6 +170,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       itemStatus: itemStatus,
     }),
     null,
+    { accountType: "restaurant" },
   );
 
   function toggleModal() {
@@ -376,6 +377,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
         updateMenuStockStatus,
         data,
         loading: loading || createLoading,
+        error,
         refetch,
         keyword,
         setKeyword,

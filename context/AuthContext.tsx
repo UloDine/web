@@ -10,6 +10,49 @@ import {
   CUSTOMER_ROUTES,
 } from "@/routes/RoutePaths";
 
+const STORAGE_USER_KEY = "user";
+const RESTAURANT_ACCOUNT_TYPE: AccountType = "RESTAURANT";
+const CUSTOMER_ACCOUNT_TYPE: AccountType = "CUSTOMER";
+
+function persistAuthUser<T extends object>(
+  payload: T,
+  accountType: AccountType,
+) {
+  localStorage.setItem(
+    STORAGE_USER_KEY,
+    JSON.stringify({ ...payload, accountType }),
+  );
+}
+
+function getStoredAccountType() {
+  try {
+    const storedUser = localStorage.getItem(STORAGE_USER_KEY);
+    if (!storedUser) return null;
+
+    const parsedUser = JSON.parse(storedUser);
+
+    if (parsedUser?.accountType === RESTAURANT_ACCOUNT_TYPE) {
+      return RESTAURANT_ACCOUNT_TYPE;
+    }
+
+    if (parsedUser?.accountType === CUSTOMER_ACCOUNT_TYPE) {
+      return CUSTOMER_ACCOUNT_TYPE;
+    }
+
+    if (parsedUser?.role === "restaurant") {
+      return RESTAURANT_ACCOUNT_TYPE;
+    }
+
+    if (parsedUser?.role === "user") {
+      return CUSTOMER_ACCOUNT_TYPE;
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
 const AuthContext = createContext<AuthContext | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -98,7 +141,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   >({
     endpoint: apiRoutes.restaurant.auth.login,
     onSuccess: (res) => {
-      localStorage.setItem("user", JSON.stringify(res.data));
+      persistAuthUser(res.data, RESTAURANT_ACCOUNT_TYPE);
       addAlert("success", res.message || "Login successful");
       router.push(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW);
     },
@@ -113,7 +156,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   >({
     endpoint: apiRoutes.customer.auth.login,
     onSuccess: (res) => {
-      localStorage.setItem("user", JSON.stringify(res.data));
+      persistAuthUser(res.data, CUSTOMER_ACCOUNT_TYPE);
       addAlert("success", res.message || "Login successful");
       router.push(CUSTOMER_ROUTES.HOME);
     },
@@ -140,7 +183,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   >({
     endpoint: apiRoutes.customer.auth.register,
     onSuccess: (res) => {
-      localStorage.setItem("user", JSON.stringify(res.data!));
+      persistAuthUser(res.data!, CUSTOMER_ACCOUNT_TYPE);
       addAlert(
         "success",
         res.message || "Account created! Please verify your email.",
@@ -162,7 +205,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   >({
     endpoint: apiRoutes.restaurant.auth.register,
     onSuccess: (res) => {
-      localStorage.setItem("user", JSON.stringify(res.data));
+      persistAuthUser(res.data, RESTAURANT_ACCOUNT_TYPE);
       addAlert("success", res.message || "Signup successful");
       localStorage.removeItem("email_verified");
       router.push(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW);
@@ -307,28 +350,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   function logout() {
     try {
-      const storedUser = localStorage.getItem("user");
-      const user = storedUser ? JSON.parse(storedUser) : null;
-      const userRole = user?.role;
+      const userAccountType = getStoredAccountType();
 
       // Call backend logout endpoint to clear cookies
       postLogout({});
 
       // Clear frontend state
-      localStorage.removeItem("user");
+      localStorage.removeItem(STORAGE_USER_KEY);
       localStorage.removeItem("email_verified");
       localStorage.removeItem("email_to_verify");
       addAlert("success", "Logged out successfully");
 
-      // Route based on user role
-      if (userRole === "user") {
+      // Route based on the stored account type on this device
+      if (userAccountType === CUSTOMER_ACCOUNT_TYPE) {
         router.push(AUTH_ROUTES.CUS_LOGIN);
       } else {
         router.push(AUTH_ROUTES.RES_LOGIN);
       }
     } catch (error) {
       // If parsing fails, default to customer login
-      localStorage.removeItem("user");
+      localStorage.removeItem(STORAGE_USER_KEY);
       addAlert("success", "Logged out successfully");
       router.push(AUTH_ROUTES.CUS_LOGIN);
     }

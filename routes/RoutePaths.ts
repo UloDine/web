@@ -87,6 +87,7 @@ export const CUSTOMER_ROUTES = {
   BROWSE: "/customer/restaurants",
   PROFILE: "/customer/profile",
   CART: "/customer/cart",
+  NOTIFICATIONS: "/customer/notifications",
   CHECKOUT: "/customer/cart/checkout",
   PAYMENT_SUCCESS: "/customer/payment/success",
   PAYMENT_FAILED: "/customer/payment/failed",

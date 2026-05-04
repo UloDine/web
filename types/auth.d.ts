@@ -1,4 +1,5 @@
 type Role = "user" | "restaurant" | "admin";
+type AccountType = "RESTAURANT" | "CUSTOMER";
 
 interface PersonalDetails {
   firstName: string;
@@ -52,6 +53,7 @@ interface LoggedUser {
   fullName: string;
   email: string;
   role: Role;
+  accountType?: AccountType;
 }
 
 interface MeUser extends LoggedUser {

@@ -77,6 +77,7 @@ interface MenuContextProps {
   // Data and loading
   data: ListData<MenuData> | null;
   loading: boolean;
+  error: string | null;
   refetch: () => void;
 
   // Filter states

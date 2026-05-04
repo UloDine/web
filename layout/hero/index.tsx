@@ -89,7 +89,11 @@ function Hero() {
               labelColor="green"
               underline={false}
               type="outline"
-              style={{ width: "15rem", height: "4rem" }}
+              style={{
+                width: "fit-content",
+                height: "4rem",
+                padding: "0 2rem",
+              }}
               className={styles.extended}
             />
           </div>

@@ -9,6 +9,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { useProfile } from "@/context/ProfileContext";
 import { apiRoutes } from "@/lib/apiRoutes";
 import InPageLoader from "@/components/loaders/InPageLoader";
+import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 
 function Orders() {
   const [ordersData, setOrdersData] = useState<Order[]>([]);
@@ -17,9 +18,10 @@ function Orders() {
 
   const { restaurant } = useProfile();
   const id = restaurant?.id || "";
-  const { data, loading } = useFetch<Order[]>(
+  const { data, loading, error } = useFetch<Order[]>(
     apiRoutes.restaurant.order.fetchAllByRestaurant(id),
     [],
+    { accountType: "restaurant" },
   );
 
   const filterObjects = [
@@ -61,69 +63,79 @@ function Orders() {
     setSearched(data ?? []);
   }, [data]);
 
-  if (loading || !data) {
+  // Show loading while restaurant ID is being fetched
+  if (!id || loading) {
     return <InPageLoader text="Fetching your delicious orders..." />;
-  } else {
+  }
+
+  if (error || !data) {
     return (
-      <section className={styles.orders}>
-        <PageTitleBar title="Orders" />
-        <div className={styles.orders_header}>
-          <div className={styles.orders_header_left}>
-            <span className={styles.length}>
-              {searched.length > 0 ? searched.length : ordersData.length} items
-            </span>
-            <div className={styles.search}>
-              {GeneralIcons.search}
-              <input
-                type="search"
-                placeholder="Search orders..."
-                onChange={(e) => searchOrders(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className={styles.orders_header_right}>
-            <div className={styles.filter_wrapper}>
-              <button
-                className={styles.filter}
-                onClick={() => setOpenFilter(!openFilter)}
-              >
-                {GeneralIcons.filter}
-              </button>
-              {openFilter && (
-                <Filter
-                  filters={filterObjects}
-                  action={(filters) => {
-                    const values = filters.map((f) => f.value);
-                    searchOrders(values);
-                    setOpenFilter(false);
-                  }}
-                  onClose={() => setOpenFilter(false)}
-                  // selectedFilters={selectedFilter}
-                  // updateSelectedFilters={(newList) =>
-                  //   setSelectedFilter((prev) =>
-                  //     prev.filter((item) => {
-                  //       if (!newList.includes(item)) {
-                  //         return item;
-                  //       }
-                  //     })
-                  //   )
-                  // }
-                />
-              )}
-            </div>
-            <button className={styles.add_btn}>
-              {GeneralIcons.plus} Add New Item
-            </button>
-          </div>
-        </div>
-        <div className={styles.orders_wrapper}>
-          {(searched.length > 0 ? searched : ordersData).map((order, i) => (
-            <OrderCard {...order} key={order.id || i} />
-          ))}
-        </div>
-      </section>
+      <EmptyScreen
+        title="Unable to Load Orders"
+        subTitle={error || "Failed to fetch orders. Please try again later."}
+      />
     );
   }
+
+  return (
+    <section className={styles.orders}>
+      <PageTitleBar title="Orders" />
+      <div className={styles.orders_header}>
+        <div className={styles.orders_header_left}>
+          <span className={styles.length}>
+            {searched.length > 0 ? searched.length : ordersData.length} items
+          </span>
+          <div className={styles.search}>
+            {GeneralIcons.search}
+            <input
+              type="search"
+              placeholder="Search orders..."
+              onChange={(e) => searchOrders(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className={styles.orders_header_right}>
+          <div className={styles.filter_wrapper}>
+            <button
+              className={styles.filter}
+              onClick={() => setOpenFilter(!openFilter)}
+            >
+              {GeneralIcons.filter}
+            </button>
+            {openFilter && (
+              <Filter
+                filters={filterObjects}
+                action={(filters) => {
+                  const values = filters.map((f) => f.value);
+                  searchOrders(values);
+                  setOpenFilter(false);
+                }}
+                onClose={() => setOpenFilter(false)}
+                // selectedFilters={selectedFilter}
+                // updateSelectedFilters={(newList) =>
+                //   setSelectedFilter((prev) =>
+                //     prev.filter((item) => {
+                //       if (!newList.includes(item)) {
+                //         return item;
+                //       }
+                //     })
+                //   )
+                // }
+              />
+            )}
+          </div>
+          <button className={styles.add_btn}>
+            {GeneralIcons.plus} Add New Item
+          </button>
+        </div>
+      </div>
+      <div className={styles.orders_wrapper}>
+        {(searched.length > 0 ? searched : ordersData).map((order, i) => (
+          <OrderCard {...order} key={order.id || i} />
+        ))}
+      </div>
+    </section>
+  );
 }
 
 export default Orders;

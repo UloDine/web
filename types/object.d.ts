@@ -178,7 +178,11 @@ interface Profile {
   restaurant: Restaurant | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   setRestaurant: React.Dispatch<React.SetStateAction<Restaurant | null>>;
-  updateProfileStore: (payload: { user: User; restaurant: Restaurant }) => void;
+  updateProfileStore: (payload: {
+    user: User;
+    restaurant: Restaurant;
+    accountType?: AccountType;
+  }) => void;
 }
 
 interface User {

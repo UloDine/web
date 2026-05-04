@@ -1,0 +1,68 @@
+.notifications {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+.notifications .header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  left: 0;
+}
+.notifications .header .top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.notifications .header .top .left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.notifications .header .top .left button {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notifications .header .top .filter_btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notifications .body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+.notifications .body li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 0.5rem;
+}
+.notifications .body li.unread {
+  background: #f5fffd;
+}
+.notifications .body li h4 {
+  color: #000000;
+}
+.notifications .body li small {
+  color: var(--text);
+  display: block;
+}/*# sourceMappingURL=styles.module.css.map */

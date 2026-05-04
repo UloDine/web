@@ -46,13 +46,15 @@ function HeaderNavLayout() {
           type="home-page"
           placeholder="Search something"
           onSearchChange={() => {}}
-          width={width > 500 ? "25rem" : "22rem"}
+          width={
+            width > 500 && width < 800 ? "70%" : width > 800 ? "60%" : "22rem"
+          }
         />
       </div>
 
       <nav>
         <div
-          className={`${styles.menu} ${!open ? styles.close : ""}`}
+          className={`${styles.menu} ${!open && width < 790 ? styles.close : ""}`}
           onClick={() => setOpen((pr) => !pr)}
         >
           <ul>
@@ -81,26 +83,37 @@ function HeaderNavLayout() {
               underline={false}
               type="main"
               labelColor="green"
-              style={{ background: "#f5f5f5", borderRadius: "2rem" }}
+              style={{
+                background: "#f5f5f5",
+                borderRadius: "2rem",
+                height: "3rem",
+                padding: "0 2rem",
+              }}
               className={styles.extended}
             />
 
             <UloDineLink
               color="white"
-              label="Signup"
+              label="Create Store"
               path={AUTH_ROUTES.RES_SIGNUP}
               underline={false}
               type="main"
-              style={{ borderRadius: "2rem" }}
+              style={{
+                borderRadius: "2rem",
+                height: "3rem",
+                padding: "0 2rem",
+              }}
               className={styles.extended}
             />
           </div>
         </div>
-        <button onClick={() => setOpen((pr) => !pr)}>
-          <span />
-          <span />
-          <span />
-        </button>
+        {width < 790 && (
+          <button onClick={() => setOpen((pr) => !pr)}>
+            <span />
+            <span />
+            <span />
+          </button>
+        )}
       </nav>
     </header>
   );

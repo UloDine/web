@@ -17,6 +17,11 @@
 .side_bar.close {
   display: none;
 }
+@media screen and (min-width: 501px) {
+  .side_bar.close {
+    display: block;
+  }
+}
 .side_bar_header {
   display: flex;
   gap: 1rem;

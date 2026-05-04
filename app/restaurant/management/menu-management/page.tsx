@@ -7,14 +7,18 @@ import MenuCard from "./components/MenuCard";
 import { useMenuContext } from "@/context/menu/MenuContext";
 import InPageLoader from "@/components/loaders/InPageLoader";
 import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
+import { useProfile } from "@/context/ProfileContext";
 import { useCallback, useEffect, useState } from "react";
 
 const MENU_FILTER_STORAGE_KEY = "menu-management-selected-filters";
 
 function MenuManagement() {
+  const { restaurant } = useProfile();
+  const id = restaurant?.id || "";
   const {
     data,
     loading,
+    error,
     setKeyword,
     setItemStatus,
     setStockStatus,
@@ -70,6 +74,20 @@ function MenuManagement() {
       JSON.stringify(selectedFilters),
     );
   }, [selectedFilters]);
+
+  // Show loading while restaurant ID is being fetched
+  if (!id || loading) {
+    return <InPageLoader text="Loading menu..." />;
+  }
+
+  if (error || !data) {
+    return (
+      <EmptyScreen
+        title="Unable to Load Menu"
+        subTitle={error || "Failed to fetch menu. Please try again later."}
+      />
+    );
+  }
 
   const filterObjects = [
     {
@@ -133,9 +151,7 @@ function MenuManagement() {
           </button>
         </div>
       </div>
-      {loading || !data ? (
-        <InPageLoader text="Loading menu..." />
-      ) : data.result.length === 0 ? (
+      {data.result.length === 0 ? (
         <EmptyScreen
           title="No Menu Available Yet!"
           subTitle="Start creating menu to appear here"

@@ -2,16 +2,19 @@
 import { BellIcon, ScanIcon } from "@/icons/customer";
 import { GeneralIcons } from "@/icons/general/icons";
 import { DateUtils } from "@/utils/date";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/home.module.css";
 import UloDineSearch from "@/components/input/UloDineSearch";
 import { useAuth } from "@/context/AuthContext";
 import UloDineLink from "@/components/button/UloDineLink";
-import { AUTH_ROUTES } from "@/routes/RoutePaths";
+import { AUTH_ROUTES, CUSTOMER_ROUTES } from "@/routes/RoutePaths";
+import { useRouter } from "next/navigation";
 
 function TopBar() {
+  const router = useRouter();
   const { getMe } = useAuth();
   const [user, setUser] = React.useState<MeResponsePayload | null>(null);
+  const [unread, setUnread] = useState(true);
 
   useEffect(() => {
     async function fetchUser() {
@@ -44,8 +47,9 @@ function TopBar() {
             <ScanIcon />
           </button>
           {user ? (
-            <button>
+            <button onClick={() => router.push(CUSTOMER_ROUTES.NOTIFICATIONS)}>
               <BellIcon />
+              {unread && <span />}
             </button>
           ) : (
             <UloDineLink

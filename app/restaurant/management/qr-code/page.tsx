@@ -11,6 +11,7 @@ import { useProfile } from "@/context/ProfileContext";
 import { useFetch } from "@/hooks/useFetch";
 import { apiRoutes } from "@/lib/apiRoutes";
 import InPageLoader from "@/components/loaders/InPageLoader";
+import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 import { resolveAssetUrl } from "@/utils/helpers";
 
 function getSafeImageSrc(path?: string | null, fallback = "/placeholder.png") {
@@ -22,14 +23,27 @@ function QrManagement() {
   // const router = useRouter();
   const { restaurant } = useProfile();
   const id = restaurant?.id || "";
-  const { data, loading } = useFetch<QRResponse | null>(
+  const { data, loading, error } = useFetch<QRResponse | null>(
     apiRoutes.restaurant.qr.fetchOverview(id),
     null,
+    { accountType: "restaurant" },
   );
 
-  if (loading || !data) {
+  // Show loading while restaurant ID is being fetched
+  if (!id || loading) {
     return <InPageLoader text="Fetching your QR data..." />;
-  } else {
+  }
+
+  if (error || !data) {
+    return (
+      <EmptyScreen
+        title="Unable to Load QR Code"
+        subTitle={error || "Failed to fetch QR code. Please try again later."}
+      />
+    );
+  }
+
+  {
     async function downloadAsset(url: string, type: "pdf" | "png") {
       try {
         if (!url || !url.trim()) {
@@ -138,7 +152,6 @@ function QrManagement() {
         </div>
       </section>
     );
-  }
 }
 
 export default QrManagement;
