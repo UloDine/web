@@ -112,26 +112,22 @@ function ScanPage() {
     );
   }, []);
 
-  const handleDetectionResult = useCallback(
-    (rawValue: string) => {
-      if (scanLockRef.current) {
-        return;
-      }
+  const handleDetectionResult = useCallback((rawValue: string) => {
+    if (scanLockRef.current) {
+      return;
+    }
 
-      scanLockRef.current = true;
-      setDetectedValue(rawValue);
-      setError("");
-      stopCamera();
+    scanLockRef.current = true;
+    setDetectedValue(rawValue);
+    setError("");
 
-      // Keep this as a placeholder until the final route/handler is confirmed.
-      // router.push(`/customer/scan?value=${encodeURIComponent(rawValue)}`);
+    // Keep this as a placeholder until the final route/handler is confirmed.
+    // router.push(`/customer/scan?value=${encodeURIComponent(rawValue)}`);
 
-      window.setTimeout(() => {
-        scanLockRef.current = false;
-      }, SCAN_LOCK_TIMEOUT);
-    },
-    [stopCamera],
-  );
+    window.setTimeout(() => {
+      scanLockRef.current = false;
+    }, SCAN_LOCK_TIMEOUT);
+  }, []);
 
   const detectWithJsQr = useCallback(async (): Promise<DetectedBarcode[]> => {
     const video = videoRef.current;
@@ -324,8 +320,15 @@ function ScanPage() {
       return;
     }
 
+    stopCamera();
     router.push(path);
-  }, [detectedValue, matchesValidOrigin, extractRestaurantPath, router]);
+  }, [
+    detectedValue,
+    extractRestaurantPath,
+    matchesValidOrigin,
+    router,
+    stopCamera,
+  ]);
 
   return (
     <section className={styles.scan_page}>
@@ -342,7 +345,9 @@ function ScanPage() {
       <video ref={videoRef} autoPlay playsInline muted></video>
       <canvas ref={canvasRef}></canvas>
 
-      {error ? <span style={{ color: "red" }}>{error}</span> : null}
+      {error ? (
+        <span style={{ color: "red", marginBottom: "1rem" }}>{error}</span>
+      ) : null}
     </section>
   );
 }
