@@ -6,10 +6,14 @@ import styles from "./styles/styles.module.css";
 import { SEEDED_NOTIFICATIONS } from "./dummy";
 import { DateUtils } from "@/utils/date";
 import { useRouter } from "next/navigation";
+import { BottomDrawer } from "@/components/drawers";
+import UloDineRadioButton from "@/components/input/UloDineRadioButton";
+import UloDIneButton from "@/components/button/UloDIneButton";
 
 function Notifications() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("general");
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const data = SEEDED_NOTIFICATIONS.filter((notification) => {
     if (activeTab === "general") return notification.type === "GENERAL";
     if (activeTab === "orders") return notification.type === "ORDER_UPDATE";
@@ -40,7 +44,10 @@ function Notifications() {
             </button>
             <h2>Notifications</h2>
           </div>
-          <button className={styles.filter_btn}>
+          <button
+            className={styles.filter_btn}
+            onClick={() => setDrawerOpen(true)}
+          >
             <FilterIcon />
           </button>
         </div>
@@ -64,6 +71,45 @@ function Notifications() {
           </li>
         ))}
       </ul>
+      <BottomDrawer
+        isOpen={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        title="Filters"
+      >
+        <div className={styles.drawer_content}>
+          <div className={styles.flex}>
+            <p>Unread</p>
+            <UloDineRadioButton
+              name=""
+              onChange={(val) => {}}
+              selected={true}
+            />
+          </div>
+          <div className={styles.flex}>
+            <p>Read</p>
+            <UloDineRadioButton
+              name=""
+              onChange={(val) => {}}
+              selected={false}
+            />
+          </div>
+          <div className={styles.flex}>
+            <p>Unread</p>
+            <UloDineRadioButton
+              name=""
+              onChange={(val) => {}}
+              selected={false}
+            />
+          </div>
+          <UloDIneButton
+            color="green"
+            label="Apply"
+            onClick={() => {}}
+            type="primary"
+            style={{ width: "100%", height: "4rem" }}
+          />
+        </div>
+      </BottomDrawer>
     </section>
   );
 }

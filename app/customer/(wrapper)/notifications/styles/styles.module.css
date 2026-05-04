@@ -65,4 +65,16 @@
 .notifications .body li small {
   color: var(--text);
   display: block;
+}
+.notifications .drawer_content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.notifications .drawer_content .flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }/*# sourceMappingURL=styles.module.css.map */
