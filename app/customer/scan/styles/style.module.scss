@@ -1,0 +1,88 @@
+.scan_page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .header {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+
+    button {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    h2 {
+      color: #ffffff;
+      text-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+
+    .scan_area {
+      width: 30rem;
+      height: 30rem;
+      border-radius: 1rem;
+      border: 1px solid #00d4aa;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.65);
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 5rem;
+        border-bottom: 0.2rem solid #00d4aa;
+        background: linear-gradient(#00d4aa00, rgba(0, 212, 170, 0.3));
+        animation: scan 2s linear infinite;
+      }
+
+      @keyframes scan {
+        0% {
+          top: 0;
+        }
+        100% {
+          top: calc(100% - 2px);
+        }
+      }
+    }
+  }
+
+  video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+  }
+
+  canvas {
+    display: none;
+  }
+}

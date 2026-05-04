@@ -43,7 +43,7 @@ function TopBar() {
           )}
         </div>
         <div className={styles.right}>
-          <button>
+          <button onClick={() => router.push(CUSTOMER_ROUTES.SCAN)}>
             <ScanIcon />
           </button>
           {user ? (

@@ -93,6 +93,7 @@ export const CUSTOMER_ROUTES = {
   PAYMENT_FAILED: "/customer/payment/failed",
   SETTINGS: "/customer/settings",
   LOGOUT: "/customer/logout",
+  SCAN: "/customer/scan",
 } as const;
 
 export const RESTAURANT_ROUTES = {
