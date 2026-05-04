@@ -79,27 +79,15 @@ function Notifications() {
         <div className={styles.drawer_content}>
           <div className={styles.flex}>
             <p>Unread</p>
-            <UloDineRadioButton
-              name=""
-              onChange={(val) => {}}
-              selected={true}
-            />
+            <UloDineRadioButton name="" onChange={() => {}} selected={true} />
           </div>
           <div className={styles.flex}>
             <p>Read</p>
-            <UloDineRadioButton
-              name=""
-              onChange={(val) => {}}
-              selected={false}
-            />
+            <UloDineRadioButton name="" onChange={() => {}} selected={false} />
           </div>
           <div className={styles.flex}>
             <p>Unread</p>
-            <UloDineRadioButton
-              name=""
-              onChange={(val) => {}}
-              selected={false}
-            />
+            <UloDineRadioButton name="" onChange={() => {}} selected={false} />
           </div>
           <UloDIneButton
             color="green"

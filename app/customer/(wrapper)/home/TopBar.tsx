@@ -14,7 +14,7 @@ function TopBar() {
   const router = useRouter();
   const { getMe } = useAuth();
   const [user, setUser] = React.useState<MeResponsePayload | null>(null);
-  const [unread, setUnread] = useState(true);
+  const [unread] = useState(true);
 
   useEffect(() => {
     async function fetchUser() {

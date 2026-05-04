@@ -79,7 +79,7 @@ function ScanPage() {
     return match ? match[0] : null;
   }, []);
 
-  const isInsideScanArea = useCallback((box: DOMRectReadOnly): boolean => {
+  const isInsideScanBox = useCallback((box: DOMRectReadOnly): boolean => {
     const video = videoRef.current;
     const scanArea = scanAreaRef.current;
     if (!video || !scanArea) {
@@ -102,8 +102,7 @@ function ScanPage() {
       height: Math.min(video.videoHeight, scanRect.height * scaleY),
     };
 
-    // Strict containment: only accept when the detected bounding box
-    // is fully inside the visible scan area on the video frame.
+    // Strict containment against the overlay div with the `scan_area` class.
     return (
       box.x > scanAreaOnVideo.x &&
       box.y > scanAreaOnVideo.y &&
@@ -230,7 +229,7 @@ function ScanPage() {
         const match = results.find(
           (barcode) =>
             barcode.rawValue &&
-            (!barcode.boundingBox || isInsideScanArea(barcode.boundingBox)),
+            (!barcode.boundingBox || isInsideScanBox(barcode.boundingBox)),
         );
 
         if (match) {
@@ -244,7 +243,7 @@ function ScanPage() {
     };
 
     frameRef.current = requestAnimationFrame(run);
-  }, [detectWithJsQr, handleDetectionResult, isInsideScanArea]);
+  }, [detectWithJsQr, handleDetectionResult, isInsideScanBox]);
 
   const startCamera = useCallback(async () => {
     if (!navigator.mediaDevices?.getUserMedia) {

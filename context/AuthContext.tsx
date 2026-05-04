@@ -14,13 +14,14 @@ const STORAGE_USER_KEY = "user";
 const RESTAURANT_ACCOUNT_TYPE: AccountType = "RESTAURANT";
 const CUSTOMER_ACCOUNT_TYPE: AccountType = "CUSTOMER";
 
-function persistAuthUser<T extends object>(
-  payload: T,
-  accountType: AccountType,
-) {
+function persistAuthUser(payload: object | null, accountType: AccountType) {
+  if (!payload) {
+    return;
+  }
+
   localStorage.setItem(
     STORAGE_USER_KEY,
-    JSON.stringify({ ...payload, accountType }),
+    JSON.stringify({ ...(payload as Record<string, unknown>), accountType }),
   );
 }
 
@@ -141,6 +142,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   >({
     endpoint: apiRoutes.restaurant.auth.login,
     onSuccess: (res) => {
+      if (!res.data) {
+        addAlert("error", "Login failed");
+        return;
+      }
+
       persistAuthUser(res.data, RESTAURANT_ACCOUNT_TYPE);
       addAlert("success", res.message || "Login successful");
       router.push(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW);
@@ -156,6 +162,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   >({
     endpoint: apiRoutes.customer.auth.login,
     onSuccess: (res) => {
+      if (!res.data) {
+        addAlert("error", "Login failed");
+        return;
+      }
+
       persistAuthUser(res.data, CUSTOMER_ACCOUNT_TYPE);
       addAlert("success", res.message || "Login successful");
       router.push(CUSTOMER_ROUTES.HOME);
@@ -205,6 +216,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   >({
     endpoint: apiRoutes.restaurant.auth.register,
     onSuccess: (res) => {
+      if (!res.data) {
+        addAlert("error", "Signup failed");
+        return;
+      }
+
       persistAuthUser(res.data, RESTAURANT_ACCOUNT_TYPE);
       addAlert("success", res.message || "Signup successful");
       localStorage.removeItem("email_verified");
