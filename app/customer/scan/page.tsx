@@ -31,6 +31,12 @@ const DETECTOR_FORMATS = [
   "upc_a",
   "upc_e",
 ];
+const VALID_QR_ORIGINS = [
+  "http://localhost:4000",
+  "http://127.0.0.1:4000",
+  "https://app.ulodine.com",
+  "https://ulodine.com",
+];
 
 function ScanPage() {
   const router = useRouter();
@@ -62,6 +68,15 @@ function ScanPage() {
     if (video) {
       video.srcObject = null;
     }
+  }, []);
+
+  const matchesValidOrigin = useCallback((value: string): boolean => {
+    return VALID_QR_ORIGINS.some((origin) => value.startsWith(origin));
+  }, []);
+
+  const extractRestaurantPath = useCallback((value: string): string | null => {
+    const match = value.match(/\/restaurants\/[^/?#]+/);
+    return match ? match[0] : null;
   }, []);
 
   const isInsideScanArea = useCallback((box: DOMRectReadOnly): boolean => {
@@ -291,6 +306,25 @@ function ScanPage() {
     };
   }, [startCamera, stopCamera]);
 
+  useEffect(() => {
+    if (!detectedValue) {
+      return;
+    }
+
+    if (!matchesValidOrigin(detectedValue)) {
+      setError("Invalid QR code. Please scan a valid UloDine restaurant QR.");
+      return;
+    }
+
+    const path = extractRestaurantPath(detectedValue);
+    if (!path) {
+      setError("Unable to extract restaurant information from QR code.");
+      return;
+    }
+
+    router.push(path);
+  }, [detectedValue, matchesValidOrigin, extractRestaurantPath, router]);
+
   return (
     <section className={styles.scan_page}>
       <div className={styles.header}>
@@ -305,8 +339,8 @@ function ScanPage() {
       </div>
       <video ref={videoRef} autoPlay playsInline muted></video>
       <canvas ref={canvasRef}></canvas>
-      {detectedValue ? <span>{detectedValue}</span> : null}
-      {error ? <span>{error}</span> : null}
+
+      {error ? <span style={{ color: "red" }}>{error}</span> : null}
     </section>
   );
 }
