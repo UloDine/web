@@ -313,12 +313,14 @@ function ScanPage() {
 
     if (!matchesValidOrigin(detectedValue)) {
       setError("Invalid QR code. Please scan a valid UloDine restaurant QR.");
+      scanLockRef.current = false; // Reset lock to allow re-scanning
       return;
     }
 
     const path = extractRestaurantPath(detectedValue);
     if (!path) {
       setError("Unable to extract restaurant information from QR code.");
+      scanLockRef.current = false; // Reset lock to allow re-scanning
       return;
     }
 
