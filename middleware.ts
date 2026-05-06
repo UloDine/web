@@ -69,14 +69,22 @@ export function middleware(req: NextRequest) {
       AUTH_ROUTES.RES_LOGIN,
       AUTH_ROUTES.RES_SIGNUP,
     ];
+    const forcedLogin = req.nextUrl.searchParams.get("forced") === "true";
+    const forcedLoginCookie = req.cookies.get("forced-login")?.value === "true";
 
     if (!token && !restaurantPublicPaths.includes(pathname)) {
       // Not logged in, trying to access protected restaurant page
       return NextResponse.redirect(new URL(AUTH_ROUTES.RES_LOGIN, req.url));
     }
 
-    if (token && restaurantPublicPaths.includes(pathname)) {
-      // Logged in, trying to access login/signup page
+    if (
+      token &&
+      restaurantPublicPaths.includes(pathname) &&
+      !forcedLogin &&
+      !forcedLoginCookie
+    ) {
+      // Logged in, trying to access login/signup page.
+      // Allow forced redirects from ProfileContext to pass through.
       return NextResponse.redirect(
         new URL(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW, req.url),
       );

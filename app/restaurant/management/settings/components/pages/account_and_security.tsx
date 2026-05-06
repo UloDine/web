@@ -18,13 +18,13 @@ function AccountAndSecurity() {
     //     // Logic to enable 2FA
     //   },
     // },
-    {
-      title: "Modify account contact details",
-      description: "Enable 2FA for added security.",
-      action: () => {
-        // Logic to enable 2FA
-      },
-    },
+    // {
+    //   title: "Modify account contact details",
+    //   description: "Enable 2FA for added security.",
+    //   action: () => {
+    //     // Logic to enable 2FA
+    //   },
+    // },
     // {
     //   title: "Manage Devices",
     //   description: "View and manage devices connected to your account.",
@@ -48,9 +48,9 @@ function AccountAndSecurity() {
           <p className={styles.action_description}>{action.description}</p>
           <div className={styles.action_button}>
             <UloDIneButton
-              type='primary'
-              color='green'
-              label='Begin Process'
+              type="primary"
+              color="green"
+              label="Begin Process"
               onClick={action.action}
             />
           </div>

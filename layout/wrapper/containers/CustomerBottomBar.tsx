@@ -39,7 +39,7 @@ function CustomerBottomBar() {
     return () => {
       isMounted = false;
     };
-  }, [getMe]);
+  }, []);
 
   const tabs: Array<{ path: string; label: string; icon: React.ReactNode }> = [
     {

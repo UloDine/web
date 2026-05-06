@@ -26,16 +26,14 @@ function EditPen({
 }) {
   return (
     <button
-      disabled={loading || (value === "" && editing)}
+      type="button"
+      disabled={loading}
       className={`${styles.edit_pen} ${
-        editing && value !== ""
-          ? styles.editing
-          : loading
-          ? styles.loading
-          : value === ""
-          ? styles.empty
-          : ""
+        editing ? styles.editing : loading ? styles.loading : ""
       }`}
+      onMouseDown={(event) => {
+        event.preventDefault();
+      }}
       onClick={() => {
         setEditing(!editing);
         // setLoading(!editing);
@@ -53,11 +51,7 @@ function EditPen({
       ) : loading ? (
         <span className={styles.edit_pen_loader}></span>
       ) : (
-        <span className={styles.edit_pen_icon}>
-          {editing && value === ""
-            ? GeneralIcons.check_line_white
-            : GeneralIcons.edit_pen}
-        </span>
+        <span className={styles.edit_pen_icon}>{GeneralIcons.edit_pen}</span>
       )}
     </button>
   );

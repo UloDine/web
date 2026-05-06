@@ -23,13 +23,13 @@ export default function Seetings() {
       },
       value: "account-and-security",
     },
-    {
-      label: "Order & Menu Preferences",
-      action: function () {
-        setCurrentTab(this.value);
-      },
-      value: "order-and-menu-preferences",
-    },
+    // {
+    //   label: "Order & Menu Preferences",
+    //   action: function () {
+    //     setCurrentTab(this.value);
+    //   },
+    //   value: "order-and-menu-preferences",
+    // },
     {
       label: "Payment & Billing",
       action: function () {
@@ -55,7 +55,7 @@ export default function Seetings() {
 
   return (
     <section>
-      <PageTitleBar title='Settings' />
+      <PageTitleBar title="Settings" />
       <div className={styles.settings}>
         <ul className={styles.tabs}>
           {tabs.map((tab) => (

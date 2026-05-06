@@ -1,9 +1,16 @@
 "use client";
 import { usePost } from "@/hooks/usePost";
 import { apiRoutes } from "@/lib/apiRoutes";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import { useAlert } from "./alert/AlertContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   AUTH_ROUTES,
   RESTAURANT_MANAGEMENT_ROUTES,
@@ -59,6 +66,7 @@ const AuthContext = createContext<AuthContext | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { addAlert } = useAlert();
   const router = useRouter();
+  const pathname = usePathname();
 
   const [personal, setPersonal] = useState<PersonalDetails>({
     firstName: "",
@@ -128,6 +136,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   const [sending, setSending] = useState<boolean>(false);
+  const [meCache, setMeCache] = useState<MeResponsePayload | null>(null);
+  const [isMeFetching, setIsMeFetching] = useState<boolean>(false);
+  const meFetchedRef = useRef<boolean>(false);
+
+  // ----- Initialize Me cache on mount -----
+  useEffect(() => {
+    if (meFetchedRef.current) return;
+    if (!pathname?.startsWith("/customer")) return;
+
+    async function initializeMeCache() {
+      if (typeof document === "undefined") return;
+
+      try {
+        setIsMeFetching(true);
+        const response = await fetch(apiRoutes.customer.auth.me, {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        const json = (await response.json()) as BaseResponse<MeResponsePayload>;
+
+        if (response.ok && json.data) {
+          setMeCache(json.data);
+        }
+      } catch (error) {
+        console.error("Failed to initialize Me cache:", error);
+      } finally {
+        setIsMeFetching(false);
+        meFetchedRef.current = true;
+      }
+    }
+
+    initializeMeCache();
+  }, [pathname]);
 
   // ----- Helpers -----
   function updateEmailStatus(payload: any) {
@@ -148,6 +193,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       persistAuthUser(res.data, RESTAURANT_ACCOUNT_TYPE);
+      // Clear Me cache on login so it gets refreshed
+      setMeCache(null);
+      meFetchedRef.current = false;
       addAlert("success", res.message || "Login successful");
       router.push(RESTAURANT_MANAGEMENT_ROUTES.OVERVIEW);
     },
@@ -168,6 +216,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       persistAuthUser(res.data, CUSTOMER_ACCOUNT_TYPE);
+      // Clear Me cache on login so it gets refreshed
+      setMeCache(null);
+      meFetchedRef.current = false;
       addAlert("success", res.message || "Login successful");
       router.push(CUSTOMER_ROUTES.HOME);
     },
@@ -272,6 +323,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   async function getMe(): Promise<MeResponsePayload> {
+    // Return cached value if available
+    if (meCache) {
+      return meCache;
+    }
+
+    // If currently fetching, wait for cache to be populated
+    if (isMeFetching) {
+      // Wait up to 5 seconds for cache to be populated
+      for (let i = 0; i < 50; i++) {
+        if (meCache) {
+          return meCache;
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      }
+      throw new Error("Failed to fetch auth state");
+    }
+
+    // If not cached and not fetching, fetch and cache
     const response = await fetch(apiRoutes.customer.auth.me, {
       method: "GET",
       credentials: "include",
@@ -290,6 +359,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw new Error("Failed to fetch auth state");
     }
 
+    setMeCache(json.data);
     return json.data;
   }
 
@@ -375,6 +445,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem(STORAGE_USER_KEY);
       localStorage.removeItem("email_verified");
       localStorage.removeItem("email_to_verify");
+
+      // Clear Me cache and reset fetch flag
+      setMeCache(null);
+      meFetchedRef.current = false;
+
       addAlert("success", "Logged out successfully");
 
       // Route based on the stored account type on this device

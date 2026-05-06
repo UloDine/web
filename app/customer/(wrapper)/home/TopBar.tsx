@@ -27,7 +27,7 @@ function TopBar() {
     }
 
     fetchUser();
-  }, [getMe]);
+  }, []);
   return (
     <div className={styles.top_bar}>
       <div className={styles.inner}>

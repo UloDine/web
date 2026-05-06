@@ -183,6 +183,7 @@ interface Profile {
     restaurant: Restaurant;
     accountType?: AccountType;
   }) => void;
+  refreshRestaurantProfile: (restaurantId: string) => Promise<Restaurant>;
 }
 
 interface User {

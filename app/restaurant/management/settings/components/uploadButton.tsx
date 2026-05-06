@@ -2,13 +2,20 @@ import { GeneralIcons } from "@/icons/general/icons";
 import React from "react";
 import styles from "../style/index.module.css";
 
-function UploadFileButton({ className }: { className?: string }) {
+function UploadFileButton({
+  className,
+  onClick,
+}: {
+  className?: string;
+  onClick?: () => void;
+}) {
   const [uploading] = React.useState(false);
   return (
     <button
       disabled={uploading}
       className={`${styles.upload_button} ${className || ""}`}
-      //   onClick={() => setUploading(true)}
+      type="button"
+      onClick={onClick}
     >
       {uploading ? (
         <span className={styles.spinner}></span>

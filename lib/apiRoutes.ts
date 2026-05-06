@@ -16,6 +16,10 @@ export const apiRoutes = {
       request_otp: `/api/auth/otp/request`,
       verify_otp: `/api/auth/otp/verify`,
     },
+    settings: {
+      fetch: (id: string) => `/api/restaurant/settings?restaurantId=${id}`,
+      update: (id: string) => `/api/restaurant/settings?restaurantId=${id}`,
+    },
     fetchOverview: (id: string) =>
       `/api/restaurant/overview?restaurantId=${id}`,
     fetchById: (id: string) => `/api/restaurants/${id}`,

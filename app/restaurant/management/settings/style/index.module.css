@@ -113,7 +113,8 @@
 .general .restaurant_desc p {
   font-size: 1.2rem;
   text-align: center;
-  width: 100%;
+  width: -moz-fit-content;
+  width: fit-content;
   padding: 0.7rem;
   border: 0.1rem solid transparent;
 }
@@ -139,6 +140,13 @@
   align-items: center;
   width: 100%;
 }
+.general .section_edits_wrapper .inner_wrapper .display_text {
+  display: block;
+}
+.general .section_edits_wrapper .inner_wrapper .display_text:empty::before {
+  content: attr(data-placeholder);
+  color: #c1c1c1;
+}
 .general .section_edits_wrapper .inner_wrapper .icon {
   width: 2rem;
   height: 2rem;
@@ -148,6 +156,255 @@
   margin-right: 1.5rem;
 }
 
+.general_skeleton_banner {
+  position: relative;
+  height: 25rem;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ececec 0%, #f6f6f6 100%);
+}
+.general_skeleton_banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_skeleton_banner_overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.general_skeleton_profile_image {
+  position: absolute;
+  bottom: -15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  border: 0.5rem solid #ffffff;
+  background: #e2e2e2;
+  overflow: hidden;
+}
+.general_skeleton_profile_image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_skeleton_upload,
+.general_skeleton_upload_primary,
+.general_skeleton_edit,
+.general_skeleton_section_action {
+  position: absolute;
+  overflow: hidden;
+  background: #ececec;
+}
+.general_skeleton_upload::after,
+.general_skeleton_upload_primary::after,
+.general_skeleton_edit::after,
+.general_skeleton_section_action::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_skeleton_upload {
+  bottom: 0.5rem;
+  right: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.general_skeleton_upload_primary {
+  bottom: 0.5rem;
+  right: 4rem;
+  width: 8rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+}
+
+.general_skeleton_name_row {
+  margin: 2rem 0;
+  margin-top: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.general_skeleton_name {
+  min-width: 50%;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background: #ececec;
+  overflow: hidden;
+  position: relative;
+}
+.general_skeleton_name::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_skeleton_edit {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  position: relative;
+}
+
+.general_skeleton_desc {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.general_skeleton_desc_line {
+  width: 100%;
+  max-width: 42rem;
+  height: 1.2rem;
+  border-radius: 999px;
+  background: #ececec;
+  overflow: hidden;
+  position: relative;
+}
+.general_skeleton_desc_line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_skeleton_section_title {
+  display: inline-block;
+  width: 8rem;
+  height: 1.1rem;
+  border-radius: 999px;
+  background: #ececec;
+  overflow: hidden;
+  position: relative;
+}
+.general_skeleton_section_title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_skeleton_section_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.general_skeleton_section_row:not(:first-child) {
+  margin-top: 1.5rem;
+}
+
+.general_skeleton_section_icon {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background: #ececec;
+  overflow: hidden;
+  position: relative;
+}
+.general_skeleton_section_icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_skeleton_section_text,
+.general_skeleton_section_text_long {
+  height: 1rem;
+  width: 100%;
+  background: #ececec;
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+}
+.general_skeleton_section_text::after,
+.general_skeleton_section_text_long::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_field_skeleton_text {
+  display: inline-block;
+  height: 1rem;
+  width: 100%;
+  max-width: 34rem;
+  border-radius: 999px;
+  background: #ececec;
+  position: relative;
+  overflow: hidden;
+}
+.general_field_skeleton_text::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 100%);
+  animation: generalShimmer 1.4s infinite;
+}
+
+.general_field_skeleton_name {
+  height: 2.5rem;
+  border-radius: 0.75rem;
+}
+
+.general_field_skeleton_desc {
+  width: 100%;
+  max-width: 42rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.general_skeleton_section_text {
+  max-width: 18rem;
+}
+
+.general_skeleton_section_text_long {
+  max-width: 24rem;
+}
+
+@keyframes generalShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
 .account_and_security {
   position: relative;
   min-height: 54rem;

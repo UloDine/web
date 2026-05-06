@@ -17,7 +17,6 @@ function RestaurantSidebar() {
   const { logout } = useAuth();
   const [isOpen, setIsOpen] = React.useState(false);
   const { openSidebar, setOpenSidebar } = useCustomNavigation();
-  if (!restaurant) return null;
   const menu = [
     {
       icon: RestaurantIcons.overview,
@@ -56,6 +55,43 @@ function RestaurantSidebar() {
       path: RESTAURANT_MANAGEMENT_ROUTES.SETTINGS,
     },
   ];
+
+  if (!restaurant) {
+    return (
+      <>
+        <nav
+          className={`${styles.side_bar} ${styles.side_bar_skeleton} ${!openSidebar ? styles.close : ""}`}
+          aria-busy="true"
+          aria-live="polite"
+        >
+          <div className={styles.side_bar_header}>
+            <div className={styles.side_bar_avatar_skeleton} />
+            <div className={styles.side_bar_header_right}>
+              <div className={styles.side_bar_title_skeleton} />
+              <div className={styles.side_bar_plan_skeleton} />
+            </div>
+          </div>
+
+          <ul className={styles.side_bar_skeleton_list}>
+            {menu.map((m) => (
+              <li key={m.label} className={styles.side_bar_skeleton_item}>
+                <div className={styles.side_bar_menu_icon_skeleton} />
+                <div className={styles.side_bar_menu_label_skeleton} />
+              </li>
+            ))}
+          </ul>
+
+          <div className={styles.side_bar_logout_skeleton} />
+        </nav>
+        {openSidebar && (
+          <div
+            className={styles.overlay}
+            onClick={() => setOpenSidebar(false)}
+          />
+        )}
+      </>
+    );
+  }
 
   return (
     <>

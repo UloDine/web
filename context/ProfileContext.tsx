@@ -1,4 +1,5 @@
 "use client";
+import { apiRoutes } from "@/lib/apiRoutes";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import { usePathname, useRouter } from "next/navigation";
 import React, {
@@ -13,6 +14,14 @@ export const ProfileContext = createContext<Profile | null>(null);
 const STORAGE_USER_KEY = "user";
 const RESTAURANT_ACCOUNT_TYPE: AccountType = "RESTAURANT";
 const CUSTOMER_ACCOUNT_TYPE: AccountType = "CUSTOMER";
+
+function getForcedRestaurantLoginPath() {
+  // Set a cookie flag that persists across URL changes
+  if (typeof document !== "undefined") {
+    document.cookie = "forced-login=true; path=/; max-age=60";
+  }
+  return `${AUTH_ROUTES.RES_LOGIN}?forced=true`;
+}
 
 function ProfileProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -33,13 +42,73 @@ function ProfileProvider({ children }: { children: React.ReactNode }) {
     setRestaurant(payload.restaurant);
   }
 
+  async function refreshRestaurantProfile(restaurantId: string) {
+    const response = await fetch(
+      apiRoutes.restaurant.settings.fetch(restaurantId),
+      {
+        method: "GET",
+        credentials: "include",
+        headers: { Accept: "application/json" },
+      },
+    );
+
+    const json = await response.json();
+
+    if (!response.ok || json.status !== "success" || !json.data) {
+      throw new Error(json.message || "Failed to refresh restaurant profile");
+    }
+
+    const nextRestaurant = json.data as Restaurant;
+    setRestaurant(nextRestaurant);
+
+    try {
+      const storedData = localStorage.getItem(STORAGE_USER_KEY);
+
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        localStorage.setItem(
+          STORAGE_USER_KEY,
+          JSON.stringify({
+            ...parsedData,
+            user: parsedData.user ?? user,
+            restaurant: nextRestaurant,
+            accountType: RESTAURANT_ACCOUNT_TYPE,
+          }),
+        );
+      } else if (user) {
+        localStorage.setItem(
+          STORAGE_USER_KEY,
+          JSON.stringify({
+            user,
+            restaurant: nextRestaurant,
+            accountType: RESTAURANT_ACCOUNT_TYPE,
+          }),
+        );
+      }
+    } catch {
+      if (user) {
+        localStorage.setItem(
+          STORAGE_USER_KEY,
+          JSON.stringify({
+            user,
+            restaurant: nextRestaurant,
+            accountType: RESTAURANT_ACCOUNT_TYPE,
+          }),
+        );
+      }
+    }
+
+    return nextRestaurant;
+  }
+
   useLayoutEffect(() => {
     const storedData = localStorage.getItem(STORAGE_USER_KEY);
     const isProtectedRestaurantRoute = pathname?.startsWith(
       "/restaurant/management",
     );
+
     if (!storedData && isProtectedRestaurantRoute) {
-      router.replace(AUTH_ROUTES.RES_LOGIN);
+      router.replace(getForcedRestaurantLoginPath());
       return;
     }
 
@@ -81,7 +150,7 @@ function ProfileProvider({ children }: { children: React.ReactNode }) {
 
       if (accountType === CUSTOMER_ACCOUNT_TYPE) {
         if (isProtectedRestaurantRoute) {
-          router.replace(AUTH_ROUTES.RES_LOGIN);
+          router.replace(getForcedRestaurantLoginPath());
         }
 
         setUser(null);
@@ -100,7 +169,14 @@ function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ProfileContext.Provider
-      value={{ user, restaurant, setUser, setRestaurant, updateProfileStore }}
+      value={{
+        user,
+        restaurant,
+        setUser,
+        setRestaurant,
+        updateProfileStore,
+        refreshRestaurantProfile,
+      }}
     >
       {children}
     </ProfileContext.Provider>
