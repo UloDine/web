@@ -28,20 +28,26 @@ export async function proxyRequest<T>(
 
     // ensure cookies are forwarded to the upstream
     const cookieHeader = req.headers.get("cookie");
+    const headers = {
+      ...(cookieHeader ? { cookie: cookieHeader } : {}),
+      "content-type": req.headers.get("content-type") || "",
+      "X-Internal-Secret": process.env.INTERNAL_SECRET_KEY || "",
+      "ngrok-skip-browser-warning": "69420",
+    };
+    console.log("[proxyRequest] Target URL:", targetUrl);
+    console.log("[proxyRequest] X-Internal-Secret:", headers["X-Internal-Secret"]?.substring(0, 10) + "...");
+    
     const response = await axios({
       url: targetUrl,
       method,
-      headers: {
-        ...(cookieHeader ? { cookie: cookieHeader } : {}),
-        "content-type": req.headers.get("content-type") || "",
-        "X-Internal-Secret": process.env.INTERNAL_SECRET_KEY || "",
-        "ngrok-skip-browser-warning": "69420",
-      },
+      headers,
       data,
       withCredentials: true,
       responseType: "arraybuffer",
       validateStatus: () => true,
     });
+    
+    console.log("[proxyRequest] Response status:", response.status);
 
     if (response.status === 401) {
       // If upstream says unauthorized, clear cookies and redirect to login
