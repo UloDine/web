@@ -51,7 +51,8 @@ function Page() {
     if (!email || !isValidEmail(email)) {
       return;
     }
-    await requestOTPBusiness(email);
+    const ok = await requestOTPBusiness(email);
+    if (!ok) return;
     // After OTP is sent, navigate to verify-email page
     const params = new URLSearchParams({
       from: AUTH_ROUTES.RES_RECOVER_PASSWORD,

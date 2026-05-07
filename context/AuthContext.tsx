@@ -500,10 +500,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSending(false);
   }
 
-  async function requestOTPBusiness(email: string) {
+  async function requestOTPBusiness(email: string): Promise<boolean> {
     if (!email) {
       addAlert("error", "Please enter your email");
-      return;
+      return false;
     }
 
     setSending(true);
@@ -516,7 +516,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!emailCheckResponse.ok) {
         addAlert("error", "No restaurant account found with this email address");
         setSending(false);
-        return;
+        return false;
       }
 
       setBusinessPasswordReset((prev) => ({ ...prev, email }));
@@ -527,11 +527,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         accountType: "restaurant",
         purpose: "password_reset",
       });
+
+      setSending(false);
+      return true;
     } catch (error) {
       console.error("Error checking email:", error);
       addAlert("error", "Failed to verify email. Please try again.");
+      setSending(false);
+      return false;
     }
-    setSending(false);
   }
 
   async function handleVerifyEmailBusiness() {

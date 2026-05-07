@@ -123,8 +123,8 @@ interface AuthContext {
   handleUserSignup: () => Promise<void>;
   handleVerifyEmail: () => Promise<void>;
   requestOTP: (purpose?: string) => Promise<void>;
-  requestOTPBusiness: (email: string) => Promise<void>;
-  handleVerifyEmailBusiness: () => Promise<void>;
+  requestOTPBusiness: (email: string) => Promise<boolean>;
+  handleVerifyEmailBusiness: () => Promise<void>; 
   logout: () => void;
   getMe: () => Promise<MeResponsePayload>;
 
