@@ -1,5 +1,4 @@
 "use client";
-import UloDIneButton from "@/components/button/UloDIneButton";
 import { GeneralIcons } from "@/icons/general/icons";
 import { SocialIcons } from "@/icons/socials/icons";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
@@ -20,7 +19,6 @@ function Page() {
     requestOTPBusiness,
     sending,
   } = useAuth();
-  const [disabled, setDisabled] = useState<boolean>(true);
   const [otpRequested, setOtpRequested] = useState<boolean>(false);
 
   const socials = [
@@ -55,9 +53,7 @@ function Page() {
 
   useEffect(() => {
     if (businessPasswordReset.otp.length === 6) {
-      setDisabled(false);
     } else {
-      setDisabled(true);
     }
   }, [businessPasswordReset.otp]);
 
@@ -112,23 +108,11 @@ function Page() {
               otpChange={(value) =>
                 setBusinessPasswordReset({ ...businessPasswordReset, otp: value })
               }
-              onComplete={() => {}}
+              onComplete={handleVerifyEmailBusiness}
             />
           </div>
 
-          <div style={{ marginTop: 30 }}>
-            <UloDIneButton
-              type="primary"
-              label="Verify"
-              color="green"
-              onClick={handleVerifyEmailBusiness}
-              style={{ width: 150, height: 40 }}
-              disabled={disabled || sending}
-              loading={sending}
-            />
-          </div>
-
-          <p>
+          <p style={{ marginTop: "1rem" }}>
             Didn&apos;t receive OTP?{" "}
             <button
               onClick={() => requestOTPBusiness(businessPasswordReset.email)}
@@ -161,3 +145,4 @@ function Page() {
 }
 
 export default Page;
+

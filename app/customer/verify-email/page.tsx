@@ -57,20 +57,10 @@ function VerifyEmail() {
         type="otp"
         value={verifyEmail.otp}
         otpChange={(value) => setVerifyEmail({ ...verifyEmail, otp: value })}
-        onComplete={() => {}}
+        onComplete={handleVerifyEmail}
       />
 
-      <UloDIneButton
-        color="green"
-        label="Verify"
-        onClick={handleVerifyEmail}
-        type="primary"
-        disabled={disabled || sending}
-        loading={sending}
-        style={{ width: "100%", height: "4rem" }}
-      />
-
-      <p>
+      <p style={{ marginTop: "1rem" }}>
         Didn&apos;t receive OTP?{" "}
         <button
           onClick={() => requestOTP()}

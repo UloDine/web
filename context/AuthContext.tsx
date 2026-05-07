@@ -445,24 +445,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSending(false);
   }
 
-  async function requestOTP(purpose: string = "account_verification") {
-    const emailToVerify =
-      localStorage.getItem("email_to_verify") || verifyEmail.email;
-
-    if (!emailToVerify) {
-      addAlert("error", "No email found. Please sign up again.");
-      return;
-    }
-
-    setSending(true);
-    await postRequestOTP({
-      email: emailToVerify,
-      accountType: "user",
-      purpose,
-    });
-    setSending(false);
-  }
-
   async function register() {
     setSending(true);
     await postRegister({
@@ -475,6 +457,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSending(false);
   }
 
+  async function requestOTP(purpose: string = "account_verification") {
+    const emailToVerify =
+      localStorage.getItem("email_to_verify") || verifyEmail.email;
+
+    if (!emailToVerify) {
+      addAlert("error", "No email found. Please sign up again.");
+      return;
+    }
+
+    setSending(true);
+    try {
+      // For password reset, check if account exists before sending OTP
+      if (purpose === "password_reset") {
+        // Try to verify email existence by checking against the backend
+        const emailCheckResponse = await fetch(
+          `/api/auth/check-email?email=${encodeURIComponent(emailToVerify)}&accountType=user`,
+          { credentials: "include" }
+        );
+
+        if (!emailCheckResponse.ok) {
+          addAlert("error", "No account found with this email address");
+          setSending(false);
+          return;
+        }
+      }
+
+      await postRequestOTP({
+        email: emailToVerify,
+        accountType: "user",
+        purpose,
+      });
+    } catch (error) {
+      console.error("Error checking email:", error);
+      // Still proceed with OTP request if check fails (backend will validate)
+      await postRequestOTP({
+        email: emailToVerify,
+        accountType: "user",
+        purpose,
+      });
+    }
+    setSending(false);
+  }
+
   async function requestOTPBusiness(email: string) {
     if (!email) {
       addAlert("error", "Please enter your email");
@@ -482,12 +507,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     setSending(true);
-    setBusinessPasswordReset((prev) => ({ ...prev, email }));
-    await postRequestOTPBusiness({
-      email,
-      accountType: "restaurant",
-      purpose: "password_reset",
-    });
+    try {
+      // Verify that the restaurant email exists
+      const emailCheckResponse = await fetch(
+        `/api/restaurants/email/${encodeURIComponent(email)}`
+      );
+
+      if (!emailCheckResponse.ok) {
+        addAlert("error", "No restaurant account found with this email address");
+        setSending(false);
+        return;
+      }
+
+      setBusinessPasswordReset((prev) => ({ ...prev, email }));
+      localStorage.setItem("email_to_verify_business", email);
+
+      await postRequestOTPBusiness({
+        email,
+        accountType: "restaurant",
+        purpose: "password_reset",
+      });
+    } catch (error) {
+      console.error("Error checking email:", error);
+      addAlert("error", "Failed to verify email. Please try again.");
+    }
     setSending(false);
   }
 
