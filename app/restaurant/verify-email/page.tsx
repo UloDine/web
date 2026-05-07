@@ -106,7 +106,10 @@ function Page() {
               type="otp"
               value={businessPasswordReset.otp}
               otpChange={(value) =>
-                setBusinessPasswordReset({ ...businessPasswordReset, otp: value })
+                setBusinessPasswordReset({
+                  ...businessPasswordReset,
+                  otp: value,
+                })
               }
               onComplete={handleVerifyEmailBusiness}
             />
@@ -145,4 +148,3 @@ function Page() {
 }
 
 export default Page;
-

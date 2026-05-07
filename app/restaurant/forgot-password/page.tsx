@@ -16,7 +16,7 @@ function Page() {
   const searchParams = useSearchParams();
   const { requestOTPBusiness, sending } = useAuth();
   const [email, setEmail] = useState("");
-  
+
   const socials = [
     {
       icon: SocialIcons.x,

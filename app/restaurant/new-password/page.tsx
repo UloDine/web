@@ -76,7 +76,7 @@ function Page() {
 
       // Fetch restaurant by email to get the ID
       const response = await fetch(
-        `/api/restaurants/email/${encodeURIComponent(email)}`
+        `/api/restaurants/email/${encodeURIComponent(email)}`,
       );
       const result = await response.json();
 
@@ -97,7 +97,7 @@ function Page() {
           body: JSON.stringify({
             newPassword: businessPasswordReset.newPassword,
           }),
-        }
+        },
       );
 
       const passwordResult = await passwordResponse.json();
@@ -105,7 +105,7 @@ function Page() {
       if (!passwordResponse.ok) {
         addAlert(
           "error",
-          passwordResult.message || "Failed to update password"
+          passwordResult.message || "Failed to update password",
         );
         return;
       }

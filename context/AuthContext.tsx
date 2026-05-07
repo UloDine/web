@@ -342,7 +342,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     endpoint: apiRoutes.restaurant.auth.request_otp,
     onSuccess: (res) => {
       addAlert("success", res.message || "OTP sent to your email");
-      localStorage.setItem("email_to_verify_business", businessPasswordReset.email);
+      localStorage.setItem(
+        "email_to_verify_business",
+        businessPasswordReset.email,
+      );
     },
     onError: (err) => {
       addAlert("error", err.message || "Failed to send OTP");
@@ -473,7 +476,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         // Try to verify email existence by checking against the backend
         const emailCheckResponse = await fetch(
           `/api/auth/check-email?email=${encodeURIComponent(emailToVerify)}&accountType=user`,
-          { credentials: "include" }
+          { credentials: "include" },
         );
 
         if (!emailCheckResponse.ok) {
@@ -508,13 +511,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setSending(true);
     try {
-      // Verify that the restaurant email exists
+      // Verify that the restaurant email exists in restaurant_users table
       const emailCheckResponse = await fetch(
-        `/api/restaurants/email/${encodeURIComponent(email)}`
+        `/api/auth/restaurant/check-email?email=${encodeURIComponent(email)}`,
+        { credentials: "include" },
       );
 
+      const checkData = await emailCheckResponse.json();
+      console.log("Email check response:", { status: emailCheckResponse.status, data: checkData });
+
       if (!emailCheckResponse.ok) {
-        addAlert("error", "No restaurant account found with this email address");
+        addAlert(
+          "error",
+          checkData.message || "No restaurant account found with this email address",
+        );
         setSending(false);
         return false;
       }
