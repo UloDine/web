@@ -1,15 +1,16 @@
 import React from "react";
 import styles from "../../style/index.module.css";
 import UloDIneButton from "@/components/button/UloDIneButton";
+import { useRouter } from "next/navigation";
+import { AUTH_ROUTES } from "@/routes/RoutePaths";
 
 function AccountAndSecurity() {
+  const router = useRouter();
   const actions = [
     {
       title: "Change Password",
       description: "Update login credentials securely.",
-      action: () => {
-        // Logic to change password
-      },
+      action: () => router.push(AUTH_ROUTES.RES_RECOVER_PASSWORD),
     },
     // {
     //   title: "Two-Factor Authentication",

@@ -28,7 +28,7 @@ interface UloDineLink {
   disabled?: boolean;
   className?: string;
   label: string;
-  type?: "main" | "outline";
+  type?: "main" | "outline" | "text";
   icon?: React.ReactNode;
   underline?: boolean;
   labelColor?: buttonColor;

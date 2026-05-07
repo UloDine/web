@@ -2,6 +2,9 @@ export const HOME_ROUTES = {
   HOME: "/",
   RESTAURANTS: "/restaurants",
   PRICING: "/pricing",
+  FAQ: "/faq",
+  CONTACT_EMAIL: "mailto:help@ulodine.com",
+  CONTACT_PHONE: "tel:+2349063213825",
 };
 
 export const PAGE_ROUTES = {
@@ -12,6 +15,10 @@ export const AUTH_ROUTES = {
   RES_LOGIN: "/restaurant/login",
   RES_SIGNUP: "/restaurant/signup",
   RES_LOGOUT: "/logout",
+  RES_RECOVER_PASSWORD: "/restaurant/forgot-password",
+  RES_VERIFY_EMAIL: "/restaurant/verify-email",
+  RES_NEW_PASSWORD: "/restaurant/new-password",
+  RES_DELETE_ACCOUNT: "/restaurant/delete-account",
   CUS_LOGIN: "/customer/login",
   CUS_SIGNUP: "/customer/signup",
   CUS_LOGOUT: "/customer/logout",

@@ -33,3 +33,4 @@ export { default as KeySmallIcon } from "./KeySmall";
 export { default as LogoutIcon } from "./Logout";
 export { default as ChatIcon } from "./Chat";
 export { default as FilterIcon } from "./Filter";
+export { default as LinkExternalIcon } from "./LinkExternal";

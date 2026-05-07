@@ -171,6 +171,14 @@
   border-radius: 2rem;
 }
 
+.ulodine_link.text {
+  padding: unset;
+  height: unset;
+  border: unset;
+  background: unset;
+  font-weight: 500;
+}
+
 .ulodine_link.green {
   border-color: #00bb95;
 }

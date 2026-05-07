@@ -100,6 +100,22 @@ interface AuthContext {
   setUserLogin: React.Dispatch<React.SetStateAction<UserLogin>>;
   setBusinessLogin: React.Dispatch<React.SetStateAction<BusinessLogin>>;
 
+  // Business password reset state
+  businessPasswordReset: {
+    email: string;
+    otp: string;
+    newPassword: string;
+    confirmPassword: string;
+  };
+  setBusinessPasswordReset: React.Dispatch<
+    React.SetStateAction<{
+      email: string;
+      otp: string;
+      newPassword: string;
+      confirmPassword: string;
+    }>
+  >;
+
   // Actions
   login: (loginDetails: BusinessLogin | UserLogin) => Promise<void>;
   loginCustomer: (userLoginDetails: UserLogin) => Promise<void>;
@@ -107,6 +123,8 @@ interface AuthContext {
   handleUserSignup: () => Promise<void>;
   handleVerifyEmail: () => Promise<void>;
   requestOTP: (purpose?: string) => Promise<void>;
+  requestOTPBusiness: (email: string) => Promise<void>;
+  handleVerifyEmailBusiness: () => Promise<void>;
   logout: () => void;
   getMe: () => Promise<MeResponsePayload>;
 

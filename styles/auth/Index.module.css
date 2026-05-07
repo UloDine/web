@@ -43,9 +43,9 @@
   font-size: 2.5rem;
 }
 .auth_center h1 {
-  font-size: 4rem;
+  font-size: 5rem;
   color: #ffffff;
-  font-weight: 900;
+  font-weight: 700;
   line-height: 6rem;
 }
 .auth_center h1 span {
@@ -53,6 +53,10 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-size: 10rem;
+  display: inline-block;
+  line-height: 10rem;
+  font-weight: 900;
 }
 .auth_bottom {
   position: relative;
@@ -81,7 +85,7 @@
 }
 .auth_form_header h1 {
   font-size: 3.5rem;
-  font-weight: 900;
+  font-weight: 700;
 }
 .auth_form_center {
   display: grid;

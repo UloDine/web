@@ -117,6 +117,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [verifyEmail, setVerifyEmail] = useState<VerifyEmailPayload>({
     email: "",
     otp: "",
+    purpose: "",
+  });
+
+  const [businessPasswordReset, setBusinessPasswordReset] = useState<{
+    email: string;
+    otp: string;
+    newPassword: string;
+    confirmPassword: string;
+  }>({
+    email: "",
+    otp: "",
+    newPassword: "",
+    confirmPassword: "",
   });
 
   const [step, setStep] = useState<number>(1);
@@ -322,6 +335,34 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     },
   });
 
+  const { postData: postRequestOTPBusiness } = usePost<
+    { email: string; accountType?: string; purpose?: string },
+    BaseResponse<{ expiration: string; user_email: string }>
+  >({
+    endpoint: apiRoutes.restaurant.auth.request_otp,
+    onSuccess: (res) => {
+      addAlert("success", res.message || "OTP sent to your email");
+      localStorage.setItem("email_to_verify_business", businessPasswordReset.email);
+    },
+    onError: (err) => {
+      addAlert("error", err.message || "Failed to send OTP");
+    },
+  });
+
+  const { postData: postVerifyOTPBusiness } = usePost<
+    { email: string; otp: string; purpose?: string },
+    BaseResponse<{ email: string }>
+  >({
+    endpoint: apiRoutes.restaurant.auth.verify_otp,
+    onSuccess: (res) => {
+      addAlert("success", res.message || "OTP verified successfully");
+      router.push(AUTH_ROUTES.RES_NEW_PASSWORD);
+    },
+    onError: (err) => {
+      addAlert("error", err.message || "OTP verification failed");
+    },
+  });
+
   async function getMe(): Promise<MeResponsePayload> {
     // Return cached value if available
     if (meCache) {
@@ -434,6 +475,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setSending(false);
   }
 
+  async function requestOTPBusiness(email: string) {
+    if (!email) {
+      addAlert("error", "Please enter your email");
+      return;
+    }
+
+    setSending(true);
+    setBusinessPasswordReset((prev) => ({ ...prev, email }));
+    await postRequestOTPBusiness({
+      email,
+      accountType: "restaurant",
+      purpose: "password_reset",
+    });
+    setSending(false);
+  }
+
+  async function handleVerifyEmailBusiness() {
+    if (!businessPasswordReset.otp || businessPasswordReset.otp.length !== 6) {
+      addAlert("error", "Please enter a valid 6-digit OTP");
+      return;
+    }
+
+    setSending(true);
+    const emailToVerify =
+      localStorage.getItem("email_to_verify_business") ||
+      businessPasswordReset.email;
+    await postVerifyOTPBusiness({
+      email: emailToVerify,
+      otp: businessPasswordReset.otp,
+      purpose: "password_reset",
+    });
+    setSending(false);
+  }
+
   function logout() {
     try {
       const userAccountType = getStoredAccountType();
@@ -479,12 +554,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUserLogin,
         businessLogin,
         setBusinessLogin,
+        businessPasswordReset,
+        setBusinessPasswordReset,
         login,
         loginCustomer,
         register,
         handleUserSignup,
         handleVerifyEmail,
         requestOTP,
+        requestOTPBusiness,
+        handleVerifyEmailBusiness,
         logout,
         step,
         setStep,

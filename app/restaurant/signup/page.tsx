@@ -73,7 +73,8 @@ function Page() {
         </div>
         <div className={styles.auth_center}>
           <h1>
-            Join <span>UloDine</span> & Grow Your Restaurant Business!
+            No missing orders when <br /> <span>UloDine</span> <br /> is on your
+            side.
           </h1>
         </div>
         <div className={styles.auth_bottom}>

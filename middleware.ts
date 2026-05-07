@@ -68,9 +68,24 @@ export function middleware(req: NextRequest) {
     const restaurantPublicPaths = [
       AUTH_ROUTES.RES_LOGIN,
       AUTH_ROUTES.RES_SIGNUP,
+      AUTH_ROUTES.RES_RECOVER_PASSWORD,
+      AUTH_ROUTES.RES_VERIFY_EMAIL,
+      AUTH_ROUTES.RES_NEW_PASSWORD,
+    ];
+    const recoveryRoutes = [
+      AUTH_ROUTES.RES_RECOVER_PASSWORD,
+      AUTH_ROUTES.RES_VERIFY_EMAIL,
+      AUTH_ROUTES.RES_NEW_PASSWORD,
     ];
     const forcedLogin = req.nextUrl.searchParams.get("forced") === "true";
     const forcedLoginCookie = req.cookies.get("forced-login")?.value === "true";
+
+    // Clear token for recovery routes so logged-in users can access them
+    if (recoveryRoutes.includes(pathname) && token) {
+      const res = NextResponse.next();
+      res.cookies.delete("token");
+      return res;
+    }
 
     if (!token && !restaurantPublicPaths.includes(pathname)) {
       // Not logged in, trying to access protected restaurant page
@@ -79,7 +94,8 @@ export function middleware(req: NextRequest) {
 
     if (
       token &&
-      restaurantPublicPaths.includes(pathname) &&
+      (pathname === AUTH_ROUTES.RES_LOGIN ||
+        pathname === AUTH_ROUTES.RES_SIGNUP) &&
       !forcedLogin &&
       !forcedLoginCookie
     ) {
@@ -101,6 +117,18 @@ export function middleware(req: NextRequest) {
       AUTH_ROUTES.CUS_RECOVER_PASSWORD,
       AUTH_ROUTES.CUS_NEW_PASSWORD,
     ];
+    const customerRecoveryRoutes = [
+      AUTH_ROUTES.CUS_RECOVER_PASSWORD,
+      AUTH_ROUTES.CUS_VERIFY_EMAIL,
+      AUTH_ROUTES.CUS_NEW_PASSWORD,
+    ];
+
+    // Clear token for recovery routes so logged-in users can access them
+    if (customerRecoveryRoutes.includes(pathname) && token) {
+      const res = NextResponse.next();
+      res.cookies.delete("token");
+      return res;
+    }
 
     if (!token && !customerPublicPaths.includes(pathname)) {
       return NextResponse.redirect(new URL(AUTH_ROUTES.CUS_LOGIN, req.url));

@@ -4,17 +4,25 @@ import { GeneralIcons } from "@/icons/general/icons";
 import { SocialIcons } from "@/icons/socials/icons";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/auth/Index.module.css";
 import UloDineLink from "@/components/button/UloDineLink";
 import UloDineInput from "@/components/input/UloDineInput";
-import { isStrongPassword } from "@/utils/helpers";
 import { useAuth } from "@/context/AuthContext";
 
 function Page() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { businessLogin, setBusinessLogin, login, sending } = useAuth();
+  const {
+    businessPasswordReset,
+    setBusinessPasswordReset,
+    handleVerifyEmailBusiness,
+    requestOTPBusiness,
+    sending,
+  } = useAuth();
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [otpRequested, setOtpRequested] = useState<boolean>(false);
+
   const socials = [
     {
       icon: SocialIcons.x,
@@ -45,6 +53,22 @@ function Page() {
     router.replace(AUTH_ROUTES.RES_LOGIN);
   }, [router, searchParams]);
 
+  useEffect(() => {
+    if (businessPasswordReset.otp.length === 6) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [businessPasswordReset.otp]);
+
+  useEffect(() => {
+    // Auto-request OTP when page loads
+    if (!otpRequested && businessPasswordReset.email) {
+      requestOTPBusiness(businessPasswordReset.email);
+      setOtpRequested(true);
+    }
+  }, [otpRequested, businessPasswordReset.email, requestOTPBusiness]);
+
   return (
     <section className={`${styles.auth} ${styles.login}`}>
       <div className={styles.auth_img_bg_login}>
@@ -53,8 +77,8 @@ function Page() {
         </div>
         <div className={styles.auth_center}>
           <h1>
-            Welcome Back to <br />
-            <span>UloDine</span> <br /> Manage Your <br /> Restaurant with Ease.
+            Reset Your <br />
+            <span>Password</span> <br /> to Get Back in
           </h1>
         </div>
         <div className={styles.auth_bottom}>
@@ -74,65 +98,59 @@ function Page() {
       </div>
       <div className={styles.auth_form}>
         <div className={styles.auth_form_header}>
-          <h1>Login</h1>
-          <UloDineLink
-            color="green"
-            label="Signup"
-            path={AUTH_ROUTES.RES_SIGNUP}
-            type="main"
-            key={"jkfhuewr"}
-          />
+          <h1>Verify your email</h1>
         </div>
         <div className={styles.auth_form_login}>
-          <div style={{ margin: "1rem 0" }}>
+          <p>
+            You need to verify that you own this email address before you can
+            reset your password. Enter the OTP sent to you here.
+          </p>
+          <div style={{ margin: "1rem 0", maxWidth: "40rem" }}>
             <UloDineInput
-              type="email"
-              value={businessLogin.email}
-              label="Email"
-              onChange={(e) => {
-                setBusinessLogin((prev) => ({
-                  ...prev,
-                  email: e.target.value,
-                }));
-              }}
+              type="otp"
+              value={businessPasswordReset.otp}
+              otpChange={(value) =>
+                setBusinessPasswordReset({ ...businessPasswordReset, otp: value })
+              }
+              onComplete={() => {}}
             />
           </div>
-          <div style={{ margin: "1rem 0" }}>
-            <UloDineInput
-              type="password"
-              value={businessLogin.password}
-              label="Password"
-              onChange={(e) => {
-                setBusinessLogin((prev) => ({
-                  ...prev,
-                  password: e.target.value,
-                }));
-              }}
-            />
-          </div>
+
           <div style={{ marginTop: 30 }}>
             <UloDIneButton
               type="primary"
-              label="Login"
+              label="Verify"
               color="green"
-              onClick={async () => {
-                login(businessLogin);
-              }}
+              onClick={handleVerifyEmailBusiness}
               style={{ width: 150, height: 40 }}
-              disabled={
-                businessLogin.email === "" ||
-                businessLogin.password === "" ||
-                !isStrongPassword(businessLogin.password)
-              }
+              disabled={disabled || sending}
               loading={sending}
             />
           </div>
+
+          <p>
+            Didn&apos;t receive OTP?{" "}
+            <button
+              onClick={() => requestOTPBusiness(businessPasswordReset.email)}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#22c55e",
+                cursor: "pointer",
+                textDecoration: "underline",
+                fontSize: "inherit",
+              }}
+              disabled={sending}
+            >
+              Resend OTP
+            </button>
+          </p>
         </div>
         <div className={styles.auth_form_bottom}>
           <UloDineLink
-            label="Forgot Password?"
+            label="Back to Login"
             color="green"
-            path={AUTH_ROUTES.RES_RECOVER_PASSWORD}
+            path={AUTH_ROUTES.RES_LOGIN}
             type="text"
             labelColor="green"
           />

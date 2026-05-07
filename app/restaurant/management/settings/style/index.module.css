@@ -10,7 +10,7 @@
 }
 .settings .tabs {
   position: relative;
-  border-right: 0.15rem solid #dfdfdf;
+  border-right: 0.1rem solid #dfdfdf;
   padding-right: 1rem;
 }
 .settings .tabs .tabItem {
@@ -491,13 +491,269 @@
 .section {
   margin: 1rem 0;
   width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.5rem;
 }
 .section_title {
   color: #000000;
   font-size: 1.2rem;
+  width: 100%;
 }
 .section_wrapper {
-  border: 0.15rem solid #dfdfdf;
+  border: 0.1rem solid #dfdfdf;
   padding: 1rem;
   border-radius: 0.5rem;
+  width: 100%;
+}
+
+.payment_and_billing {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 53rem;
+  overflow: auto;
+}
+.payment_and_billing .header {
+  width: 100%;
+}
+.payment_and_billing .tab_layout {
+  width: 100%;
+}
+.payment_and_billing .content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.payment_and_billing .content .cards {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.payment_and_billing .content .cards .card {
+  position: relative;
+  padding: 1.5rem;
+  min-width: 25rem;
+  border: 0.1rem solid #dfdfdf;
+  border-radius: 1rem;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+}
+.payment_and_billing .content .cards .card button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+.payment_and_billing .content .transactions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.payment_and_billing .content .transactions .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.1rem solid #dfdfdf;
+  padding: 0.5rem 0;
+}
+.payment_and_billing .content .transactions .header .title {
+  font-size: 1.2rem;
+}
+.payment_and_billing .content .transactions .header .filter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+.payment_and_billing .content .transactions .header .filter button {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.payment_and_billing .content .transactions .list {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+}
+.payment_and_billing .content .transactions .list li {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.payment_and_billing .content .transactions .list li div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.payment_and_billing .content .transactions .list li div:last-child {
+  align-items: flex-end;
+}
+.payment_and_billing .content .transactions .list li div b {
+  display: block;
+  color: #6b6a6a;
+}
+.payment_and_billing .content .transactions .list li div small {
+  display: block;
+  color: var(--text);
+}
+.payment_and_billing .content .transactions .list li div .completed {
+  color: #00bb95;
+}
+.payment_and_billing .content .transactions .list li div .pending {
+  color: #f98500;
+}
+.payment_and_billing .content .transactions .list li div .failed {
+  color: #d80000;
+}
+.payment_and_billing .content .plan {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  flex-direction: column;
+}
+.payment_and_billing .content .plan h3 {
+  width: 100%;
+}
+.payment_and_billing .content .plan .plan_card {
+  width: 100%;
+  border: 0.1rem solid #dfdfdf;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-direction: column;
+}
+.payment_and_billing .content .plan .plan_card div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notification_alerts {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 53rem;
+  overflow: auto;
+}
+.notification_alerts .header {
+  width: 100%;
+}
+.notification_alerts ul {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.notification_alerts ul li {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.notification_alerts .banner {
+  display: flex;
+  width: 100%;
+  padding: 1rem;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  background: #e7f9ff;
+}
+.notification_alerts .banner small {
+  color: #0092c3;
+}
+
+.support {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.support .header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.support .help {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+}
+.support .help div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.support .help div a {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 3rem;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+.support .contact {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 0;
+  border-top: 0.1rem solid #dfdfdf;
+}
+.support .contact div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+.support .contact div a {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  color: var(--text);
+  font-size: 1.1rem;
+  gap: 0.7rem;
 }/*# sourceMappingURL=index.module.css.map */
