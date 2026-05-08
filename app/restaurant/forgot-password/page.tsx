@@ -51,12 +51,14 @@ function Page() {
     if (!email || !isValidEmail(email)) {
       return;
     }
-    const ok = await requestOTPBusiness(email);
+    const normalized = email.trim().toLowerCase();
+    const ok = await requestOTPBusiness(normalized);
     if (!ok) return;
     // After OTP is sent, navigate to verify-email page
     const params = new URLSearchParams({
       from: AUTH_ROUTES.RES_RECOVER_PASSWORD,
       to: AUTH_ROUTES.RES_NEW_PASSWORD,
+      email: normalized,
     });
     router.push(`${AUTH_ROUTES.RES_VERIFY_EMAIL}?${params.toString()}`);
   };

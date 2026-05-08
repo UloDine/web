@@ -52,6 +52,27 @@ function Page() {
   }, [router, searchParams]);
 
   useEffect(() => {
+    // Prefill email from query param or localStorage so OTP verification has an email
+    const paramEmail = searchParams?.get("email");
+    if (paramEmail) {
+      const normalized = paramEmail.trim().toLowerCase();
+      setBusinessPasswordReset((prev) => ({ ...prev, email: normalized }));
+      try {
+        localStorage.setItem("email_to_verify_business", normalized);
+      } catch (e) {}
+      return;
+    }
+
+    // Fallback to localStorage if present
+    try {
+      const stored = localStorage.getItem("email_to_verify_business");
+      if (stored) {
+        setBusinessPasswordReset((prev) => ({ ...prev, email: stored }));
+      }
+    } catch (e) {}
+  }, [searchParams, setBusinessPasswordReset]);
+
+  useEffect(() => {
     if (businessPasswordReset.otp.length === 6) {
     } else {
     }
@@ -118,27 +139,9 @@ function Page() {
               }}
             />
           </div>
-          {sending ? (
+          {sending && (
             <p style={{ fontSize: "1.5rem", color: "#22c55e" }}>
               Verifying Email...
-            </p>
-          ) : (
-            <p style={{ marginTop: "1rem" }}>
-              Didn&apos;t receive OTP?{" "}
-              <button
-                onClick={() => requestOTPBusiness(businessPasswordReset.email)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "#22c55e",
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                  fontSize: "inherit",
-                }}
-                disabled={sending}
-              >
-                Resend OTP
-              </button>
             </p>
           )}
         </div>
