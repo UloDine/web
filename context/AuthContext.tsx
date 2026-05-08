@@ -511,9 +511,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     setSending(true);
     try {
+      // Normalize email - trim and lowercase
+      const normalizedEmail = email.trim().toLowerCase();
+      
       // Verify that the restaurant email exists in restaurant_users table
       const emailCheckResponse = await fetch(
-        `/api/auth/restaurant/check-email?email=${encodeURIComponent(email)}`,
+        `/api/auth/restaurant/check-email?email=${encodeURIComponent(normalizedEmail)}`,
         { credentials: "include" },
       );
 
@@ -533,11 +536,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return false;
       }
 
-      setBusinessPasswordReset((prev) => ({ ...prev, email }));
-      localStorage.setItem("email_to_verify_business", email);
+      setBusinessPasswordReset((prev) => ({ ...prev, email: normalizedEmail }));
+      localStorage.setItem("email_to_verify_business", normalizedEmail);
 
       await postRequestOTPBusiness({
-        email,
+        email: normalizedEmail,
         accountType: "restaurant",
         purpose: "password_reset",
       });

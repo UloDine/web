@@ -112,6 +112,10 @@ function Page() {
                 })
               }
               onComplete={handleVerifyEmailBusiness}
+              onResend={() => {
+                requestOTPBusiness(businessPasswordReset.email);
+                setOtpRequested(true);
+              }}
             />
           </div>
           {sending ? (
