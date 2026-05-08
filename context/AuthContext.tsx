@@ -518,12 +518,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       );
 
       const checkData = await emailCheckResponse.json();
-      console.log("Email check response:", { status: emailCheckResponse.status, data: checkData });
+      console.log("Email check response:", {
+        status: emailCheckResponse.status,
+        data: checkData,
+      });
 
       if (!emailCheckResponse.ok) {
         addAlert(
           "error",
-          checkData.message || "No restaurant account found with this email address",
+          checkData.message ||
+            "No restaurant account found with this email address",
         );
         setSending(false);
         return false;
@@ -558,6 +562,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const emailToVerify =
       localStorage.getItem("email_to_verify_business") ||
       businessPasswordReset.email;
+    
+    console.log("[handleVerifyEmailBusiness] Verifying OTP:", {
+      email: emailToVerify,
+      otp: businessPasswordReset.otp,
+      purpose: "password_reset",
+    });
+    
     await postVerifyOTPBusiness({
       email: emailToVerify,
       otp: businessPasswordReset.otp,

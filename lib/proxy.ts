@@ -35,8 +35,11 @@ export async function proxyRequest<T>(
       "ngrok-skip-browser-warning": "69420",
     };
     console.log("[proxyRequest] Target URL:", targetUrl);
-    console.log("[proxyRequest] X-Internal-Secret:", headers["X-Internal-Secret"]?.substring(0, 10) + "...");
-    
+    console.log(
+      "[proxyRequest] X-Internal-Secret:",
+      headers["X-Internal-Secret"]?.substring(0, 10) + "...",
+    );
+
     const response = await axios({
       url: targetUrl,
       method,
@@ -46,7 +49,7 @@ export async function proxyRequest<T>(
       responseType: "arraybuffer",
       validateStatus: () => true,
     });
-    
+
     console.log("[proxyRequest] Response status:", response.status);
 
     if (response.status === 401) {

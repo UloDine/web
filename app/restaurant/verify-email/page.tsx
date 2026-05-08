@@ -114,24 +114,29 @@ function Page() {
               onComplete={handleVerifyEmailBusiness}
             />
           </div>
-
-          <p style={{ marginTop: "1rem" }}>
-            Didn&apos;t receive OTP?{" "}
-            <button
-              onClick={() => requestOTPBusiness(businessPasswordReset.email)}
-              style={{
-                background: "none",
-                border: "none",
-                color: "#22c55e",
-                cursor: "pointer",
-                textDecoration: "underline",
-                fontSize: "inherit",
-              }}
-              disabled={sending}
-            >
-              Resend OTP
-            </button>
-          </p>
+          {sending ? (
+            <p style={{ fontSize: "1.5rem", color: "#22c55e" }}>
+              Verifying Email...
+            </p>
+          ) : (
+            <p style={{ marginTop: "1rem" }}>
+              Didn&apos;t receive OTP?{" "}
+              <button
+                onClick={() => requestOTPBusiness(businessPasswordReset.email)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "#22c55e",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  fontSize: "inherit",
+                }}
+                disabled={sending}
+              >
+                Resend OTP
+              </button>
+            </p>
+          )}
         </div>
         <div className={styles.auth_form_bottom}>
           <UloDineLink

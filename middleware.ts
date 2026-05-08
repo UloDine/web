@@ -44,6 +44,7 @@ export function middleware(req: NextRequest) {
     const publicApiPaths = [
       "/api/auth/restaurant/login",
       "/api/auth/restaurant/register",
+      "/api/auth/restaurant/check-email",
       "/api/auth/otp/request",
       "/api/auth/otp/verify",
       "/api/auth/user/logout",
