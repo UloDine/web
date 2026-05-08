@@ -74,35 +74,26 @@ function Page() {
         return;
       }
 
-      // Fetch restaurant by email to get the ID
-      const response = await fetch(
-        `/api/restaurants/email/${encodeURIComponent(email)}`,
-      );
-      const result = await response.json();
-
-      if (!response.ok || !result.data?.id) {
-        addAlert("error", "Failed to find restaurant account");
-        return;
-      }
-
-      // Set password for the restaurant
-      const passwordResponse = await fetch(
-        `/api/restaurants/${result.data.id}/password`,
+      // Call backend reset endpoint via Next.js proxy
+      const normalizedEmail = String(email).trim().toLowerCase();
+      const resetResponse = await fetch(
+        `/api/auth/restaurant/reset-password`,
         {
-          method: "PUT",
+          method: "POST",
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            email: normalizedEmail,
             newPassword: businessPasswordReset.newPassword,
           }),
         },
       );
 
-      const passwordResult = await passwordResponse.json();
+      const passwordResult = await resetResponse.json();
 
-      if (!passwordResponse.ok) {
+      if (!resetResponse.ok) {
         addAlert(
           "error",
           passwordResult.message || "Failed to update password",
