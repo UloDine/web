@@ -513,7 +513,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       // Normalize email - trim and lowercase
       const normalizedEmail = email.trim().toLowerCase();
-      
+
       // Verify that the restaurant email exists in restaurant_users table
       const emailCheckResponse = await fetch(
         `/api/auth/restaurant/check-email?email=${encodeURIComponent(normalizedEmail)}`,
@@ -565,13 +565,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const emailToVerify =
       localStorage.getItem("email_to_verify_business") ||
       businessPasswordReset.email;
-    
+
     console.log("[handleVerifyEmailBusiness] Verifying OTP:", {
       email: emailToVerify,
       otp: businessPasswordReset.otp,
       purpose: "password_reset",
     });
-    
+
     await postVerifyOTPBusiness({
       email: emailToVerify,
       otp: businessPasswordReset.otp,

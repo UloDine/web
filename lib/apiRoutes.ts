@@ -20,6 +20,7 @@ export const apiRoutes = {
       fetch: (id: string) => `/api/restaurant/settings?restaurantId=${id}`,
       update: (id: string) => `/api/restaurant/settings?restaurantId=${id}`,
     },
+    deleteAccount: (id: string) => `/api/restaurant/delete?restaurantId=${id}`,
     fetchOverview: (id: string) =>
       `/api/restaurant/overview?restaurantId=${id}`,
     fetchById: (id: string) => `/api/restaurants/${id}`,

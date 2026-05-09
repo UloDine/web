@@ -76,20 +76,17 @@ function Page() {
 
       // Call backend reset endpoint via Next.js proxy
       const normalizedEmail = String(email).trim().toLowerCase();
-      const resetResponse = await fetch(
-        `/api/auth/restaurant/reset-password`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: normalizedEmail,
-            newPassword: businessPasswordReset.newPassword,
-          }),
+      const resetResponse = await fetch(`/api/auth/restaurant/reset-password`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          email: normalizedEmail,
+          newPassword: businessPasswordReset.newPassword,
+        }),
+      });
 
       const passwordResult = await resetResponse.json();
 
