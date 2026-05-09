@@ -127,11 +127,12 @@ function QrManagement() {
           </div>
         </div>
       </div>
+
       <div className={styles.bottom}>
         <Image
           src={getSafeImageSrc(qrData.imgPath)}
-          width={100}
-          height={100}
+          width={1000}
+          height={1000}
           alt={qrData.business_name + " poster"}
           quality={100}
         />
