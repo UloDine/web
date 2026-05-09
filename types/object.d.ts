@@ -223,6 +223,7 @@ interface QRResponse {
   qr_code: string;
   restaurant_url: string;
   business_name: string;
+  flyer?: string;
   pdfPath: string;
   imgPath: string;
 }
