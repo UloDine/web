@@ -35,38 +35,51 @@ function shouldProxyAsset(path: string): boolean {
   );
 }
 
+function isObjectStorageAsset(path: string): boolean {
+  return /^(qr-codes|flyers|banners|menu-images)\//i.test(path);
+}
+
+function buildProxyUrl(targetUrl: string): string {
+  return `/api/image-proxy?url=${encodeURIComponent(targetUrl)}`;
+}
+
 export function resolveAssetUrl(path?: string | null): string {
   if (!path) return "";
 
+  const trimmedPath = path.trim();
   const baseUrl = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "");
 
-  if (/^https?:\/\//i.test(path)) {
+  if (/^https?:\/\//i.test(trimmedPath)) {
     try {
-      const url = new URL(path);
+      const url = new URL(trimmedPath);
       const baseHost = baseUrl ? new URL(baseUrl).host : "";
 
       if (url.hostname === "localhost" || url.hostname === "127.0.0.1") {
-        return `/api/image-proxy?url=${encodeURIComponent(path)}`;
+        return buildProxyUrl(trimmedPath);
       }
 
       if (baseHost && url.host === baseHost) {
-        return `/api/image-proxy?url=${encodeURIComponent(path)}`;
+        return buildProxyUrl(trimmedPath);
       }
     } catch {
       // Fall through to the original URL for malformed values.
     }
 
-    return path;
+    return trimmedPath;
   }
 
-  if (shouldProxyAsset(path)) {
-    const assetPath = path.startsWith("/") ? path : `/${path}`;
+  if (shouldProxyAsset(trimmedPath) || isObjectStorageAsset(trimmedPath)) {
+    const assetPath = trimmedPath.startsWith("/") ? trimmedPath : `/${trimmedPath}`;
     const targetUrl = `${baseUrl}${assetPath}`;
 
-    return `/api/image-proxy?url=${encodeURIComponent(targetUrl)}`;
+    return buildProxyUrl(targetUrl);
   }
 
-  return path;
+  if (trimmedPath.startsWith("/")) {
+    return trimmedPath;
+  }
+
+  return `/${trimmedPath}`;
 }
 
 export const countryPhoneLengths: Record<string, number> = {

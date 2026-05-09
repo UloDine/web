@@ -189,10 +189,10 @@ Input) {
 
     const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
       e.preventDefault();
-      
+
       const pastedData = e.clipboardData?.getData("text") || "";
       const digits = pastedData.replace(/\D/g, "").split("").slice(0, 6);
-      
+
       if (digits.length > 0) {
         const newOtp = [...otp];
         digits.forEach((digit, idx) => {
@@ -200,10 +200,10 @@ Input) {
             newOtp[idx] = digit;
           }
         });
-        
+
         setOtp(newOtp);
         otpChange?.(newOtp.join(""));
-        
+
         // Focus on the next empty field or last field
         const nextEmptyIndex = newOtp.findIndex((val) => val === "");
         const focusIndex = nextEmptyIndex === -1 ? 5 : nextEmptyIndex;
