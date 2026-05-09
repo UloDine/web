@@ -7,6 +7,7 @@ import {
   getCountryDetails,
   isStrongPassword,
   isValidEmail,
+  countryPhoneLengths,
 } from "@/utils/helpers";
 import { GeneralIcons } from "@/icons/general/icons";
 import Image from "next/image";
@@ -217,7 +218,17 @@ Input) {
               onChange={(e) => {
                 if (onChange) onChange(e);
 
-                setInputValue(formatPhoneNumber(e.target.value, 10));
+                const maxLength = countryDetails?.country_code
+                  ? countryPhoneLengths[countryDetails.country_code] || 15
+                  : 10;
+
+                setInputValue(
+                  formatPhoneNumber(
+                    e.target.value,
+                    maxLength,
+                    countryDetails?.country_code,
+                  ),
+                );
                 setError(false);
               }}
               onBlur={handleBlur}

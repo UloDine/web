@@ -30,10 +30,13 @@ function AccountAndSecurity() {
 
     try {
       setDeactivating(true);
-      const response = await fetch(apiRoutes.restaurant.deleteAccount(restaurantId), {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const response = await fetch(
+        apiRoutes.restaurant.deleteAccount(restaurantId),
+        {
+          method: "DELETE",
+          credentials: "include",
+        },
+      );
 
       const result = await response.json();
       if (!response.ok || result.status !== "success") {

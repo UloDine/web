@@ -8,10 +8,34 @@
   margin-top: 1rem;
   max-height: 56rem;
 
+  @media screen and (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-height: 90vh;
+    width: 100%;
+    border-radius: 1rem;
+
+    .tabContent {
+      width: 100%;
+    }
+  }
+
   .tabs {
     position: relative;
     border-right: 0.1rem solid #dfdfdf;
     padding-right: 1rem;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      gap: 1rem;
+      padding: 0;
+      border: none;
+    }
 
     .tabItem {
       padding: 1rem;
@@ -23,6 +47,18 @@
       border-radius: 0.5rem;
       color: #6b6a6a;
 
+      @media screen and (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        width: 100%;
+        padding: 0.5rem 1rem;
+
+        &:not(:first-child) {
+          margin: 0;
+        }
+      }
+
       &:not(:first-child) {
         margin: 1rem 0;
       }
@@ -31,6 +67,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        @media screen and (max-width: 768px) {
+          display: none;
+        }
       }
 
       &.active {
