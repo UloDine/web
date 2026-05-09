@@ -140,7 +140,8 @@ const phoneFormatPatterns: Record<string, (digits: string) => string> = {
   FR: (digits) => {
     if (digits.length <= 2) return digits;
     if (digits.length <= 5) return `${digits.slice(0, 2)} ${digits.slice(2)}`;
-    if (digits.length <= 8) return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5)}`;
+    if (digits.length <= 8)
+      return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5)}`;
     return `${digits.slice(0, 2)} ${digits.slice(2, 5)} ${digits.slice(5, 8)} ${digits.slice(8)}`;
   },
   BR: (digits) => {
@@ -150,7 +151,11 @@ const phoneFormatPatterns: Record<string, (digits: string) => string> = {
   },
 };
 
-export function formatPhoneNumber(input: string, maxLength: number, countryCode?: string): string {
+export function formatPhoneNumber(
+  input: string,
+  maxLength: number,
+  countryCode?: string,
+): string {
   // Remove non-numeric characters
   const numericInput = input.replace(/\D/g, "");
 

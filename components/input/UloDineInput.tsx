@@ -53,9 +53,12 @@ Input) {
   // avoid production lint failures for props that are intentionally unused
   markUsed(sending);
 
-  function validateInput(inputVal: string, inputType: string): { isValid: boolean; message: string } {
+  function validateInput(
+    inputVal: string,
+    inputType: string,
+  ): { isValid: boolean; message: string } {
     const currentVal = inputVal || value;
-    
+
     // Check if empty
     if (currentVal == "" || currentVal == " ") {
       return { isValid: false, message: "Value cannot be empty" };
@@ -64,25 +67,29 @@ Input) {
     // Validate based on type
     if (inputType === "email") {
       if (!isValidEmail(currentVal)) {
-        return { isValid: false, message: "Please enter a valid email address" };
+        return {
+          isValid: false,
+          message: "Please enter a valid email address",
+        };
       }
     } else if (inputType === "password") {
       if (!isStrongPassword(currentVal)) {
-        return { 
-          isValid: false, 
-          message: "Password must be at least 6 characters with uppercase, lowercase, number, and special character" 
+        return {
+          isValid: false,
+          message:
+            "Password must be at least 6 characters with uppercase, lowercase, number, and special character",
         };
       }
     } else if (inputType === "phone") {
       // Remove formatting to count digits
       const digitsOnly = currentVal.replace(/\D/g, "");
-      const countryCode = countryDetails?.country_code || "NG";
-      const expectedLength = countryPhoneLengths[countryCode] || 10;
-      
+      const cc = countryDetails?.country_code2 || "NG";
+      const expectedLength = countryPhoneLengths[cc] || 10;
+
       if (digitsOnly.length < expectedLength) {
-        return { 
-          isValid: false, 
-          message: `Phone number must be at least ${expectedLength} digits` 
+        return {
+          isValid: false,
+          message: `Phone number must be at least ${expectedLength} digits`,
         };
       }
     }
@@ -98,7 +105,7 @@ Input) {
 
     const validation = validateInput(value || inputValue, type);
     setError(!validation.isValid);
-    
+
     if (!validation.isValid) {
       setAlertMessage({
         ...alertMessage,
@@ -180,6 +187,30 @@ Input) {
       }
     };
 
+    const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      
+      const pastedData = e.clipboardData?.getData("text") || "";
+      const digits = pastedData.replace(/\D/g, "").split("").slice(0, 6);
+      
+      if (digits.length > 0) {
+        const newOtp = [...otp];
+        digits.forEach((digit, idx) => {
+          if (idx < newOtp.length) {
+            newOtp[idx] = digit;
+          }
+        });
+        
+        setOtp(newOtp);
+        otpChange?.(newOtp.join(""));
+        
+        // Focus on the next empty field or last field
+        const nextEmptyIndex = newOtp.findIndex((val) => val === "");
+        const focusIndex = nextEmptyIndex === -1 ? 5 : nextEmptyIndex;
+        inputRefs.current[focusIndex]?.focus();
+      }
+    };
+
     return (
       <div className={styles.otp}>
         <span className={styles.otp_label}>
@@ -198,6 +229,7 @@ Input) {
               value={otp[index]}
               onChange={(e) => handleChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
+              onPaste={handlePaste}
             />
           ))}
         </div>
@@ -259,15 +291,15 @@ Input) {
               onChange={(e) => {
                 if (onChange) onChange(e);
 
-                const maxLength = countryDetails?.country_code
-                  ? countryPhoneLengths[countryDetails.country_code] || 15
+                const maxLength = countryDetails?.country_code2
+                  ? countryPhoneLengths[countryDetails.country_code2] || 15
                   : 10;
 
                 setInputValue(
                   formatPhoneNumber(
                     e.target.value,
                     maxLength,
-                    countryDetails?.country_code,
+                    countryDetails?.country_code2,
                   ),
                 );
                 setError(false);

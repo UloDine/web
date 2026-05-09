@@ -154,7 +154,10 @@ function StepThree() {
               Requesting OTP from UloDine...
             </p>
           ) : (
-            <div className={styles.input}>
+            <div
+              className={styles.input}
+              style={{ margin: "1rem 0", maxWidth: "40rem" }}
+            >
               <UloDineInput
                 value={business.businessAddress}
                 onChange={() => {}}
