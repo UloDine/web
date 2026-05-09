@@ -49,6 +49,26 @@ export function resolveAssetUrl(path?: string | null): string {
   const trimmedPath = path.trim();
   const baseUrl = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/+$/, "");
 
+  // Direct API media object URLs - convert to direct route
+  if (/^\/api\/media\/object\?/i.test(trimmedPath)) {
+    // Extract the key parameter and redirect to direct flyers/banners route
+    const match = trimmedPath.match(/key=([^&]+)/);
+    if (match) {
+      const decodedKey = decodeURIComponent(match[1]);
+      // For flyer paths (flyers/...), use the /flyers/* route
+      if (decodedKey.startsWith("flyers/")) {
+        return `/${decodedKey}`;
+      }
+      // For banner paths (banners/...), use the /banners/* route
+      if (decodedKey.startsWith("banners/")) {
+        return `/${decodedKey}`;
+      }
+      // For other paths, return the original
+      return trimmedPath;
+    }
+    return trimmedPath;
+  }
+
   if (/^https?:\/\//i.test(trimmedPath)) {
     try {
       const url = new URL(trimmedPath);
@@ -69,7 +89,9 @@ export function resolveAssetUrl(path?: string | null): string {
   }
 
   if (shouldProxyAsset(trimmedPath) || isObjectStorageAsset(trimmedPath)) {
-    const assetPath = trimmedPath.startsWith("/") ? trimmedPath : `/${trimmedPath}`;
+    const assetPath = trimmedPath.startsWith("/")
+      ? trimmedPath
+      : `/${trimmedPath}`;
     const targetUrl = `${baseUrl}${assetPath}`;
 
     return buildProxyUrl(targetUrl);
