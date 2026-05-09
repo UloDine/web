@@ -51,18 +51,8 @@ export function resolveAssetUrl(path?: string | null): string {
 
   // Direct API media object URLs - proxy the backend asset route, not the web app.
   if (/^\/api\/media\/object\?/i.test(trimmedPath)) {
-    const match = trimmedPath.match(/key=([^&]+)/);
-    if (match) {
-      const decodedKey = decodeURIComponent(match[1]);
-      if (
-        decodedKey.startsWith("flyers/") ||
-        decodedKey.startsWith("banners/")
-      ) {
-        const assetUrl = `${baseUrl}/${decodedKey}`;
-        return buildProxyUrl(assetUrl);
-      }
-    }
-    return trimmedPath;
+    const assetUrl = `${baseUrl}${trimmedPath}`;
+    return buildProxyUrl(assetUrl);
   }
 
   if (/^\/(flyers|banners)\//i.test(trimmedPath)) {
@@ -90,9 +80,11 @@ export function resolveAssetUrl(path?: string | null): string {
   }
 
   if (shouldProxyAsset(trimmedPath) || isObjectStorageAsset(trimmedPath)) {
-    const assetPath = trimmedPath.startsWith("/")
-      ? trimmedPath
-      : `/${trimmedPath}`;
+    const assetPath = isObjectStorageAsset(trimmedPath)
+      ? `/api/media/object?key=${encodeURIComponent(trimmedPath)}`
+      : trimmedPath.startsWith("/")
+        ? trimmedPath
+        : `/${trimmedPath}`;
     const targetUrl = `${baseUrl}${assetPath}`;
 
     return buildProxyUrl(targetUrl);
