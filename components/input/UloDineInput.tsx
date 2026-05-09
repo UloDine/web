@@ -43,9 +43,7 @@ Input) {
     icon: GeneralIcons.error_circle,
     message: errorMessage ?? "Value cannot be empty",
   });
-  const [error, setError] = useState<boolean>(
-    isValidEmail(value) || isStrongPassword(value),
-  );
+  const [error, setError] = useState<boolean>(false);
 
   const [countryDetails, setCountryDetails] = useState<IPGeolocation | null>(
     null,
@@ -55,15 +53,57 @@ Input) {
   // avoid production lint failures for props that are intentionally unused
   markUsed(sending);
 
+  function validateInput(inputVal: string, inputType: string): { isValid: boolean; message: string } {
+    const currentVal = inputVal || value;
+    
+    // Check if empty
+    if (currentVal == "" || currentVal == " ") {
+      return { isValid: false, message: "Value cannot be empty" };
+    }
+
+    // Validate based on type
+    if (inputType === "email") {
+      if (!isValidEmail(currentVal)) {
+        return { isValid: false, message: "Please enter a valid email address" };
+      }
+    } else if (inputType === "password") {
+      if (!isStrongPassword(currentVal)) {
+        return { 
+          isValid: false, 
+          message: "Password must be at least 6 characters with uppercase, lowercase, number, and special character" 
+        };
+      }
+    } else if (inputType === "phone") {
+      // Remove formatting to count digits
+      const digitsOnly = currentVal.replace(/\D/g, "");
+      const countryCode = countryDetails?.country_code || "NG";
+      const expectedLength = countryPhoneLengths[countryCode] || 10;
+      
+      if (digitsOnly.length < expectedLength) {
+        return { 
+          isValid: false, 
+          message: `Phone number must be at least ${expectedLength} digits` 
+        };
+      }
+    }
+
+    return { isValid: true, message: "" };
+  }
+
   function handleBlur() {
-    if ((strict && value == "") || (strict && value == " ")) {
-      setError(true);
+    if (!strict) {
+      setError(false);
+      return;
+    }
+
+    const validation = validateInput(value || inputValue, type);
+    setError(!validation.isValid);
+    
+    if (!validation.isValid) {
       setAlertMessage({
         ...alertMessage,
-        message: "Value cannot be empty",
+        message: validation.message,
       });
-    } else {
-      setError(false);
     }
   }
 
@@ -72,6 +112,11 @@ Input) {
 
     setInputValue(e.target.value);
     setError(false);
+    // Clear error message when user starts typing
+    setAlertMessage({
+      icon: GeneralIcons.error_circle,
+      message: errorMessage ?? "Value cannot be empty",
+    });
   }
 
   useEffect(() => {
@@ -210,11 +255,7 @@ Input) {
               type={type}
               placeholder={placeholder}
               value={value ?? inputValue}
-              className={`${styles.input} ${className} ${
-                (error && value == "") || (error && value == " ")
-                  ? styles.error
-                  : ""
-              }`}
+              className={`${styles.input} ${className} ${error || invalid ? styles.error : ""}`}
               onChange={(e) => {
                 if (onChange) onChange(e);
 
@@ -236,18 +277,13 @@ Input) {
           </div>
         ) : type == "password" ? (
           <div
-            className={`${styles.password_input} ${
-              type == "password" && error
-                ? styles.error
-                : (error && value == "") || (error && value == " ")
-                  ? styles.error
-                  : ""
-            }`}
+            className={`${styles.password_input} ${error || invalid ? styles.error : ""}`}
           >
             <input
               type={secret ? type : "text"}
               placeholder={placeholder}
               className={`${styles.input} ${className}`}
+              value={value ?? inputValue}
               onChange={handleChange}
               onBlur={handleBlur}
             />
@@ -259,27 +295,13 @@ Input) {
           <input
             type={type}
             placeholder={placeholder}
-            className={`${styles.input} ${className} ${
-              (type == "email" && error) || (type == "password" && error)
-                ? styles.error
-                : (error && value == "") || (error && value == " ")
-                  ? styles.error
-                  : ""
-            }`}
+            className={`${styles.input} ${className} ${error || invalid ? styles.error : ""}`}
             value={value ?? inputValue}
             onChange={(e) => {
               if (onChange) onChange(e);
 
               setInputValue(e.target.value);
               setError(false);
-
-              if (type == "email") {
-                setError(!isValidEmail(value));
-                setAlertMessage({
-                  ...alertMessage,
-                  message: "Invalid email address",
-                });
-              }
             }}
             onBlur={handleBlur}
             disabled={disabled}
