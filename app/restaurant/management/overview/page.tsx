@@ -11,6 +11,7 @@ import { useFetch } from "@/hooks/useFetch";
 import { useRouter } from "next/navigation";
 import { useProfile } from "@/context/ProfileContext";
 import InPageLoader from "@/components/loaders/InPageLoader";
+import { OrderSmallIcon } from "@/icons/customer";
 
 export default function Overview() {
   const router = useRouter();
@@ -43,7 +44,7 @@ export default function Overview() {
     const actions = [
       {
         label: "Generate QR",
-        icon: GeneralIcons.plus,
+        icon: RestaurantIcons.qr,
         action: () => {
           router.push("/restaurant/management/qr-code");
         },
@@ -57,7 +58,7 @@ export default function Overview() {
       },
       {
         label: "Manage Orders",
-        icon: GeneralIcons.plus,
+        icon: <OrderSmallIcon />,
         action: () => {
           router.push("/restaurant/management/orders");
         },

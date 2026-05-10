@@ -30,6 +30,7 @@
 }
 .overview .scrollable {
   padding: 1rem 0;
+  margin: 1rem 0;
 }
 .overview .scrollable .cards {
   display: grid;
