@@ -38,6 +38,7 @@
 
       @media screen and (max-width: 500px) {
         grid-template-columns: 1fr;
+        gap: 1rem;
       }
     }
   }

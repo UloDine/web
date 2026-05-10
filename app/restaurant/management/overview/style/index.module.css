@@ -39,6 +39,7 @@
 @media screen and (max-width: 500px) {
   .overview .scrollable .cards {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
 .overview_feedbacks {

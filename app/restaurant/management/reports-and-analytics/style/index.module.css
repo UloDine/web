@@ -23,11 +23,23 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
+@media screen and (max-width: 500px) {
+  .report_page_cards {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
+  }
+}
 .report_page .charts {
   display: grid;
   grid-template-columns: 1.7fr 1fr;
   gap: 1rem;
   margin: 2rem 0;
+}
+@media screen and (max-width: 768px) {
+  .report_page .charts {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 4rem;
+  }
 }
 .report_page .charts_chart {
   display: block;
