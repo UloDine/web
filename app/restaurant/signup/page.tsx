@@ -66,8 +66,8 @@ function Page() {
     }
   }, [business, setBusiness, step]);
   return (
-    <section className={styles.auth}>
-      <div className={styles.auth_img_bg}>
+    <section className={`${styles.auth} ${styles.signup}`}>
+      <div className={styles.auth_img_bg_signup}>
         <div className={styles.auth_logo}>
           {GeneralIcons.logo} <h1>UloDine</h1>
         </div>
@@ -118,6 +118,7 @@ function Page() {
             onClick={() => setStep(prev)}
             type="minor"
             disabled={step <= 1}
+            className={styles.prev_btn}
           />
           {step == 3 && emailVerified && emailVerified.status ? (
             <UloDIneButton
@@ -131,6 +132,8 @@ function Page() {
                 auth.password !== auth.retypedpassword ||
                 sending
               }
+              loading={sending}
+              className={styles.create_account_btn}
             />
           ) : step !== 3 ? (
             <UloDIneButton
@@ -140,6 +143,7 @@ function Page() {
                 setStep(next);
               }}
               type="minor"
+              className={styles.next_btn}
               disabled={
                 !personal.complete && step === 1
                   ? true

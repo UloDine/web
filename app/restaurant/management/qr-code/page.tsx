@@ -130,7 +130,7 @@ function QrManagement() {
 
       <div className={styles.bottom}>
         <Image
-          src={getSafeImageSrc(qrData.imgPath)}
+          src={getSafeImageSrc(qrData.flyer)}
           width={1000}
           height={1000}
           alt={qrData.business_name + " poster"}
@@ -146,7 +146,9 @@ function QrManagement() {
           <UloDIneButton
             color="green"
             label="Download poster"
-            onClick={() => downloadAsset(qrData.imgPath, "png")}
+            onClick={() =>
+              qrData.flyer ? downloadAsset(qrData.flyer, "png") : null
+            }
             type="primary"
             icon={GeneralIcons.download_white}
             style={{ padding: "2rem" }}

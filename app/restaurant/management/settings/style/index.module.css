@@ -14,7 +14,7 @@
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
-    max-height: 90vh;
+    min-height: 105vh;
     width: 100%;
     border-radius: 1rem;
   }
@@ -82,6 +82,11 @@
   position: relative;
   max-height: 54rem;
   overflow: auto;
+}
+@media screen and (max-width: 768px) {
+  .general {
+    min-height: 90vh;
+  }
 }
 .general::-webkit-scrollbar {
   color: #00bb95;

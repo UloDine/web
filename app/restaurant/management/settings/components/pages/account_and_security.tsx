@@ -59,8 +59,11 @@ function AccountAndSecurity() {
 
       addAlert("success", "Account deleted successfully");
       router.replace(AUTH_ROUTES.RES_LOGIN);
-    } catch (error: any) {
-      addAlert("error", error?.message || "Failed to deactivate account");
+    } catch (error: unknown) {
+      addAlert(
+        "error",
+        error instanceof Error ? error.message : "Failed to deactivate account",
+      );
     } finally {
       setDeactivating(false);
       setOpenDeactivate(false);
@@ -135,8 +138,9 @@ function AccountAndSecurity() {
         </p>
         <div className={styles.statement_input}>
           <p>
-            Enter the statement <strong>"permanently delete my account"</strong>{" "}
-            to continue
+            Enter the statement{" "}
+            <strong>&quot;permanently delete my account&quot;</strong> to
+            continue
           </p>
           <input
             type="text"

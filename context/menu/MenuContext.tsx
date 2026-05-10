@@ -24,6 +24,7 @@ import { apiRoutes } from "@/lib/apiRoutes";
 import { useProfile } from "../ProfileContext";
 import { useApiService } from "../ApiServiceContext";
 import UloDineModal from "@/components/modal/UloDineModal";
+import { EmptyImagePlaceholder } from "@/components/abstracts";
 
 const MenuContext = createContext<MenuContextProps | undefined>(undefined);
 
@@ -114,7 +115,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     restaurantId: string;
   } | null>(null);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  const [previewUrl, setPreviewUrl] = useState<string>("/placeholder.png");
+  const [previewUrl, setPreviewUrl] = useState<string>("");
   const [previewLoaded, setPreviewLoaded] = useState<boolean>(false);
   const skipImageEffectRef = useRef(false);
 
@@ -123,7 +124,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       ...DEFAULT_MENU_FORM,
       restaurantId: restaurant?.id || "",
     });
-    setPreviewUrl("/placeholder.png");
+    setPreviewUrl("");
     setPreviewLoaded(false);
     setSelectedMenuId(null);
   }
@@ -152,7 +153,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       discount: String(menu.discount ?? 0),
       restaurantId: menu.restaurant_id,
     });
-    setPreviewUrl(resolveAssetUrl(menu.menu_image) || "/placeholder.png");
+    setPreviewUrl(resolveAssetUrl(menu.menu_image) || "");
     setPreviewLoaded(false);
     setOpen(true);
   }
@@ -354,7 +355,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
         const dataUrl = await fileToDataURL(form.image);
         setPreviewUrl(dataUrl);
       } else if (!selectedMenuId) {
-        setPreviewUrl("/placeholder.png");
+        setPreviewUrl("");
       }
     };
 
@@ -436,21 +437,27 @@ export function MenuProvider({ children }: { children: ReactNode }) {
             <div className={styles.main}>
               <div className={styles.left}>
                 <div className={styles.image_wrapper}>
-                  {!previewLoaded && <div className={styles.image_skeleton} />}
-                  <Image
-                    src={previewUrl}
-                    width={100}
-                    height={100}
-                    alt="Image preview"
-                    unoptimized
-                    priority
-                    className={`${styles.product_image} ${
-                      previewLoaded ? styles.product_image_loaded : ""
-                    }`}
-                    onLoad={() => setPreviewLoaded(true)}
-                    placeholder="blur"
-                    blurDataURL="/placeholder.png"
-                  />
+                  {/* {!previewLoaded && <div className={styles.image_skeleton} />} */}
+                  {!previewUrl ? (
+                    <div style={{ height: "15rem" }}>
+                      <EmptyImagePlaceholder width={40} height={40} />
+                    </div>
+                  ) : (
+                    <Image
+                      src={previewUrl}
+                      width={100}
+                      height={100}
+                      alt="Image preview"
+                      unoptimized
+                      priority
+                      className={`${styles.product_image} ${
+                        previewLoaded ? styles.product_image_loaded : ""
+                      }`}
+                      onLoad={() => setPreviewLoaded(true)}
+                      placeholder="blur"
+                      blurDataURL="/placeholder.png"
+                    />
+                  )}
                 </div>
                 <button className={styles.left_button} onClick={selectImage}>
                   <p>Upload image</p>

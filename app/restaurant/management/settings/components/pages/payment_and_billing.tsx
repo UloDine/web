@@ -115,7 +115,7 @@ function PaymentAndBilling() {
               <div className={styles.filter}>
                 {filterOpen && (
                   <Filter
-                    action={(selected) => {}}
+                    action={() => {}}
                     filters={[
                       {
                         title: "Status",
@@ -149,7 +149,7 @@ function PaymentAndBilling() {
             </div>
             <ul className={styles.list}>
               {orderTransactions.map((trxn) => (
-                <li>
+                <li key={trxn.id}>
                   <div>
                     <p>{trxn.description}</p>
                     <b>{formatCurrency(trxn.amount)}</b>
@@ -191,7 +191,7 @@ function PaymentAndBilling() {
               <div className={styles.filter}>
                 {secondFilterOpen && (
                   <Filter
-                    action={(selected) => {}}
+                    action={() => {}}
                     filters={[
                       {
                         title: "Status",
@@ -225,7 +225,7 @@ function PaymentAndBilling() {
             </div>
             <ul className={styles.list}>
               {orderTransactions.map((trxn) => (
-                <li>
+                <li key={trxn.id}>
                   <div>
                     <p>{trxn.description}</p>
                     <b>{formatCurrency(trxn.amount)}</b>

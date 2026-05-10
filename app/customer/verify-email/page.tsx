@@ -1,6 +1,5 @@
 "use client";
 
-import UloDIneButton from "@/components/button/UloDIneButton";
 import React, { useEffect, useState } from "react";
 import styles from "./styles/styles.module.css";
 import Link from "next/link";
@@ -12,7 +11,6 @@ import { AUTH_ROUTES } from "@/routes/RoutePaths";
 function VerifyEmail() {
   // const router = useRouter();
   const searchParams = useSearchParams();
-  const [disabled, setDisabled] = useState<boolean>(true);
   const [otpRequested, setOtpRequested] = useState<boolean>(false);
   const {
     verifyEmail,
@@ -21,14 +19,6 @@ function VerifyEmail() {
     requestOTP,
     sending,
   } = useAuth();
-
-  useEffect(() => {
-    if (verifyEmail.otp.length === 6) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  }, [verifyEmail.otp]);
 
   useEffect(() => {
     // Auto-request OTP when page loads

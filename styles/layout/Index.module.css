@@ -1,6 +1,13 @@
 .step_indicator {
   position: relative;
 }
+@media screen and (max-width: 500px) {
+  .step_indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
 .step_indicator .step {
   margin-bottom: 1rem;
   height: 7rem;
@@ -19,6 +26,11 @@
   height: 80%;
   border-radius: 1rem;
 }
+@media screen and (max-width: 500px) {
+  .step_indicator .step:not(:last-child)::before {
+    display: none;
+  }
+}
 .step_indicator .step p {
   padding-top: 0.2rem;
 }
@@ -34,4 +46,9 @@
 }
 .step_one .input {
   margin-bottom: 1rem;
+}
+@media screen and (max-width: 500px) {
+  .step_one .input {
+    margin: none;
+  }
 }/*# sourceMappingURL=Index.module.css.map */

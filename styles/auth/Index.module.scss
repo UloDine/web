@@ -19,7 +19,8 @@
     flex-direction: column;
     justify-content: space-between;
   }
-  &_img_bg_login {
+  &_img_bg_login,
+  &_img_bg_signup {
     background:
       linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
       url(../../public/login.png);
@@ -102,6 +103,10 @@
       grid-template-columns: 1fr 2fr;
       gap: 1rem;
       margin-top: 10rem;
+
+      @media screen and (max-width: 500px) {
+        display: block;
+      }
     }
 
     &_bottom {
@@ -114,22 +119,30 @@
       width: 90%;
 
       @media screen and (max-width: 500px) {
-        // width: 100%;
+        width: 100%;
         justify-content: center;
         gap: 1rem;
+        left: 0;
         bottom: 5rem;
+        padding: 1.5rem;
 
-        div {
-          width: 100%;
-          border: none !important;
+        .next_btn,
+        .prev_btn {
           height: 4rem;
+          flex: 1;
+        }
+
+        .create_account_btn {
+          height: 4rem;
+          flex: 1;
         }
       }
     }
   }
 }
 
-.login {
+.login,
+.signup {
   @media screen and (min-width: 900px) {
     display: grid;
     grid-template-columns: 2fr 1fr;

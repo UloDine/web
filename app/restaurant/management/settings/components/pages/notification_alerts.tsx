@@ -26,9 +26,9 @@ function NotificationsAndAlerts() {
       </div>
       <ul>
         {options.map((o) => (
-          <li>
+          <li key={o.label}>
             <p>{o.label}</p>
-            <UloDineCheckbox onChange={(val) => {}} checked={o.checked} />
+            <UloDineCheckbox onChange={() => {}} checked={o.checked} />
           </li>
         ))}
       </ul>

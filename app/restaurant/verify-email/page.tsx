@@ -59,7 +59,7 @@ function Page() {
       setBusinessPasswordReset((prev) => ({ ...prev, email: normalized }));
       try {
         localStorage.setItem("email_to_verify_business", normalized);
-      } catch (e) {}
+      } catch {}
       return;
     }
 
@@ -69,7 +69,7 @@ function Page() {
       if (stored) {
         setBusinessPasswordReset((prev) => ({ ...prev, email: stored }));
       }
-    } catch (e) {}
+    } catch {}
   }, [searchParams, setBusinessPasswordReset]);
 
   useEffect(() => {
