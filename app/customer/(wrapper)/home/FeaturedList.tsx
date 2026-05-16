@@ -15,4 +15,16 @@ function FeaturedRestaurants({ list }: { list: RestaurantCard[] }) {
   );
 }
 
+export function LoadingFeaturedRestaurants() {
+  return (
+    <div className={styles.recentList}>
+      <div />
+      <div>
+        <div />
+        <div />
+      </div>
+    </div>
+  );
+}
+
 export default FeaturedRestaurants;

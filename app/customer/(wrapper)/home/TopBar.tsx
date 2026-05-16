@@ -10,7 +10,13 @@ import UloDineLink from "@/components/button/UloDineLink";
 import { AUTH_ROUTES, CUSTOMER_ROUTES } from "@/routes/RoutePaths";
 import { useRouter } from "next/navigation";
 
-function TopBar() {
+function TopBar({
+  searchTerm,
+  onSearchChange,
+}: {
+  searchTerm?: string;
+  onSearchChange?: (term: string) => void;
+}) {
   const router = useRouter();
   const { getMe } = useAuth();
   const [user, setUser] = React.useState<MeResponsePayload | null>(null);
@@ -64,7 +70,8 @@ function TopBar() {
         </div>
       </div>
       <UloDineSearch
-        onSearchChange={() => {}}
+        value={searchTerm}
+        onSearchChange={onSearchChange ?? (() => {})}
         placeholder="Search for restaurants or meals…"
         type="normal"
         width={"100%"}

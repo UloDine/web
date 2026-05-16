@@ -42,6 +42,8 @@ export function middleware(req: NextRequest) {
   // --- API routes ---
   if (pathname.startsWith("/api/")) {
     const publicApiPaths = [
+      "/api/restaurants",
+      "/api/menu/all",
       "/api/auth/restaurant/login",
       "/api/auth/restaurant/register",
       "/api/auth/restaurant/reset-password",
@@ -51,9 +53,17 @@ export function middleware(req: NextRequest) {
       "/api/auth/user/logout",
       "/api/auth/user/login",
       "/api/auth/user/register",
+      "/api/cuisines",
+      "/api/categories",
     ];
 
-    if (!publicApiPaths.includes(pathname) && !token) {
+    const publicApiPrefixes = ["/api/restaurants/public/"];
+
+    const isPublicApiPath =
+      publicApiPaths.includes(pathname) ||
+      publicApiPrefixes.some((prefix) => pathname.startsWith(prefix));
+
+    if (!isPublicApiPath && !token) {
       return new Response(
         JSON.stringify({
           status: "failed",
@@ -113,6 +123,8 @@ export function middleware(req: NextRequest) {
   if (pathname.startsWith("/customer")) {
     const customerPublicPaths = [
       CUSTOMER_ROUTES.HOME,
+      CUSTOMER_ROUTES.BROWSE,
+      CUSTOMER_ROUTES.SCAN,
       AUTH_ROUTES.CUS_LOGIN,
       AUTH_ROUTES.CUS_SIGNUP,
       AUTH_ROUTES.CUS_VERIFY_EMAIL,

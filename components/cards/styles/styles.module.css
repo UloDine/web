@@ -16,12 +16,27 @@
   height: 15rem;
   position: relative;
 }
+.restaurant_card .image_wrapper .banner_placeholder {
+  width: 100%;
+  height: 14rem;
+}
 .restaurant_card .image_wrapper .banner {
   display: block;
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+.restaurant_card .image_wrapper .logo_placeholder {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  border: 0.5rem solid #fff;
+  overflow: hidden;
 }
 .restaurant_card .image_wrapper .logo {
   position: absolute;

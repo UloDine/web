@@ -263,7 +263,7 @@ Input) {
           <textarea
             id={id as string}
             placeholder={placeholder}
-            className={`${styles.input} ${className}`}
+            className={`${styles.textarea} ${className}`}
             value={value ?? inputValue}
             onChange={(e) => {
               if (onTextAreaChange) onTextAreaChange(e);

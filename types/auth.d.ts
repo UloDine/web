@@ -13,9 +13,14 @@ interface BusinessDetails {
   businessName: string;
   businessAddress: string;
   state: string;
+  country: string;
   postalCode: string;
   businessLogo?: File;
   complete: boolean;
+  category: string;
+  cuisine: string;
+  tagline?: string;
+  description?: string;
 }
 
 interface AuthDetails {

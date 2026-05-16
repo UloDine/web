@@ -9,6 +9,7 @@ import { AlertProvider } from "@/context/alert/AlertContext";
 import ProfileProvider from "@/context/ProfileContext";
 import { NavigationProvider } from "@/context/NavigationContext";
 import { CartProvider } from "@/context/CartContext";
+import { GeoLocationProvider } from "@/context/GeoLocationContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -63,7 +64,9 @@ export default function RootLayout({
                   {/* <ProgressBar /> */}
                   <AuthProvider>
                     <ToastProvider>
-                      <ApiServiceProvider>{children}</ApiServiceProvider>
+                      <GeoLocationProvider>
+                        <ApiServiceProvider>{children}</ApiServiceProvider>
+                      </GeoLocationProvider>
                     </ToastProvider>
                   </AuthProvider>
                 </ProfileProvider>

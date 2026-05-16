@@ -103,4 +103,121 @@
 .nearbyList {
   margin: 0.5rem 0;
   padding: 1rem;
+}
+
+.skeletonSection {
+  width: 100%;
+  padding: 1rem;
+}
+.skeletonSection .skeletonHeader {
+  margin-bottom: 1rem;
+}
+.skeletonSection .skeletonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.skeletonTitle,
+.skeletonSubTitle,
+.skeletonTitleWide,
+.skeletonTitleShort,
+.skeletonLineLarge,
+.skeletonLineMedium,
+.skeletonLineSmall,
+.skeletonThumb,
+.skeletonDivider {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #eceff3 25%, #f7f9fc 37%, #eceff3 63%);
+  background-size: 400% 100%;
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+  border-radius: 0.75rem;
+}
+
+.skeletonTitle,
+.skeletonTitleWide,
+.skeletonTitleShort {
+  height: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.skeletonTitleWide {
+  width: 11rem;
+}
+
+.skeletonTitleShort {
+  width: 7rem;
+}
+
+.skeletonSubTitle {
+  width: 9rem;
+  height: 0.8rem;
+}
+
+.skeletonCard {
+  border-radius: 1rem;
+  background: #fff;
+  position: relative;
+  height: 24rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.skeletonThumb {
+  width: 100%;
+  height: 65%;
+}
+
+.skeletonLogo {
+  width: 5rem;
+  height: 5rem;
+  border: 0.5rem solid #fff;
+  background: #f6f6f6;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translateX(-50%);
+}
+
+.skeletonBody {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: auto;
+  padding: 0.8rem;
+}
+
+.skeletonLineLarge {
+  width: 78%;
+  height: 1.3rem;
+}
+
+.skeletonLineMedium {
+  width: 54%;
+  height: 1rem;
+}
+
+.skeletonLineSmall {
+  width: 42%;
+  height: 0.8rem;
+}
+
+.skeletonDivider {
+  width: 100%;
+  height: 1px;
+  border-radius: 999px;
+  opacity: 0.45;
+  margin: 0.25rem 1rem 0.75rem;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }/*# sourceMappingURL=home.module.css.map */

@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import styles from "./styles/styles.module.css";
 import { RESTAURANT_ROUTES } from "@/routes/RoutePaths";
+import { EmptyImagePlaceholder } from "../abstracts";
 
 function RestaurantList({
   list,
@@ -20,12 +21,18 @@ function RestaurantList({
             href={RESTAURANT_ROUTES.DETAILS(restaurant.id)}
             key={restaurant.id}
           >
-            <Image
-              src={restaurant.banner}
-              alt={`${restaurant.name} banner`}
-              width={400}
-              height={200}
-            />
+            {restaurant.banner ? (
+              <Image
+                src={restaurant.banner}
+                alt={`${restaurant.name} banner`}
+                width={400}
+                height={200}
+              />
+            ) : (
+              <div className={styles.logo_placeholder}>
+                <EmptyImagePlaceholder width={5} height={5} />
+              </div>
+            )}
             <div className={styles.restaurantInfo}>
               <p>{restaurant.name}</p>
               <div>

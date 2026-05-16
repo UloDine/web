@@ -32,6 +32,19 @@
   -o-object-fit: cover;
      object-fit: cover;
 }
+.list .wrapper a .logo_placeholder {
+  overflow: hidden;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.list .wrapper a .logo_placeholder img {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0;
+  opacity: 0.5;
+}
 .list .wrapper a .restaurantInfo {
   width: 100%;
   display: flex;

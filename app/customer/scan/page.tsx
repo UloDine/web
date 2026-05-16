@@ -345,7 +345,17 @@ function ScanPage() {
       <canvas ref={canvasRef}></canvas>
 
       {error ? (
-        <span style={{ color: "red", marginBottom: "1rem" }}>{error}</span>
+        <span
+          style={{
+            color: "red",
+            marginBottom: "1rem",
+            background: "rgb(255, 255, 255)",
+            padding: "0.5rem 1rem",
+            zIndex: 10,
+          }}
+        >
+          {error}
+        </span>
       ) : null}
     </section>
   );

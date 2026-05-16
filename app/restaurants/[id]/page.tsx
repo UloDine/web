@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  SEEDED_MENU_ITEMS,
-  SEEDED_RESTAURANTS_WITH_FULL_DETAILS,
-} from "@/app/customer/(wrapper)/home/seed";
+import { apiRoutes } from "@/lib/apiRoutes";
+import { useFetch } from "@/hooks/useFetch";
 import styles from "./styles/style.module.css";
 import UloDineSearch from "@/components/input/UloDineSearch";
 import { CUSTOMER_ROUTES, RESTAURANT_ROUTES } from "@/routes/RoutePaths";
@@ -22,6 +20,25 @@ import {
 import MenuDetails from "./MenuDetails";
 import { useRouter, useParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import Empty from "@/components/abstracts/Empty";
+import InPageLoader from "@/components/loaders/InPageLoader";
+
+interface RestaurantPublicData {
+  id: string;
+  name: string;
+  banner: string;
+  email: string | null;
+  phone: string | null;
+  tagline?: string | null;
+  description?: string | null;
+  rating?: number | null;
+  totalReviews?: number | null;
+}
+
+interface RestaurantMenusResponse {
+  pagination: Record<string, unknown> | null;
+  result: MenuData[];
+}
 
 function RestaurantDetails() {
   const router = useRouter();
@@ -33,45 +50,78 @@ function RestaurantDetails() {
   });
   const [selectedMenuItem, setSelectedMenuItem] =
     React.useState<MenuData | null>(null);
-  const restaurant = SEEDED_RESTAURANTS_WITH_FULL_DETAILS.find(
-    (r) => r.id === id,
-  );
-  return restaurant ? (
+  const { data: restaurant, loading: restaurantLoading } =
+    useFetch<RestaurantPublicData | null>(
+      apiRoutes.restaurant.fetchPublicById(id),
+      null,
+    );
+
+  const { data: menusData, loading: menusLoading } =
+    useFetch<RestaurantMenusResponse>(apiRoutes.restaurant.menu.fetchAll(id), {
+      pagination: null,
+      result: [],
+    });
+  if (restaurantLoading) {
+    return <InPageLoader text="Loading restaurant" />;
+  }
+
+  if (!restaurant) {
+    return (
+      <Empty
+        icon="restaurant"
+        title="Restaurant Not Found!"
+        desc="We could not find the restaurant you're looking for. Maybe try adjusting your search term or filter category."
+        className={styles.empty_state}
+        action={() => router.push(CUSTOMER_ROUTES.BROWSE)}
+        actionLabel="Back to Restaurants"
+      />
+    );
+  }
+
+  const restaurantData = restaurant;
+
+  return (
     <section className={styles.details}>
       <div className={styles.header}>
         {/* <Link href="/restaurants">Back to restaurants</Link> */}
-        <h2>{restaurant.name}</h2>
+        <h2>{restaurantData.name}</h2>
       </div>
       <div
         className={styles.hero}
-        style={{ "--bg": `url(${restaurant.banner})` } as React.CSSProperties}
+        style={
+          { "--bg": `url(${restaurantData.banner})` } as React.CSSProperties
+        }
       >
         <div className={styles.top}>
           <div>
-            <Link href={`mailto:${restaurant.email}`}>
-              <EmailIcon />
-            </Link>
-            <Link href={`tel:${restaurant.phone}`}>
-              <PhoneIcon />
-            </Link>
+            {restaurantData.email && (
+              <Link href={`mailto:${restaurantData.email}`}>
+                <EmailIcon />
+              </Link>
+            )}
+            {restaurantData.phone && (
+              <Link href={`tel:${restaurantData.phone}`}>
+                <PhoneIcon />
+              </Link>
+            )}
           </div>
           <button>
             <HeartIcon />
           </button>
         </div>
-        <h1>{restaurant.tagline}</h1>
+        <h1>{restaurantData.tagline ?? ""}</h1>
       </div>
       <div className={styles.meta}>
-        <p>{restaurant.description}</p>
+        <p>{restaurantData.description}</p>
         <div className={styles.wrapper}>
           <div>
             <RatingIcon />
-            <small>{restaurant.rating}</small>
+            <small>{restaurantData.rating}</small>
           </div>
           <div>
             <ReviewIcon />
             <Link href={RESTAURANT_ROUTES.REVIEWS(restaurant.id)}>
-              {restaurant.totalReviews} reviews
+              {restaurantData.totalReviews ?? 0} reviews
             </Link>
           </div>
         </div>
@@ -81,14 +131,15 @@ function RestaurantDetails() {
         <UloDineSearch
           type="normal"
           onSearchChange={() => {}}
-          placeholder={`Search for meals in ${restaurant.name}`}
+          placeholder={`Search for meals in ${restaurantData.name}`}
           width={"100%"}
         />
         {/* <TabLayout tabs={["All", "Starters", "Main Course", "Desserts", "Beverages"]} onTabChange={(tab)=>{}}/> */}
         <div className={styles.menu_items}>
-          {SEEDED_MENU_ITEMS.filter((item) => item.restaurant_id === id)
-            .slice(0, 10)
-            .map((item) => (
+          {!menusLoading &&
+          Array.isArray(menusData?.result) &&
+          menusData.result.length > 0 ? (
+            menusData.result.map((item) => (
               <div
                 key={item.id}
                 className={styles.menu_item}
@@ -101,7 +152,7 @@ function RestaurantDetails() {
                   height={200}
                 />
                 <h4>{item.item_name}</h4>
-                <b>{formatCurrency(parseFloat(item.price))}</b>
+                <b>{formatCurrency(parseFloat(String(item.price || 0)))}</b>
                 <div className={styles.row}>
                   <span
                     className={item.prep_status === "Ready" ? styles.ready : ""}
@@ -127,7 +178,10 @@ function RestaurantDetails() {
                   </button>
                 </div>
               </div>
-            ))}
+            ))
+          ) : (
+            <div>No menu items found.</div>
+          )}
         </div>
       </div>
       <button
@@ -144,8 +198,6 @@ function RestaurantDetails() {
         />
       )}
     </section>
-  ) : (
-    <></>
   );
 }
 

@@ -227,3 +227,29 @@ interface QRResponse {
   pdfPath: string;
   imgPath: string;
 }
+
+interface GeoCoordinates {
+  latitude: number;
+  longitude: number;
+}
+
+type GeoPermissionState =
+  | "idle"
+  | "granted"
+  | "denied"
+  | "unsupported"
+  | "error";
+
+interface GeoLocationContextType {
+  coordinates: GeoCoordinates | null;
+  readableAddress: string;
+  permissionState: GeoPermissionState;
+  loading: boolean;
+  requestCurrentLocation: () => Promise<GeoCoordinates | null>;
+  reverseGeocode: (
+    latitude: number,
+    longitude: number,
+  ) => Promise<string | null>;
+  geocodeAddress: (address: string) => Promise<GeoCoordinates | null>;
+  calculateDistanceToAddress: (address: string) => Promise<number | null>;
+}

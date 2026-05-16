@@ -102,7 +102,7 @@
       display: grid;
       grid-template-columns: 1fr 2fr;
       gap: 1rem;
-      margin-top: 10rem;
+      margin-top: 5rem;
 
       @media screen and (max-width: 500px) {
         display: block;
@@ -123,7 +123,7 @@
         justify-content: center;
         gap: 1rem;
         left: 0;
-        bottom: 5rem;
+        bottom: 1rem;
         padding: 1.5rem;
 
         .next_btn,

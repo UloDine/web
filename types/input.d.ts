@@ -30,6 +30,7 @@ interface Select {
   label?: string;
   placeholder?: string;
   defaultSelected?: string;
+  searchable?: boolean;
 }
 
 interface UloDineSearch {
@@ -37,4 +38,5 @@ interface UloDineSearch {
   placeholder: string;
   onSearchChange: (query: string) => void;
   width?: number | string;
+  value?: string;
 }

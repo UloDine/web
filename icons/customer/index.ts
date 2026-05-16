@@ -34,3 +34,7 @@ export { default as LogoutIcon } from "./Logout";
 export { default as ChatIcon } from "./Chat";
 export { default as FilterIcon } from "./Filter";
 export { default as LinkExternalIcon } from "./LinkExternal";
+export { default as HistoryBoldIcon } from "./HistoryBold";
+export { default as MenuBoldIcon } from "./MenuBold";
+export { default as RestaurantBoldIcon } from "./RestaurantBold";
+export { default as OrderBoldIcon } from "./OrderBold";

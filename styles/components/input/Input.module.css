@@ -16,6 +16,19 @@
 .input_wrapper .input:focus {
   border-color: #00bb95;
 }
+.input_wrapper .textarea {
+  border: 0.1rem solid #dfdfdf;
+  background: #f5f5f5;
+  border-radius: 0.5rem;
+  min-height: 6rem;
+  display: block;
+  padding: 0.5rem;
+  min-width: 20rem;
+  width: 100%;
+}
+.input_wrapper .textarea:focus {
+  border-color: #00bb95;
+}
 .input_wrapper .error {
   border-color: #d80000;
 }
@@ -105,6 +118,22 @@
   max-height: 25rem;
   overflow: auto;
   z-index: 10;
+}
+.select .dropdown .search {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: #ffffff;
+  padding: 0.5rem;
+}
+.select .dropdown .search input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 0.1rem solid #dfdfdf;
+  border-radius: 0.5rem;
+}
+.select .dropdown .search input:focus {
+  border-color: #00bb95;
 }
 .select .dropdown span {
   display: block;

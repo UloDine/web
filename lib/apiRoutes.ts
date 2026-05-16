@@ -23,7 +23,9 @@ export const apiRoutes = {
     deleteAccount: (id: string) => `/api/restaurant/delete?restaurantId=${id}`,
     fetchOverview: (id: string) =>
       `/api/restaurant/overview?restaurantId=${id}`,
+    fetchAll: `/api/restaurants`,
     fetchById: (id: string) => `/api/restaurants/${id}`,
+    fetchPublicById: (id: string) => `/api/restaurants/public/${id}`,
     fetchByEmail: (email: string) => `/api/restaurants/${email}`,
     updateBanner: (id: string) => `/api/restaurants/${id}/banner`,
     updateDescription: (id: string) => `/api/restaurants/${id}/description`,
@@ -55,7 +57,7 @@ export const apiRoutes = {
     },
     menu: {
       fetchAll: (restaurantId: string) =>
-        `/api/restaurant/menu/all?restaurantId=${restaurantId}`,
+        `/api/menu/all?restaurantId=${restaurantId}`,
       fetchById: (id: string, restaurantId: string) =>
         `/api/menu/${restaurantId}/${id}`,
       create: `/api/restaurant/menu/create`,
@@ -83,5 +85,11 @@ export const apiRoutes = {
       delete: (restaurantId: string, id: string) =>
         `/api/qr/delete/${restaurantId}/${id}`,
     },
+  },
+  cuisine: {
+    fetchAll: `/api/cuisines`,
+  },
+  categories: {
+    fetchAll: `/api/categories`,
   },
 };

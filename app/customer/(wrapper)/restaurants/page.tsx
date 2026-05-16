@@ -4,7 +4,6 @@ import TopBar from "./TopBar";
 import FeaturedRestaurants from "./FeaturedList";
 import NearbyList from "./NearbyList";
 import styles from "./styles/restaurants.module.css";
-import { SEEDED_RESTAURANTS } from "../home/seed";
 import RenderTab from "./RenderTab";
 import { useSearchParams } from "next/navigation";
 
@@ -15,17 +14,23 @@ function Browse() {
   const [activeTab, setActiveTab] = React.useState(
     params?.get("tab") || "home",
   );
+  const [searchTerm, setSearchTerm] = React.useState("");
   return (
     <section className={styles.home}>
-      <TopBar onTabChange={setActiveTab} activeTab={activeTab} />
+      <TopBar
+        onTabChange={setActiveTab}
+        activeTab={activeTab}
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+      />
       <div className={styles.content}>
         {activeTab === "home" ? (
           <>
-            <FeaturedRestaurants list={SEEDED_RESTAURANTS.slice(0, 5)} />
-            <NearbyList list={SEEDED_RESTAURANTS.slice(0, 5)} />
+            <FeaturedRestaurants searchTerm={searchTerm} />
+            <NearbyList searchTerm={searchTerm} />
           </>
         ) : (
-          <RenderTab />
+          <RenderTab searchTerm={searchTerm} />
         )}
       </div>
     </section>

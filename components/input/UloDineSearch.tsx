@@ -9,8 +9,9 @@ function UloDineSearch({
   placeholder = "Search here",
   onSearchChange,
   width,
+  value,
 }: UloDineSearch) {
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>(value || "");
 
   // some consumers pass a `type` prop that's unused here; mark it used
   markUsed(type);
@@ -42,6 +43,7 @@ function UloDineSearch({
         onChange={(e) => {
           setSearchTerm(e.target.value);
         }}
+        value={searchTerm}
       />
       <button onClick={() => onSearchChange(searchTerm)}>
         {GeneralIcons.search_white}

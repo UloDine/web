@@ -16,11 +16,28 @@
     height: 15rem;
     position: relative;
 
+    .banner_placeholder {
+      width: 100%;
+      height: 14rem;
+    }
+
     .banner {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+
+    .logo_placeholder {
+      position: absolute;
+      bottom: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4.5rem;
+      height: 4.5rem;
+      border-radius: 50%;
+      border: 0.5rem solid #fff;
+      overflow: hidden;
     }
 
     .logo {

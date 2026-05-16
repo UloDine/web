@@ -82,6 +82,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     postalCode: "",
     state: "",
     complete: false,
+    category: "",
+    cuisine: "",
+    tagline: "",
+    description: "",
+    country: "",
   });
 
   const [auth, setAuth] = useState<AuthDetails>({
@@ -132,7 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     confirmPassword: "",
   });
 
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(2);
   // const [emailVerified, setEmailVerified] = useState<any>(
   //   JSON.parse(localStorage.getItem("email_verified") ?? "{}")
   // );
@@ -264,6 +269,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         res.message || "Account created! Please verify your email.",
       );
       localStorage.setItem("email_to_verify", res.data!.email);
+      // Clear any cached `me` data so the new account is fetched freshly
+      setMeCache(null);
+      meFetchedRef.current = false;
       router.push(AUTH_ROUTES.CUS_VERIFY_EMAIL);
     },
     onError: (err) => {
@@ -303,6 +311,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onSuccess: (res) => {
       updateEmailStatus(true);
       addAlert("success", res.message || "Email verified successfully!");
+      // Ensure we fetch fresh auth state after verification
+      setMeCache(null);
+      meFetchedRef.current = false;
       router.push(CUSTOMER_ROUTES.HOME);
     },
     onError: (err) => {

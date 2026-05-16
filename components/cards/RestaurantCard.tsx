@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./styles/styles.module.css";
 import Link from "next/link";
 import { RESTAURANT_ROUTES } from "@/routes/RoutePaths";
+import { EmptyImagePlaceholder } from "../abstracts";
 
 function RestaurantCard({
   id,
@@ -21,20 +22,33 @@ function RestaurantCard({
       href={RESTAURANT_ROUTES.DETAILS(id)}
     >
       <div className={styles.image_wrapper}>
-        <Image
-          src={banner}
-          alt={`${name} banner`}
-          width={400}
-          height={200}
-          className={styles.banner}
-        />
-        <Image
-          src={logo}
-          alt={`${name} logo`}
-          width={80}
-          height={80}
-          className={styles.logo}
-        />
+        {banner ? (
+          <Image
+            src={banner}
+            alt={`${name} banner`}
+            width={400}
+            height={200}
+            className={styles.banner}
+          />
+        ) : (
+          <div className={styles.banner_placeholder}>
+            <EmptyImagePlaceholder width={40} height={40} />
+          </div>
+        )}
+
+        {logo ? (
+          <Image
+            src={logo}
+            alt={`${name} logo`}
+            width={80}
+            height={80}
+            className={styles.logo}
+          />
+        ) : (
+          <div className={styles.logo_placeholder}>
+            <EmptyImagePlaceholder width={15} height={15} />
+          </div>
+        )}
       </div>
       <h4>{name}</h4>
       <p>{cuisine} Cuisine</p>
