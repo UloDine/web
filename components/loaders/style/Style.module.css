@@ -130,4 +130,20 @@
   50% {
     opacity: 1;
   }
+}
+.spinner_small {
+  width: size;
+  height: size;
+  border: calc(var(--size) / 10px) solid var(--color);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }/*# sourceMappingURL=Style.module.css.map */

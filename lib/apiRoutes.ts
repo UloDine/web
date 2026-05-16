@@ -17,8 +17,22 @@ export const apiRoutes = {
       verify_otp: `/api/auth/otp/verify`,
     },
     settings: {
-      fetch: (id: string) => `/api/restaurant/settings?restaurantId=${id}`,
-      update: (id: string) => `/api/restaurant/settings?restaurantId=${id}`,
+      fetch: (id: string) =>
+        `/api/restaurant/settings/account?restaurantId=${id}`,
+      update: (id: string) =>
+        `/api/restaurant/settings/account?restaurantId=${id}`,
+      account: {
+        fetch: (id: string) =>
+          `/api/restaurant/settings/account?restaurantId=${id}`,
+        update: (id: string) =>
+          `/api/restaurant/settings/account?restaurantId=${id}`,
+      },
+      notifications: {
+        fetch: (id: string) =>
+          `/api/restaurant/settings/notifications?restaurantId=${id}`,
+        update: (id: string) =>
+          `/api/restaurant/settings/notifications?restaurantId=${id}`,
+      },
     },
     deleteAccount: (id: string) => `/api/restaurant/delete?restaurantId=${id}`,
     fetchOverview: (id: string) =>
@@ -57,7 +71,7 @@ export const apiRoutes = {
     },
     menu: {
       fetchAll: (restaurantId: string) =>
-        `/api/menu/all?restaurantId=${restaurantId}`,
+        `/api/restaurant/menu/all?restaurantId=${restaurantId}`,
       fetchById: (id: string, restaurantId: string) =>
         `/api/menu/${restaurantId}/${id}`,
       create: `/api/restaurant/menu/create`,

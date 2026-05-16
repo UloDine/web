@@ -44,7 +44,7 @@ function ProfileProvider({ children }: { children: React.ReactNode }) {
 
   async function refreshRestaurantProfile(restaurantId: string) {
     const response = await fetch(
-      apiRoutes.restaurant.settings.fetch(restaurantId),
+      apiRoutes.restaurant.settings.account.fetch(restaurantId),
       {
         method: "GET",
         credentials: "include",

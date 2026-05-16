@@ -11,7 +11,10 @@ export async function GET(req: NextRequest) {
     });
   }
 
-  return proxyRequest(req, `/api/restaurants/${restaurantId}/settings/account`);
+  return proxyRequest(
+    req,
+    `/api/restaurants/${restaurantId}/settings/notifications`,
+  );
 }
 
 export async function PATCH(req: NextRequest) {
@@ -24,5 +27,8 @@ export async function PATCH(req: NextRequest) {
     });
   }
 
-  return proxyRequest(req, `/api/restaurants/${restaurantId}/settings/account`);
+  return proxyRequest(
+    req,
+    `/api/restaurants/${restaurantId}/settings/notifications`,
+  );
 }

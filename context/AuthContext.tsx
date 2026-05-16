@@ -137,7 +137,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     confirmPassword: "",
   });
 
-  const [step, setStep] = useState<number>(2);
+  const [step, setStep] = useState<number>(1);
   // const [emailVerified, setEmailVerified] = useState<any>(
   //   JSON.parse(localStorage.getItem("email_verified") ?? "{}")
   // );

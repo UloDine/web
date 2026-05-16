@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { ImagePlaceholder } from "../placeholder";
 import UploadFileButton from "../uploadButton";
 import styles from "../../style/index.module.css";
@@ -8,43 +8,10 @@ import { GeneralIcons } from "@/icons/general/icons";
 import { useProfile } from "@/context/ProfileContext";
 import { useAlert } from "@/context/alert/AlertContext";
 import { apiRoutes } from "@/lib/apiRoutes";
+import { useFetch } from "@/hooks/useFetch";
+import { usePatch } from "@/hooks/usePatch";
 import { resolveAssetUrl } from "@/utils/helpers";
 import Image from "next/image";
-
-type EditableField =
-  | "business_name"
-  | "business_description"
-  | "business_email"
-  | "business_phone"
-  | "business_address"
-  | "business_state"
-  | "business_postal_code";
-
-type UploadField = "banner" | "business_logo";
-
-interface RestaurantSettingsData {
-  id: string;
-  business_name: string;
-  business_description: string | null;
-  business_email: string | null;
-  business_phone: string | null;
-  business_address: string;
-  business_state: string;
-  business_postal_code: string;
-  business_plan: string;
-  banner: string | null;
-  business_logo: string | null;
-}
-
-interface DraftSettings {
-  business_name: string;
-  business_description: string;
-  business_email: string;
-  business_phone: string;
-  business_address: string;
-  business_state: string;
-  business_postal_code: string;
-}
 
 const EMPTY_DRAFTS: DraftSettings = {
   business_name: "",
@@ -72,14 +39,30 @@ function General() {
   const { restaurant, refreshRestaurantProfile } = useProfile();
   const { addAlert } = useAlert();
   const restaurantId = restaurant?.id;
-  const [settings, setSettings] = React.useState<RestaurantSettingsData | null>(
-    null,
-  );
+  const settingsEndpoint = restaurantId
+    ? apiRoutes.restaurant.settings.account.fetch(restaurantId)
+    : "";
+  const {
+    data: settings,
+    loading: loadingSettings,
+    refetch: refetchSettings,
+  } = useFetch<RestaurantSettingsData | null>(settingsEndpoint, null, {
+    accountType: "restaurant",
+    enabled: Boolean(restaurantId),
+  });
+  const accountSettingsUpdateEndpoint = restaurantId
+    ? apiRoutes.restaurant.settings.account.update(restaurantId)
+    : "";
+  const { patchData: patchSettings, loading: patchingSettings } = usePatch<
+    FormData,
+    BaseResponse<RestaurantSettingsData>
+  >({
+    endpoint: accountSettingsUpdateEndpoint,
+  });
   const [drafts, setDrafts] = React.useState<DraftSettings>(EMPTY_DRAFTS);
   const [editingField, setEditingField] = React.useState<EditableField | null>(
     null,
   );
-  const [loadingSettings, setLoadingSettings] = React.useState(true);
   const [savingField, setSavingField] = React.useState<EditableField | null>(
     null,
   );
@@ -104,61 +87,15 @@ function General() {
   };
 
   React.useEffect(() => {
-    const currentRestaurantId = restaurantId ?? "";
-
-    if (!currentRestaurantId) {
-      setLoadingSettings(false);
-      setSettings(null);
+    if (!restaurantId) {
       setDrafts(EMPTY_DRAFTS);
       return;
     }
 
-    let active = true;
-
-    async function loadSettings() {
-      setLoadingSettings(true);
-      try {
-        const response = await fetch(
-          apiRoutes.restaurant.settings.fetch(currentRestaurantId),
-          {
-            method: "GET",
-            credentials: "include",
-            headers: { Accept: "application/json" },
-          },
-        );
-
-        const json =
-          (await response.json()) as BaseResponse<RestaurantSettingsData>;
-
-        if (!response.ok || json.status !== "success" || !json.data) {
-          throw new Error(
-            json.message || "Failed to fetch restaurant settings",
-          );
-        }
-
-        if (!active) return;
-
-        setSettings(json.data);
-        setDrafts(buildDrafts(json.data));
-      } catch (error) {
-        console.error("Failed to fetch restaurant settings:", error);
-        if (active) {
-          setSettings(null);
-          setDrafts(EMPTY_DRAFTS);
-        }
-      } finally {
-        if (active) {
-          setLoadingSettings(false);
-        }
-      }
+    if (settings) {
+      setDrafts(buildDrafts(settings));
     }
-
-    loadSettings();
-
-    return () => {
-      active = false;
-    };
-  }, [restaurantId]);
+  }, [restaurantId, settings]);
 
   React.useEffect(() => {
     if (editingField === "business_name" && nameInputRef.current) {
@@ -174,16 +111,12 @@ function General() {
     }
   }, [editingField]);
 
-  useEffect(() => {
-    console.log(drafts);
-  }, [drafts]);
-
   const syncSettings = React.useCallback(
     (nextSettings: RestaurantSettingsData) => {
-      setSettings(nextSettings);
       setDrafts(buildDrafts(nextSettings));
+      void refetchSettings();
     },
-    [],
+    [refetchSettings],
   );
 
   async function saveField(field: EditableField) {
@@ -195,20 +128,10 @@ function General() {
       payload.append("field", field);
       payload.append("value", drafts[field]);
 
-      const response = await fetch(
-        apiRoutes.restaurant.settings.update(restaurantId),
-        {
-          method: "PATCH",
-          credentials: "include",
-          body: payload,
-        },
-      );
+      const json = await patchSettings(payload);
 
-      const json =
-        (await response.json()) as BaseResponse<RestaurantSettingsData>;
-
-      if (!response.ok || json.status !== "success" || !json.data) {
-        throw new Error(json.message || "Failed to update restaurant setting");
+      if (!json || json.status !== "success" || !json.data) {
+        throw new Error(json?.message || "Failed to update restaurant setting");
       }
 
       syncSettings(json.data);
@@ -232,20 +155,10 @@ function General() {
       payload.append("field", field);
       payload.append("file", file);
 
-      const response = await fetch(
-        apiRoutes.restaurant.settings.update(restaurantId),
-        {
-          method: "PATCH",
-          credentials: "include",
-          body: payload,
-        },
-      );
+      const json = await patchSettings(payload);
 
-      const json =
-        (await response.json()) as BaseResponse<RestaurantSettingsData>;
-
-      if (!response.ok || json.status !== "success" || !json.data) {
-        throw new Error(json.message || "Failed to upload restaurant asset");
+      if (!json || json.status !== "success" || !json.data) {
+        throw new Error(json?.message || "Failed to upload restaurant asset");
       }
 
       syncSettings(json.data);
@@ -364,7 +277,9 @@ function General() {
   return (
     <section
       className={styles.general}
-      aria-busy={savingField !== null || uploadingField !== null}
+      aria-busy={
+        savingField !== null || uploadingField !== null || patchingSettings
+      }
     >
       <input
         ref={bannerInputRef}

@@ -68,6 +68,10 @@ function StepTwo() {
     };
   }, []);
 
+  useEffect(() => {
+    console.log(business);
+  }, [business]);
+
   return (
     <div className={styles.step_one}>
       <div className={styles.input}>
@@ -119,6 +123,7 @@ function StepTwo() {
             label="Category"
             placeholder="Select category"
             searchable
+            defaultSelected={business.category}
           />
         </div>
       )}
@@ -131,6 +136,7 @@ function StepTwo() {
           label="Country"
           placeholder="Select country"
           searchable
+          defaultSelected={business.country}
         />
       </div>
       <div className={styles.input}>
@@ -142,6 +148,7 @@ function StepTwo() {
           label="State"
           placeholder="Select state"
           searchable
+          defaultSelected={business.state}
         />
       </div>
       <div className={styles.input}>
@@ -168,13 +175,15 @@ function StepTwo() {
             }}
             label="Cuisine"
             placeholder="Select cuisine"
+            searchable
+            defaultSelected={business.cuisine}
           />
         </div>
       )}
       <div className={styles.input}>
         <UloDineInput
           value={business.description as string}
-          onChange={(e) => {
+          onTextAreaChange={(e) => {
             setBusiness({ ...business, description: e.target.value });
           }}
           type="textarea"

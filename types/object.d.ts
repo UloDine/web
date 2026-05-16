@@ -52,6 +52,7 @@ interface Restaurant {
   email: string;
   id: string;
   plan: "free" | "premium" | "enterprise";
+  preferences?: RestaurantPreferences | null;
 }
 
 interface PageTitle {
@@ -196,6 +197,7 @@ interface Restaurant {
   id: string;
   business_name: string;
   business_plan: string;
+  preferences?: RestaurantPreferences | null;
 }
 
 interface CopyText {

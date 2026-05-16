@@ -8,6 +8,7 @@ type FetchAccountType = "restaurant" | "customer";
 
 interface UseFetchOptions {
   accountType?: FetchAccountType;
+  enabled?: boolean;
 }
 
 function getLoginRoute(accountType?: FetchAccountType, endpoint?: string) {
@@ -65,6 +66,7 @@ export function useFetch<T>(
   const [data, setData] = useState<T>(initialValue);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isEnabled = options?.enabled ?? true;
 
   // ✅ Ensure endpoint always goes through Next.js API proxy
   const resolvedEndpoint = endpoint.startsWith("/api/")
@@ -76,6 +78,10 @@ export function useFetch<T>(
     /[?&](?:restaurantId|id|customerId|menuId)=(?:&|$)/.test(resolvedEndpoint);
 
   useLayoutEffect(() => {
+    if (!isEnabled) {
+      return;
+    }
+
     if (!hasEmptyParams) {
       return;
     }
@@ -86,7 +92,13 @@ export function useFetch<T>(
     }
 
     router.replace(getLoginRoute(options?.accountType, resolvedEndpoint));
-  }, [hasEmptyParams, options?.accountType, resolvedEndpoint, router]);
+  }, [
+    hasEmptyParams,
+    isEnabled,
+    options?.accountType,
+    resolvedEndpoint,
+    router,
+  ]);
 
   async function fetchData() {
     setError(null);
@@ -113,6 +125,12 @@ export function useFetch<T>(
   }
 
   useEffect(() => {
+    if (!isEnabled) {
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
     // Skip fetching if required params are missing
     if (hasEmptyParams) {
       setLoading(false);
@@ -122,7 +140,7 @@ export function useFetch<T>(
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resolvedEndpoint, hasEmptyParams, router]);
+  }, [resolvedEndpoint, hasEmptyParams, isEnabled, router]);
 
   return { data, loading, error, refetch: fetchData };
 }

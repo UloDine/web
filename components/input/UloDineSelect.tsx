@@ -1,6 +1,6 @@
 "use client";
 import { GeneralIcons } from "@/icons/general/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/components/input/Input.module.css";
 
 function UloDineSelect({
@@ -11,9 +11,30 @@ function UloDineSelect({
   defaultSelected,
   searchable,
 }: Select) {
-  const [value, setValue] = useState<string>(defaultSelected ?? "");
+  const [value, setValue] = useState<string>("");
   const [open, setOpen] = useState<boolean>(false);
   const [filteredItems, setFilteredItems] = useState(items);
+
+  useEffect(() => {
+    // keep filtered items in sync when items change
+    setFilteredItems(items);
+  }, [items]);
+
+  useEffect(() => {
+    // if a defaultSelected prop is provided, try to resolve it to the
+    // matching item's label (supports passing either value or label)
+    if (!defaultSelected) return;
+
+    const match = items.find(
+      (it) => it.value === defaultSelected || it.label === defaultSelected,
+    );
+
+    if (match) {
+      setValue(match.label);
+    } else {
+      setValue(String(defaultSelected));
+    }
+  }, [defaultSelected, items]);
   return (
     <div className={styles.select}>
       <label htmlFor={label}>{label}</label>

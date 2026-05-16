@@ -43,7 +43,7 @@ export function middleware(req: NextRequest) {
   if (pathname.startsWith("/api/")) {
     const publicApiPaths = [
       "/api/restaurants",
-      "/api/menu/all",
+      "/api/restaurant/menu/all",
       "/api/auth/restaurant/login",
       "/api/auth/restaurant/register",
       "/api/auth/restaurant/reset-password",
