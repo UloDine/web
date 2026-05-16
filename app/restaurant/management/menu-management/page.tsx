@@ -76,7 +76,7 @@ function MenuManagement() {
   }, [selectedFilters]);
 
   // Show loading while restaurant ID is being fetched
-  if (!id || loading) {
+  if (!id || (loading && !data)) {
     return <InPageLoader text="Loading menu..." />;
   }
 

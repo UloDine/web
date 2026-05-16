@@ -167,8 +167,8 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       sortOrder: sortOrder,
       page: page,
       limit: limit,
-      stockStatus: stockStatus,
-      itemStatus: itemStatus,
+      stock: stockStatus,
+      status: itemStatus,
     }),
     null,
     { accountType: "restaurant" },
@@ -527,6 +527,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
                             category: e.value,
                           }));
                         }}
+                        searchable
                       />
                     </div>
                     <div className={styles.space}>
