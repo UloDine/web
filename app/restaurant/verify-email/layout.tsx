@@ -1,4 +1,4 @@
-import { AlertProvider } from "@/context/alert/AlertContext";
+import { AlertProvider } from "@/context/AlertContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { ReactNode } from "react";
 

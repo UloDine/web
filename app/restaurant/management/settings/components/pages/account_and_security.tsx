@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import UloDineModal from "@/components/modal/UloDineModal";
 import { useProfile } from "@/context/ProfileContext";
-import { useAlert } from "@/context/alert/AlertContext";
+import { useAlert } from "@/context/AlertContext";
 import { apiRoutes } from "@/lib/apiRoutes";
 
 function AccountAndSecurity() {

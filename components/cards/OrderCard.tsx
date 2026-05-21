@@ -5,7 +5,7 @@ import React from "react";
 import { DashedLine } from "../abstracts";
 import Image from "next/image";
 import styles from "./styles/styles.module.css";
-import { useAlert } from "@/context/alert/AlertContext";
+import { useAlert } from "@/context/AlertContext";
 import { useRouter } from "next/navigation";
 
 function OrderCard({

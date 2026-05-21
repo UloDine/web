@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import styles from "./style/index.module.css";
+import styles from "../styles/menu/index.module.css";
 import { GeneralIcons } from "@/icons/general/icons";
 import Image from "next/image";
 import UloDineInput from "@/components/input/UloDineInput";
@@ -17,12 +17,12 @@ import UloDIneButton from "@/components/button/UloDIneButton";
 import UloDineHybridEditor from "@/components/input/UloDineHybridEditor";
 import { fileToDataURL } from "@/utils/helpers";
 import { resolveAssetUrl, queryBuilder } from "@/utils/helpers";
-import { useAlert } from "../alert/AlertContext";
+import { useAlert } from "./AlertContext";
 import { usePost } from "@/hooks/usePost";
 import { useFetch } from "@/hooks/useFetch";
 import { apiRoutes } from "@/lib/apiRoutes";
-import { useProfile } from "../ProfileContext";
-import { useApiService } from "../ApiServiceContext";
+import { useProfile } from "./ProfileContext";
+import { useApiService } from "./ApiServiceContext";
 import UloDineModal from "@/components/modal/UloDineModal";
 import { EmptyImagePlaceholder } from "@/components/abstracts";
 

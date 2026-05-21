@@ -9,7 +9,7 @@ import {
   useEffect,
   useRef,
 } from "react";
-import { useAlert } from "./alert/AlertContext";
+import { useAlert } from "./AlertContext";
 import { usePathname, useRouter } from "next/navigation";
 import {
   AUTH_ROUTES,

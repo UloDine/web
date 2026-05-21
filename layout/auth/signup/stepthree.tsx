@@ -3,7 +3,7 @@ import UloDineInput from "@/components/input/UloDineInput";
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/layout/Index.module.css";
 import { apiRoutes } from "@/lib/apiRoutes";
-import { useAlert } from "@/context/alert/AlertContext";
+import { useAlert } from "@/context/AlertContext";
 import { useAuth } from "@/context/AuthContext";
 import { isStrongPassword } from "@/utils/helpers";
 

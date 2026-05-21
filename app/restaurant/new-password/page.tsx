@@ -9,7 +9,7 @@ import styles from "@/styles/auth/Index.module.css";
 import UloDineLink from "@/components/button/UloDineLink";
 import UloDineInput from "@/components/input/UloDineInput";
 import { useAuth } from "@/context/AuthContext";
-import { useAlert } from "@/context/alert/AlertContext";
+import { useAlert } from "@/context/AlertContext";
 
 function Page() {
   const router = useRouter();

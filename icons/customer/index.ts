@@ -38,3 +38,7 @@ export { default as HistoryBoldIcon } from "./HistoryBold";
 export { default as MenuBoldIcon } from "./MenuBold";
 export { default as RestaurantBoldIcon } from "./RestaurantBold";
 export { default as OrderBoldIcon } from "./OrderBold";
+export { default as BillingSmallIcon } from "./BillingSmall";
+export { default as PlanIcon } from "./Plan";
+export { default as ExportIcon } from "./Export";
+export { default as ChevronDownIcon } from "./ChevronDown";

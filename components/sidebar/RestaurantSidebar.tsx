@@ -37,6 +37,12 @@ function RestaurantSidebar() {
       path: RESTAURANT_MANAGEMENT_ROUTES.MENU_MANAGEMENT,
     },
     {
+      icon: RestaurantIcons.billing,
+      activeIcon: RestaurantIcons.billingActive,
+      label: "Billing & Subscription",
+      path: RESTAURANT_MANAGEMENT_ROUTES.BILLING,
+    },
+    {
       icon: RestaurantIcons.report,
       activeIcon: RestaurantIcons.reportActive,
       label: "Reports & Analytics",

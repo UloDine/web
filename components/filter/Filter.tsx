@@ -1,3 +1,4 @@
+"use client";
 import { GeneralIcons } from "@/icons/general/icons";
 import React, { useEffect, useState } from "react";
 import styles from "./style/index.module.css";

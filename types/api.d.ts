@@ -65,6 +65,7 @@ interface RegisterResponsePayload {
     id: string;
     business_name: string;
     business_plan: string;
+    locked: boolean;
   };
 }
 interface RegisterResponse extends BaseResponse<RegisterResponsePayload> {}

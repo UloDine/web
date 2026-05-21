@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import styles from "./style/index.module.css";
+import styles from "../styles/alert/index.module.css";
 
 interface AlertProps {
   id: number;

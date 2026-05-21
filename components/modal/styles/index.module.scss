@@ -95,10 +95,12 @@
       max-width: 24rem;
     } // 384px
     &.md {
-      max-width: 28rem;
-    } // 448px
+      max-width: 35rem;
+      min-width: 32rem;
+    } // 512px
     &.lg {
-      max-width: 32rem;
+      max-width: 55rem;
+      min-width: 50rem;
     } // 512px
     &.xl {
       max-width: 36rem;

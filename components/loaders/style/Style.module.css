@@ -132,9 +132,10 @@
   }
 }
 .spinner_small {
-  width: size;
-  height: size;
-  border: calc(var(--size) / 10px) solid var(--color);
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  border: calc(var(--size) / 10) solid var(--color);
   border-top-color: transparent;
   border-radius: 50%;
   animation: spin 1s linear infinite;

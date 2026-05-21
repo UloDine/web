@@ -80,10 +80,12 @@
   max-width: 24rem;
 }
 .modal_panel.md {
-  max-width: 28rem;
+  max-width: 35rem;
+  min-width: 32rem;
 }
 .modal_panel.lg {
-  max-width: 32rem;
+  max-width: 55rem;
+  min-width: 50rem;
 }
 .modal_panel.xl {
   max-width: 36rem;

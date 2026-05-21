@@ -12,27 +12,35 @@ import {
 import { GeneralIcons } from "@/icons/general/icons";
 import Image from "next/image";
 
-function UloDineInput({
-  onChange,
-  onTextAreaChange,
-  type = "text",
-  className,
-  id,
-  label = "Title here",
-  placeholder = "Enter placeholder here",
-  strict = false,
-  value,
-  onComplete,
-  sending = false,
-  errorMessage,
-  invalid = false,
-  disabled = false,
-  otpLoading = false,
-  onResend,
-  otpChange,
-}: // eslint-disable-next-line @typescript-eslint/no-unused-vars
-Input) {
-  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+const UloDineInput = React.forwardRef<
+  HTMLInputElement | HTMLTextAreaElement,
+  Input
+>(function UloDineInput(
+  {
+    onChange,
+    onTextAreaChange,
+    type = "text",
+    className,
+    id,
+    label = "Title here",
+    placeholder = "Enter placeholder here",
+    strict = false,
+    value,
+    onComplete,
+    sending = false,
+    errorMessage,
+    invalid = false,
+    disabled = false,
+    otpLoading = false,
+    onResend,
+    otpChange,
+  }: // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  Input,
+  forwardedRef: React.ForwardedRef<HTMLInputElement | HTMLTextAreaElement>,
+) {
+  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>(
+    [],
+  );
   const [timeLeft, setTimeLeft] = useState(5 * 60); // 5 minutes in seconds
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(""));
   const [otpComplete, setOtpComplete] = useState<boolean>(
@@ -256,6 +264,18 @@ Input) {
       </div>
     );
   } else {
+    const assignRef: React.RefCallback<
+      HTMLInputElement | HTMLTextAreaElement
+    > = (el) => {
+      inputRefs.current[0] = el;
+      if (!forwardedRef) return;
+      if (typeof forwardedRef === "function") {
+        forwardedRef(el);
+      } else {
+        forwardedRef.current = el;
+      }
+    };
+
     return (
       <div className={styles.input_wrapper}>
         <label htmlFor={id as string}>{label}</label>
@@ -265,6 +285,7 @@ Input) {
             placeholder={placeholder}
             className={`${styles.textarea} ${className}`}
             value={value ?? inputValue}
+            ref={assignRef}
             onChange={(e) => {
               if (onTextAreaChange) onTextAreaChange(e);
 
@@ -287,6 +308,7 @@ Input) {
               type={type}
               placeholder={placeholder}
               value={value ?? inputValue}
+              ref={assignRef}
               className={`${styles.input} ${className} ${error || invalid ? styles.error : ""}`}
               onChange={(e) => {
                 if (onChange) onChange(e);
@@ -318,6 +340,7 @@ Input) {
               value={value ?? inputValue}
               onChange={handleChange}
               onBlur={handleBlur}
+              ref={assignRef}
             />
             <button onClick={() => setSecret(!secret)}>
               {secret ? GeneralIcons.eye_closed : GeneralIcons.eye}
@@ -329,6 +352,7 @@ Input) {
             placeholder={placeholder}
             className={`${styles.input} ${className} ${error || invalid ? styles.error : ""}`}
             value={value ?? inputValue}
+            ref={assignRef}
             onChange={(e) => {
               if (onChange) onChange(e);
 
@@ -347,6 +371,6 @@ Input) {
       </div>
     );
   }
-}
+});
 
 export default UloDineInput;

@@ -1,7 +1,7 @@
 "use client";
 
 import UloDineCheckbox from "@/components/input/UloDineCheckbox";
-import { useAlert } from "@/context/alert/AlertContext";
+import { useAlert } from "@/context/AlertContext";
 import { useProfile } from "@/context/ProfileContext";
 import { InfoCircleIcon } from "@/icons/customer";
 import { apiRoutes } from "@/lib/apiRoutes";

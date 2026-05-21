@@ -10,21 +10,6 @@ export async function GET(req: NextRequest) {
       status: 400,
     });
 
-  // Build the query string (preserve all params except restaurantId)
-  const queryEntries = Array.from(searchParams.entries()).filter(
-    ([key]) => key !== "restaurantId"
-  );
-
-  const queryString = queryEntries
-    .map(
-      ([key, value]) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-    )
-    .join("&");
-
-  // Construct final API path
-  const path = `/api/menu/restaurant/${restaurantId}${
-    queryString ? `?${queryString}` : ""
-  }`;
+  const path = `/api/menu/restaurant/${restaurantId}`;
   return proxyRequest(req, path);
 }

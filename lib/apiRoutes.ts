@@ -106,4 +106,20 @@ export const apiRoutes = {
   categories: {
     fetchAll: `/api/categories`,
   },
+  payments: {
+    subaccount: {
+      create: `/api/payments/subaccount`,
+      fetch: (id: string) => `/api/payments/subaccount/${id}`,
+      update: (id: string) => `/api/payments/subaccount/${id}`,
+    },
+    banks: {
+      fetchNgerian: `/api/payments/banks`,
+    },
+    resolve: {
+      fetch: (accountNumber: string, bankCode: string) =>
+        `/api/payments/resolve?account_number=${encodeURIComponent(
+          accountNumber,
+        )}&bank_code=${encodeURIComponent(bankCode)}`,
+    },
+  },
 };

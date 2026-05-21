@@ -6,7 +6,7 @@ import Image from "next/image";
 import { formatCurrency } from "@/utils/helpers";
 import FormatStatus from "./FormatStatus";
 import { resolveAssetUrl } from "@/utils/helpers";
-import { useMenuContext } from "@/context/menu/MenuContext";
+import { useMenuContext } from "@/context/MenuContext";
 
 function getSafeImageSrc(path?: string | null, fallback = "/food.png") {
   if (!path || !String(path).trim()) {

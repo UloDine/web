@@ -4,11 +4,12 @@ import { GeneralIcons } from "@/icons/general/icons";
 import styles from "./style/index.module.css";
 import Filter from "@/components/filter/Filter";
 import MenuCard from "./components/MenuCard";
-import { useMenuContext } from "@/context/menu/MenuContext";
+import { useMenuContext } from "@/context/MenuContext";
 import InPageLoader from "@/components/loaders/InPageLoader";
 import EmptyScreen from "@/layout/wrapper/containers/EmptyScreen";
 import { useProfile } from "@/context/ProfileContext";
 import { useCallback, useEffect, useState } from "react";
+import { FilterIcon } from "@/icons/customer";
 
 const MENU_FILTER_STORAGE_KEY = "menu-management-selected-filters";
 
@@ -130,7 +131,7 @@ function MenuManagement() {
               className={styles.filter}
               onClick={() => setOpenFilter(!openFilter)}
             >
-              {GeneralIcons.filter}
+              <FilterIcon />
             </button>
             {openFilter && (
               <Filter

@@ -42,6 +42,12 @@ const nextConfig: NextConfig = {
         port: "6000",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "ulodine.duckdns.org",
+        port: "",
+        pathname: "/**",
+      },
     ],
     qualities: [70, 80, 90, 100],
   },

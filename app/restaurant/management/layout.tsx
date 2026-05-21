@@ -1,6 +1,6 @@
 "use client";
-import { AlertProvider } from "@/context/alert/AlertContext";
-import { MenuProvider } from "@/context/menu/MenuContext";
+import { AlertProvider } from "@/context/AlertContext";
+import { MenuProvider } from "@/context/MenuContext";
 // import { useAuthGuard } from "@/hooks/useAuthGuard";
 import RestaurantLayout from "@/layout/wrapper/containers/RestaurantLayout";
 import { ReactNode } from "react";

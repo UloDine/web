@@ -17,6 +17,7 @@ interface Input {
   timer?: number;
   onResend?: () => void;
   otpChange?: (value: string) => void;
+  ref?: React.RefObject<HTMLInputElement | HTMLTextAreaElement | null>;
 }
 
 type item = {

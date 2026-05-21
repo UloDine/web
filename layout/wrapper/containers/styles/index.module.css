@@ -27,6 +27,7 @@
   flex-direction: column;
   min-height: 20rem;
   gap: 1rem;
+  width: 100%;
 }
 .empty_screen .sub {
   color: #7c7c7c;

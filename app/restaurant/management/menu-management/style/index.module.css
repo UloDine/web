@@ -30,6 +30,7 @@
   .orders .orders_header_left {
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
   }
 }
 .orders .orders_header_left .length {
@@ -47,6 +48,10 @@
   .orders .orders_header_left .search {
     padding-left: 0;
     border-left: none;
+    border: 0.1rem solid #dfdfdf;
+    border-radius: 0.5rem;
+    padding-left: 0.5rem;
+    width: 100%;
   }
 }
 .orders .orders_header_left .search input {
@@ -57,18 +62,21 @@
   padding: 0.5rem;
   border-radius: 0.3rem;
 }
+.orders .orders_header_left .search input:focus {
+  border-color: #00bb95;
+}
 @media screen and (max-width: 500px) {
   .orders .orders_header_left .search input {
     width: 100%;
   }
-}
-.orders .orders_header_left .search input:focus {
-  border-color: #00bb95;
+  .orders .orders_header_left .search input:focus {
+    border-color: transparent;
+  }
 }
 .orders .orders_header_right {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 .orders .orders_header_right .filter_wrapper {
   position: relative;
@@ -77,11 +85,12 @@
   cursor: pointer;
   width: 3rem;
   height: 3rem;
-  border-radius: 50%;
+  border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  border: 0.1rem solid #dfdfdf;
 }
 .orders .orders_header_right .filter:hover {
   background: #e9e9e9;
@@ -89,9 +98,12 @@
 .orders .orders_header_right .add_btn {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  border: 0.15rem solid #959595;
+  width: 3rem;
+  height: 3rem;
+  border: 0.1rem solid #dfdfdf;
   color: #959595;
   border-radius: 0.4rem;
   cursor: pointer;

@@ -6,7 +6,7 @@ import EditPen from "../editPen";
 import Section from "../section";
 import { GeneralIcons } from "@/icons/general/icons";
 import { useProfile } from "@/context/ProfileContext";
-import { useAlert } from "@/context/alert/AlertContext";
+import { useAlert } from "@/context/AlertContext";
 import { apiRoutes } from "@/lib/apiRoutes";
 import { useFetch } from "@/hooks/useFetch";
 import { usePatch } from "@/hooks/usePatch";

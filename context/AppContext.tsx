@@ -1,8 +1,8 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
-import { useWindow } from "./useWindow";
-import { useNetwork } from "./useNetwork";
-import { useTheme } from "./useTheme";
+import { useWindow } from "../hooks/useWindow";
+import { useNetwork } from "../hooks/useNetwork";
+import { useTheme } from "../hooks/useTheme";
 // import OfflineAlert from "../alert/AlertWindow";
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -17,7 +17,6 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     <AppContext.Provider value={{ windowSize, isOnline, theme, type, setType }}>
       {/* {!isOnline && <OfflineAlert />} */}
       {children}
-      
     </AppContext.Provider>
   );
 }

@@ -11,7 +11,7 @@ function Spinner({
   return (
     <div
       className={styles.spinner_small}
-      style={{ "--size": size, "--color": color } as React.CSSProperties}
+      style={{ "--size": `${size}px`, "--color": color } as React.CSSProperties}
     />
   );
 }

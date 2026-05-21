@@ -1,0 +1,380 @@
+.overview {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.overview .header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.overview .header .drop_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  border: 0.1rem solid #dfdfdf;
+  border-radius: 0.5rem;
+  position: relative;
+}
+.overview .header .drop_wrapper span {
+  display: block;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.overview .header .drop_wrapper .drop {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  padding: 0.5rem;
+  background: #ffffff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 10rem;
+}
+.overview .header .drop_wrapper .drop button {
+  padding: 0.7rem;
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.overview .header .drop_wrapper .drop button:hover {
+  background: #f5f5f5;
+}
+.overview .cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+@media screen and (max-width: 500px) {
+  .overview .cards {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.overview .cards .card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: #ffffff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.overview .cards .card .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.overview .cards .card .header .left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.overview .cards .card .header .left span {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 0.5rem;
+}
+.overview .cards .card .header button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5rem;
+  background: #00bb95;
+  height: 3rem;
+  padding: 0 1.5rem;
+  color: #ffffff;
+  cursor: pointer;
+}
+.overview .cards .card .header button:hover {
+  opacity: 0.8;
+}
+.overview .cards .card small {
+  display: block;
+  color: #00bb95;
+}
+
+.collection_account {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.collection_account .header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.collection_account .header button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #00bb95;
+  cursor: pointer;
+}
+.collection_account .emp {
+  width: 100%;
+}
+.collection_account .emp svg {
+  width: 6rem;
+  height: 6rem;
+}
+.collection_account .card_content {
+  padding: 1.5rem;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  border: 0.1rem solid #dfdfdf;
+  border-radius: 1.5rem;
+  gap: 1rem;
+}
+.collection_account .card_content h3,
+.collection_account .card_content p {
+  width: 100%;
+  display: block;
+}
+.collection_account .card_content small {
+  display: block;
+  width: 100%;
+}
+
+.export_drop {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  padding: 0.5rem;
+  background: #ffffff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 10rem;
+}
+.export_drop span {
+  padding: 0.7rem;
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.export_drop span:hover {
+  background: #f5f5f5;
+}
+
+.payment_and_billing {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 85vh;
+  overflow: auto;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+}
+.payment_and_billing .transactions {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.payment_and_billing .transactions .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+.payment_and_billing .transactions .header .title {
+  font-size: 1.2rem;
+}
+.payment_and_billing .transactions .header .filter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+.payment_and_billing .transactions .header .filter button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  cursor: pointer;
+  border: 0.1rem solid #dfdfdf;
+  border-radius: 0.7rem;
+  padding: 0.5rem 0.7rem;
+}
+.payment_and_billing .transactions .list {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+}
+.payment_and_billing .transactions .list li {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.payment_and_billing .transactions .list li div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.payment_and_billing .transactions .list li div:last-child {
+  align-items: flex-end;
+}
+.payment_and_billing .transactions .list li div b {
+  display: block;
+  color: #000000;
+}
+.payment_and_billing .transactions .list li div small {
+  display: block;
+  color: var(--text);
+}
+.payment_and_billing .transactions .list li div .completed {
+  color: #00bb95;
+}
+.payment_and_billing .transactions .list li div .pending {
+  color: #f98500;
+}
+.payment_and_billing .transactions .list li div .failed {
+  color: #d80000;
+}
+.payment_and_billing .transactions .pagination {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.payment_and_billing .transactions .pagination .center {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.payment_and_billing .transactions .pagination .center button,
+.payment_and_billing .transactions .pagination .center span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  border: 0.1rem solid #dfdfdf;
+  border-radius: 0.5rem;
+  color: #6b6a6a;
+}
+.payment_and_billing .transactions .pagination .center button:hover,
+.payment_and_billing .transactions .pagination .center span:hover {
+  opacity: 0.8;
+}
+.payment_and_billing .transactions .pagination .center .active {
+  background: #befff2;
+  color: #000000;
+  border: none;
+}
+.payment_and_billing .transactions .pagination .center .chevron_disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.payment_and_billing .transactions .pagination .right {
+  position: relative;
+}
+.payment_and_billing .transactions .pagination .right .drop_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid #dfdfdf;
+}
+.payment_and_billing .transactions .pagination .right .drop {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  padding: 0.5rem;
+  background: #ffffff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-width: 10rem;
+}
+.payment_and_billing .transactions .pagination .right .drop button {
+  padding: 0.7rem;
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.payment_and_billing .transactions .pagination .right .drop button:hover {
+  background: #f5f5f5;
+}
+
+.account_name {
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.5rem;
+  border: 0.1rem solid var(--Primary, #00bb95);
+  background: var(--Light-Green, #e8fffa);
+  color: #009a7b;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+}
+.account_name.error {
+  color: var(--Error, #d80000);
+  text-transform: unset;
+  border: 1px solid var(--Error, #d80000);
+  background: #ffe8e8;
+}
+
+.modal_content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.modal_content .select_wrapper {
+  width: 100%;
+}/*# sourceMappingURL=index.module.css.map */

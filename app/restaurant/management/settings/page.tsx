@@ -31,13 +31,6 @@ export default function Seetings() {
     //   value: "order-and-menu-preferences",
     // },
     {
-      label: "Payment & Billing",
-      action: function () {
-        setCurrentTab(this.value);
-      },
-      value: "payment-and-billing",
-    },
-    {
       label: "Notifications & Alerts",
       action: function () {
         setCurrentTab(this.value);

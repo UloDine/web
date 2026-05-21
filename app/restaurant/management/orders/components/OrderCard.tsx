@@ -5,7 +5,7 @@ import { GeneralIcons } from "@/icons/general/icons";
 import Image from "next/image";
 import { formatCurrency, formatTime } from "@/utils/helpers";
 import FormatStatus from "./FormatStatus";
-import { useAlert } from "@/context/alert/AlertContext";
+import { useAlert } from "@/context/AlertContext";
 
 function getSafeImageSrc(path?: string | null, fallback = "/placeholder.png") {
   if (!path || !String(path).trim()) {

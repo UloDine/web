@@ -24,7 +24,12 @@ export async function proxyRequest<T>(
       }
     }
 
-    const targetUrl = `${process.env.API_URL}${endpoint}`;
+    const search = req.nextUrl.search || ""; // includes leading '?' when present
+    // Append search params to endpoint safely: avoid double '?' when endpoint already contains a query
+    const cleanedSearch = search.replace(/^\?/, "");
+    const separator =
+      cleanedSearch && endpoint.includes("?") ? "&" : cleanedSearch ? "?" : "";
+    const targetUrl = `${process.env.API_URL}${endpoint}${separator}${cleanedSearch}`;
 
     // ensure cookies are forwarded to the upstream
     const cookieHeader = req.headers.get("cookie");
