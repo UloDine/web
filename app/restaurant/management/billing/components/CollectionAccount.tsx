@@ -33,7 +33,7 @@ function CollectionAccount() {
     label: bank.name,
     value: bank.code,
   }));
-  const { account, createAccount } = useBankAccount();
+  const { account, createAccount, updateAccount } = useBankAccount();
   const {
     resolve,
     loading: resolving,
@@ -46,9 +46,17 @@ function CollectionAccount() {
     bankName: "",
     nameOnAccount: "",
     restaurantId: restaurant?.id || "",
-    businessName: restaurant?.businessName || "",
+    businessName: restaurant?.business_name || "",
   });
   const [submitting, setSubmitting] = React.useState(false);
+
+  React.useEffect(() => {
+    setCreatePayload((prev) => ({
+      ...prev,
+      restaurantId: restaurant?.id || "",
+      businessName: restaurant?.business_name || "",
+    }));
+  }, [restaurant?.id, restaurant?.business_name]);
 
   const resolveTimer = React.useRef<NodeJS.Timeout | null>(null);
   React.useEffect(() => {
@@ -136,7 +144,12 @@ function CollectionAccount() {
         onAction={async () => {
           try {
             setSubmitting(true);
-            const res = await createAccount(createPayload);
+            const res = account
+              ? await updateAccount(
+                  restaurant?.id || createPayload.restaurantId,
+                  createPayload,
+                )
+              : await createAccount(createPayload);
             // if success, close modal
             if (res) setModalOpen(false);
           } finally {
