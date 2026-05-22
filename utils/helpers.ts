@@ -52,12 +52,30 @@ export function resolveAssetUrl(path?: string | null): string {
   // Direct API media object URLs - proxy the backend asset route, not the web app.
   if (/^\/api\/media\/object\?/i.test(trimmedPath)) {
     const assetUrl = `${baseUrl}${trimmedPath}`;
-    return buildProxyUrl(assetUrl);
+    // In production allow Next.js image optimizer to fetch the backend asset directly
+    // (Next configured with remotePatterns for the API host). Only proxy for localhost.
+    try {
+      const parsed = new URL(assetUrl);
+      if (parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1") {
+        return buildProxyUrl(assetUrl);
+      }
+      return assetUrl;
+    } catch {
+      return buildProxyUrl(assetUrl);
+    }
   }
 
   if (/^\/(flyers|banners)\//i.test(trimmedPath)) {
     const assetUrl = `${baseUrl}${trimmedPath}`;
-    return buildProxyUrl(assetUrl);
+    try {
+      const parsed = new URL(assetUrl);
+      if (parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1") {
+        return buildProxyUrl(assetUrl);
+      }
+      return assetUrl;
+    } catch {
+      return buildProxyUrl(assetUrl);
+    }
   }
 
   if (/^https?:\/\//i.test(trimmedPath)) {
