@@ -18,6 +18,8 @@ interface Order {
   discount?: number;
   customer: Customer;
   menuList: MenuItem[];
+  fulfillment_type?: "Dine-in" | "Takeaway" | "Counter";
+  table_number?: string | null;
 }
 
 interface CustomerOrder {
@@ -31,6 +33,8 @@ interface CustomerOrder {
   items: CustomerOrderItem[];
   created_at: string;
   discount?: number;
+  fulfillment_type?: "Dine-in" | "Takeaway" | "Counter";
+  table_number?: string | null;
 }
 
 interface CustomerOrderItem {

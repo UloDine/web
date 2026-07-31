@@ -1,0 +1,114 @@
+.faq_page {
+  background: var(--main-background, #f5f5f5);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #171717;
+}
+
+.hero_banner {
+  background: #ffffff;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+.hero_banner h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.hero_banner p {
+  color: #6b6a6a;
+  font-size: 1.15rem;
+  max-width: 700px;
+  margin: 0 auto 2rem;
+}
+
+.search_wrap {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #f5f5f5;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5rem;
+}
+
+.search_wrap svg {
+  color: #6b6a6a;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.search_wrap input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 1rem;
+  outline: none;
+  color: #171717;
+  font-family: "Poppins", sans-serif;
+}
+
+.content_section {
+  padding: 4rem 1.5rem;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq_list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.faq_card {
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.faq_btn {
+  width: 100%;
+  padding: 1.5rem;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  font-family: "Poppins", sans-serif;
+}
+
+.q_text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #171717;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.cat_tag {
+  font-size: 0.8rem;
+  color: #00bb95;
+  font-weight: 700;
+
+}
+
+.toggle_icon {
+  font-size: 1.8rem;
+  color: #00bb95;
+}
+
+.a_text {
+  padding: 0 1.5rem 1.5rem;
+  color: #6b6a6a;
+  font-size: 1rem;
+  line-height: 1.6;
+}

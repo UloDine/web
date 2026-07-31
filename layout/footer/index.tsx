@@ -4,6 +4,7 @@ import React from "react";
 import styles from "./style/index.module.css";
 import { SocialIcons } from "@/icons/socials/icons";
 import { GeneralIcons } from "@/icons/general/icons";
+import { FoodIllustrations } from "@/components/illustrations/illustrations";
 
 function Footer() {
   const socials: SocialObject[] = [
@@ -37,6 +38,10 @@ function Footer() {
   ];
   return (
     <footer className={styles.footer}>
+      <div className={styles.footer_geo_bg}>
+        <FoodIllustrations.FooterGeometricBg />
+      </div>
+
       <div className={styles.top}>
         {footerObjects.map((data, i) => (
           <div key={i} className={styles.top_card}>

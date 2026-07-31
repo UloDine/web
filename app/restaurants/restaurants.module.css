@@ -1,0 +1,183 @@
+.discovery_page {
+  background: var(--main-background, #f5f5f5);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #171717;
+}
+
+.hero_banner {
+  background: #ffffff;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.hero_banner h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.hero_banner p {
+  color: #6b6a6a;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.search_bar {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #f5f5f5;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5rem;
+}
+
+.search_bar svg {
+  color: #6b6a6a;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.search_bar input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 1rem;
+  outline: none;
+  color: #171717;
+  font-family: "Poppins", sans-serif;
+}
+
+.content_section {
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.categories_row {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.category_pill {
+  padding: 0.6rem 1.2rem;
+  border-radius: 5rem;
+  border: none;
+  background: #ffffff;
+  color: #6b6a6a;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.category_pill:hover {
+  background: #e6f8f4;
+  color: #00bb95;
+}
+
+.active_pill {
+  background: #00bb95 !important;
+  color: #ffffff !important;
+}
+
+.restaurants_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+.empty_state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 1rem;
+  background: #ffffff;
+  border-radius: 1rem;
+}
+
+.empty_state h3 {
+  font-size: 1.5rem;
+  color: #171717;
+  margin-bottom: 0.5rem;
+}
+
+.empty_state p {
+  color: #6b6a6a;
+}
+
+.restaurant_card {
+  background: #ffffff;
+  border-radius: 1rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.image_wrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  background: #e5e5e5;
+}
+
+.placeholder_img {
+  width: 100%;
+  height: 100%;
+  background: #e6f8f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #00bb95;
+}
+
+.rating_badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ffffff;
+  color: #171717;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.card_body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card_body h3 {
+  font-size: 1.2rem;
+  font-weight: 650;
+  color: #171717;
+  margin-bottom: 0.3rem;
+}
+
+.cuisine_tag {
+  font-size: 0.85rem;
+  color: #00bb95;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.description {
+  font-size: 0.9rem;
+  color: #6b6a6a;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.card_footer {
+  margin-top: auto;
+}

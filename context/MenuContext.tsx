@@ -79,6 +79,14 @@ function buildMenuFormData(menu: MenuForm): FormData {
   formData.append("prepStatus", mapPrepStatusToApi(menu.status));
   formData.append("stockStatus", mapStockStatusToApi(menu.stockStatus));
   formData.append("discount", menu.discount || "0");
+  if (menu.modifiers) {
+    formData.append(
+      "modifiers",
+      typeof menu.modifiers === "string"
+        ? menu.modifiers
+        : JSON.stringify(menu.modifiers),
+    );
+  }
 
   if (menu.image instanceof File) {
     formData.append("image", menu.image);
@@ -107,6 +115,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
   const [form, setForm] = useState<MenuForm>({
     ...DEFAULT_MENU_FORM,
     restaurantId: restaurant?.id || "",
+    modifiers: [],
   });
   const [selectedMenuId, setSelectedMenuId] = useState<string | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
@@ -123,6 +132,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     setForm({
       ...DEFAULT_MENU_FORM,
       restaurantId: restaurant?.id || "",
+      modifiers: [],
     });
     setPreviewUrl("");
     setPreviewLoaded(false);
@@ -141,6 +151,20 @@ export function MenuProvider({ children }: { children: ReactNode }) {
 
   function editMenu(menu: MenuEditDraft) {
     setSelectedMenuId(menu.id);
+
+    let parsedModifiers: ModifierGroup[] = [];
+    if (menu.modifiers) {
+      if (Array.isArray(menu.modifiers)) {
+        parsedModifiers = menu.modifiers;
+      } else if (typeof menu.modifiers === "string") {
+        try {
+          parsedModifiers = JSON.parse(menu.modifiers);
+        } catch {
+          parsedModifiers = [];
+        }
+      }
+    }
+
     setForm({
       title: "Edit Menu Item",
       image: null,
@@ -152,6 +176,7 @@ export function MenuProvider({ children }: { children: ReactNode }) {
       price: String(menu.price),
       discount: String(menu.discount ?? 0),
       restaurantId: menu.restaurant_id,
+      modifiers: parsedModifiers,
     });
     setPreviewUrl(resolveAssetUrl(menu.menu_image) || "");
     setPreviewLoaded(false);
@@ -366,6 +391,91 @@ export function MenuProvider({ children }: { children: ReactNode }) {
     setPreviewLoaded(false);
   }, [previewUrl]);
 
+  const currentModifiers: ModifierGroup[] = Array.isArray(form.modifiers)
+    ? form.modifiers
+    : [];
+
+  const addModifierGroup = () => {
+    const newGroup: ModifierGroup = {
+      id: `mod_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
+      title: "Choice of Side / Extra",
+      required: false,
+      min_selection: 0,
+      max_selection: 1,
+      options: [
+        { id: `opt_${Date.now()}_1`, name: "Default Option", price: 0 },
+      ],
+    };
+    setForm((prev) => ({
+      ...prev,
+      modifiers: [...currentModifiers, newGroup],
+    }));
+  };
+
+  const removeModifierGroup = (groupId: string) => {
+    setForm((prev) => ({
+      ...prev,
+      modifiers: currentModifiers.filter((g) => g.id !== groupId),
+    }));
+  };
+
+  const updateModifierGroup = (groupId: string, updates: Partial<ModifierGroup>) => {
+    setForm((prev) => ({
+      ...prev,
+      modifiers: currentModifiers.map((g) => (g.id === groupId ? { ...g, ...updates } : g)),
+    }));
+  };
+
+  const addOptionToGroup = (groupId: string) => {
+    setForm((prev) => ({
+      ...prev,
+      modifiers: currentModifiers.map((g) => {
+        if (g.id !== groupId) return g;
+        return {
+          ...g,
+          options: [
+            ...g.options,
+            {
+              id: `opt_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
+              name: "",
+              price: 0,
+            },
+          ],
+        };
+      }),
+    }));
+  };
+
+  const updateOptionInGroup = (
+    groupId: string,
+    optionId: string,
+    updates: Partial<ModifierOption>,
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      modifiers: currentModifiers.map((g) => {
+        if (g.id !== groupId) return g;
+        return {
+          ...g,
+          options: g.options.map((o) => (o.id === optionId ? { ...o, ...updates } : o)),
+        };
+      }),
+    }));
+  };
+
+  const removeOptionFromGroup = (groupId: string, optionId: string) => {
+    setForm((prev) => ({
+      ...prev,
+      modifiers: currentModifiers.map((g) => {
+        if (g.id !== groupId) return g;
+        return {
+          ...g,
+          options: g.options.filter((o) => o.id !== optionId),
+        };
+      }),
+    }));
+  };
+
   return (
     <MenuContext.Provider
       value={{
@@ -570,6 +680,134 @@ export function MenuProvider({ children }: { children: ReactNode }) {
                   }
                   placeholder="Craft a perfect description for your menu 😌"
                 />
+
+                {/* ===== MODIFIERS BUILDER SECTION ===== */}
+                <div style={{ marginTop: "1.5rem", borderTop: "1px solid #e2e8f0", paddingTop: "1rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                    <div>
+                      <h4 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#0f172a" }}>
+                        Customization Option Groups
+                      </h4>
+                      <small style={{ color: "#64748b" }}>
+                        Add options like Protein choices, Extra sides, Toppings, or Spice levels.
+                      </small>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={addModifierGroup}
+                      style={{
+                        backgroundColor: "#f0fdf4",
+                        color: "#16a34a",
+                        border: "1px solid #16a34a",
+                        padding: "0.5rem 1rem",
+                        borderRadius: "6px",
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        fontSize: "0.9rem",
+                      }}
+                    >
+                      + Add Option Group
+                    </button>
+                  </div>
+
+                  {currentModifiers.length === 0 ? (
+                    <div style={{ padding: "1rem", backgroundColor: "#f8fafc", borderRadius: "6px", textAlign: "center", color: "#94a3b8", fontSize: "0.9rem" }}>
+                      No option groups added yet. Click <strong>+ Add Option Group</strong> to add choices for your customers.
+                    </div>
+                  ) : (
+                    currentModifiers.map((group) => (
+                      <div
+                        key={group.id}
+                        style={{
+                          border: "1px solid #cbd5e1",
+                          borderRadius: "8px",
+                          padding: "1rem",
+                          marginBottom: "1rem",
+                          backgroundColor: "#f8fafc",
+                        }}
+                      >
+                        <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "0.8rem" }}>
+                          <input
+                            type="text"
+                            value={group.title}
+                            placeholder="Group Title (e.g., Choose Protein)"
+                            onChange={(e) => updateModifierGroup(group.id, { title: e.target.value })}
+                            style={{
+                              flex: 1,
+                              padding: "0.5rem 0.8rem",
+                              borderRadius: "6px",
+                              border: "1px solid #cbd5e1",
+                              fontWeight: 600,
+                            }}
+                          />
+                          <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.9rem", cursor: "pointer" }}>
+                            <input
+                              type="checkbox"
+                              checked={group.required}
+                              onChange={(e) => updateModifierGroup(group.id, { required: e.target.checked })}
+                            />
+                            Required Choice
+                          </label>
+                          <label style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.9rem", cursor: "pointer" }}>
+                            Selection:
+                            <select
+                              value={group.max_selection}
+                              onChange={(e) => updateModifierGroup(group.id, { max_selection: Number(e.target.value) })}
+                              style={{ padding: "0.3rem", borderRadius: "4px", border: "1px solid #cbd5e1" }}
+                            >
+                              <option value={1}>Single Choice (Radio)</option>
+                              <option value={5}>Multi Choice (Checkboxes)</option>
+                            </select>
+                          </label>
+                          <button
+                            type="button"
+                            onClick={() => removeModifierGroup(group.id)}
+                            style={{ color: "#ef4444", background: "none", border: "none", cursor: "pointer", fontWeight: "bold" }}
+                          >
+                            ✕
+                          </button>
+                        </div>
+
+                        {/* Options in group */}
+                        <div style={{ paddingLeft: "1rem", borderLeft: "2px solid #cbd5e1" }}>
+                          {group.options.map((opt) => (
+                            <div key={opt.id} style={{ display: "flex", gap: "0.6rem", alignItems: "center", marginBottom: "0.5rem" }}>
+                              <input
+                                type="text"
+                                value={opt.name}
+                                placeholder="Option Name (e.g., Fried Chicken)"
+                                onChange={(e) => updateOptionInGroup(group.id, opt.id, { name: e.target.value })}
+                                style={{ flex: 2, padding: "0.4rem", borderRadius: "4px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
+                              />
+                              <input
+                                type="number"
+                                value={opt.price}
+                                placeholder="Extra Price (₦)"
+                                onChange={(e) => updateOptionInGroup(group.id, opt.id, { price: Number(e.target.value) || 0 })}
+                                style={{ width: "120px", padding: "0.4rem", borderRadius: "4px", border: "1px solid #cbd5e1", fontSize: "0.9rem" }}
+                              />
+                              <button
+                                type="button"
+                                onClick={() => removeOptionFromGroup(group.id, opt.id)}
+                                style={{ color: "#ef4444", background: "none", border: "none", cursor: "pointer" }}
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ))}
+                          <button
+                            type="button"
+                            onClick={() => addOptionToGroup(group.id)}
+                            style={{ color: "#16a34a", background: "none", border: "none", cursor: "pointer", fontSize: "0.85rem", fontWeight: 600, marginTop: "0.3rem" }}
+                          >
+                            + Add Option Item
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+
                 <div className={styles.bottom_actions}>
                   <UloDIneButton
                     type="primary"

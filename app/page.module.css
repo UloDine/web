@@ -1,0 +1,633 @@
+.hero_wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero_abstract_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero_section {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 4rem;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.hero_content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.hero_badge_title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #00bb95;
+  letter-spacing: -0.01em;
+}
+
+.hero_title {
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.12;
+  color: #171717;
+  letter-spacing: -0.025em;
+}
+
+.hero_title span {
+  color: #00bb95;
+}
+
+.hero_desc {
+  font-size: 1.15rem;
+  color: #6b6a6a;
+  line-height: 1.65;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.hero_ctas {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Custom 3.8rem / 4rem Height Buttons */
+.hero_main_btn {
+  height: 3.8rem !important;
+  min-height: 3.8rem !important;
+  border-radius: 5rem !important;
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  padding: 0 2.4rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.hero_illustration_wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 360px;
+}
+
+/* 4 Floating Feature & Stat Cards with Soft Light Shadow & Colorful Icon Badges */
+.stat_badge_card {
+  position: absolute;
+  background: #ffffff;
+  padding: 0.85rem 1.2rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+  z-index: 2;
+  transition: background-color 0.2s ease;
+}
+
+.icon_circle {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon_green {
+  background: #e6f8f4;
+  color: #00bb95;
+}
+
+.icon_orange {
+  background: #fff4e8;
+  color: #f98500;
+}
+
+.icon_blue {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+.icon_gold {
+  background: #fefce8;
+  color: #ca8a04;
+}
+
+.stat_badge_card strong {
+  font-size: 1.05rem;
+  color: #171717;
+  display: block;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stat_badge_card span {
+  font-size: 0.82rem;
+  color: #6b6a6a;
+  display: block;
+}
+
+.card_pos_1 {
+  bottom: -15px;
+  left: -20px;
+}
+
+.card_pos_2 {
+  top: -10px;
+  right: -25px;
+}
+
+.card_pos_3 {
+  top: 35px;
+  left: -35px;
+}
+
+.card_pos_4 {
+  bottom: 50px;
+  right: -35px;
+}
+
+/* ROI Calculator Section */
+.calculator_section {
+  background: #ffffff;
+  padding: 4rem 1.5rem;
+  margin: 3rem 0;
+}
+
+.calculator_container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section_title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #171717;
+  margin-bottom: 0.8rem;
+}
+
+.section_subtitle {
+  font-size: 1.1rem;
+  color: #6b6a6a;
+  margin-bottom: 2.5rem;
+}
+
+.slider_card {
+  background: #f5f5f5;
+  border-radius: 1rem;
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.slider_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.slider_head span {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.slider_head strong {
+  font-size: 1.8rem;
+  color: #00bb95;
+}
+
+.range_input {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e5e5;
+  outline: none;
+  cursor: pointer;
+  accent-color: #00bb95;
+}
+
+.comparison_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.comp_card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.comp_card h4 {
+  font-size: 0.95rem;
+  color: #6b6a6a;
+  margin-bottom: 0.5rem;
+}
+
+.comp_card .amount {
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.comp_card.traditional .amount {
+  color: #d80000;
+}
+
+.comp_card.ulodine .amount {
+  color: #171717;
+}
+
+.comp_card.savings {
+  background: #e6f8f4;
+}
+
+.comp_card.savings h4 {
+  color: #00bb95;
+}
+
+.comp_card.savings .amount {
+  color: #00bb95;
+}
+
+/* Feature Section with Left Illustration & Stacked Cards on Right */
+.features_wrapper {
+  position: relative;
+  width: 100%;
+  padding: 4rem 0;
+  overflow: hidden;
+}
+
+.features_abstract_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  transform: rotate(180deg);
+}
+
+.features_section {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.features_header {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 3rem;
+}
+
+.features_layout {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.features_illustration_col {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features_stacked_col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.feature_card {
+  background: #ffffff;
+  border-radius: 1rem;
+  padding: 1.6rem;
+  display: flex;
+  gap: 1.2rem;
+  align-items: flex-start;
+}
+
+.feature_icon {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 0.8rem;
+  background: #e6f8f4;
+  color: #00bb95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feature_info h3 {
+  font-size: 1.3rem;
+  font-weight: 650;
+  color: #171717;
+  margin-bottom: 0.5rem;
+}
+
+.feature_info p {
+  color: #6b6a6a;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Full-Width Section Wrappers with Custom Background Geometrics */
+.section_wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.section_wrapper:nth-of-type(1) {
+  background: #ffffff;
+}
+
+.section_wrapper:nth-of-type(2) {
+  background: #f5f5f5;
+}
+
+.section_geo_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.owners_full_section {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 1.5rem;
+  background: transparent;
+}
+
+.diners_full_section {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 1.5rem;
+  background: transparent;
+}
+
+.full_section_container {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.full_section_text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.dualsided_tag {
+  background: #00bb95;
+  color: #ffffff;
+  padding: 0.35rem 1rem;
+  border-radius: 5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.tag_diner {
+  background: #171717;
+}
+
+.full_section_text h2 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #171717;
+  line-height: 1.2;
+}
+
+.full_section_text p {
+  color: #6b6a6a;
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.full_section_illustration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Pricing Section */
+.pricing_section {
+  background: #ffffff;
+  padding: 4.5rem 1.5rem;
+}
+
+.pricing_container {
+  max-width: 1050px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.pricing_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.pricing_card {
+  background: #f5f5f5;
+  border-radius: 1.2rem;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  position: relative;
+}
+
+.pricing_card.featured_plan {
+  background: #e6f8f4;
+}
+
+.plan_badge {
+  background: #00bb95;
+  color: #ffffff;
+  padding: 0.35rem 1rem;
+  border-radius: 5rem;
+  font-weight: 600;
+  font-size: 0.82rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+.plan_badge.badge_growth {
+  background: #171717;
+}
+
+.price_tag {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: #171717;
+  margin-bottom: 0.3rem;
+}
+
+.price_tag span {
+  font-size: 1.1rem;
+  color: #6b6a6a;
+  font-weight: 500;
+}
+
+.pricing_card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #171717;
+  margin-bottom: 0.2rem;
+}
+
+.pricing_features {
+  list-style: none;
+  padding: 0;
+  margin: 1.8rem 0 2.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  flex: 1;
+}
+
+.pricing_features li {
+  font-size: 0.98rem;
+  color: #171717;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.pricing_features li svg {
+  color: #00bb95;
+  width: 1.2rem;
+  height: 1.2rem;
+  flex-shrink: 0;
+}
+
+.pricing_cta_wrap {
+  margin-top: auto;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .hero_section {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2.5rem;
+    padding: 2.5rem 1rem;
+  }
+  .hero_content {
+    align-items: center;
+  }
+  .hero_title {
+    font-size: 2.4rem;
+  }
+  .hero_ctas {
+    justify-content: center;
+  }
+  .hero_illustration_wrap {
+    min-height: 320px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .hero_illustration_wrap > svg {
+    width: 210px !important;
+    height: 210px !important;
+  }
+  .stat_badge_card {
+    position: absolute;
+    padding: 0.55rem 0.85rem;
+    gap: 0.6rem;
+    border-radius: 0.8rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  }
+  .icon_circle {
+    width: 2rem;
+    height: 2rem;
+  }
+  .icon_circle svg {
+    width: 14px;
+    height: 14px;
+  }
+  .stat_badge_card strong {
+    font-size: 0.85rem;
+  }
+  .stat_badge_card span {
+    font-size: 0.72rem;
+  }
+  .card_pos_1 {
+    bottom: 5px;
+    left: 0px;
+  }
+  .card_pos_2 {
+    top: 0px;
+    right: 0px;
+  }
+  .card_pos_3 {
+    top: 25px;
+    left: -5px;
+  }
+  .card_pos_4 {
+    bottom: 45px;
+    right: -5px;
+  }
+  .features_layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .features_illustration_col {
+    order: -1;
+  }
+  .features_illustration_col svg {
+    max-width: 260px !important;
+    height: auto !important;
+  }
+  .comparison_grid {
+    grid-template-columns: 1fr;
+  }
+  .pricing_grid {
+    grid-template-columns: 1fr;
+  }
+  .full_section_container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+  .full_section_text {
+    align-items: center;
+  }
+}

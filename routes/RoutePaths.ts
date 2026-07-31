@@ -12,30 +12,32 @@ export const PAGE_ROUTES = {
 };
 
 export const AUTH_ROUTES = {
-  RES_LOGIN: "/restaurant/login",
-  RES_SIGNUP: "/restaurant/signup",
-  RES_LOGOUT: "/logout",
-  RES_RECOVER_PASSWORD: "/restaurant/forgot-password",
-  RES_VERIFY_EMAIL: "/restaurant/verify-email",
-  RES_NEW_PASSWORD: "/restaurant/new-password",
-  RES_DELETE_ACCOUNT: "/restaurant/delete-account",
-  CUS_LOGIN: "/customer/login",
-  CUS_SIGNUP: "/customer/signup",
-  CUS_LOGOUT: "/customer/logout",
-  CUS_VERIFY_EMAIL: "/customer/verify-email",
-  CUS_RECOVER_PASSWORD: "/customer/recover-password",
-  CUS_NEW_PASSWORD: "/customer/new-password",
+  RES_LOGIN: "http://localhost:5000/auth/login",
+  RES_SIGNUP: "http://localhost:5000/auth/signup",
+  RES_LOGOUT: "http://localhost:5000/logout",
+  RES_RECOVER_PASSWORD: "http://localhost:5000/auth/forgot-password",
+  RES_VERIFY_EMAIL: "http://localhost:5000/auth/verify-email",
+  RES_NEW_PASSWORD: "http://localhost:5000/auth/new-password",
+  RES_DELETE_ACCOUNT: "http://localhost:5000/auth/delete-account",
+  CUS_LOGIN: "http://localhost:3000/login",
+  CUS_SIGNUP: "http://localhost:3000/signup",
+  CUS_LOGOUT: "http://localhost:3000/logout",
+  CUS_VERIFY_EMAIL: "http://localhost:3000/verify-email",
+  CUS_RECOVER_PASSWORD: "http://localhost:3000/recover-password",
+  CUS_NEW_PASSWORD: "http://localhost:3000/new-password",
 };
 
 export const RESTAURANT_MANAGEMENT_ROUTES = {
-  OVERVIEW: "/restaurant/management/overview",
-  ORDERS: "/restaurant/management/orders",
-  MENU_MANAGEMENT: "/restaurant/management/menu-management",
-  BILLING: "/restaurant/management/billing",
-  REPORTS: "/restaurant/management/reports-and-analytics",
-  QR_CODE: "/restaurant/management/qr-code",
-  SETTINGS: "/restaurant/management/settings",
-  LOGOUT: "/restaurant/management/logout",
+  OVERVIEW: "http://localhost:5000/management/overview",
+  ORDERS: "http://localhost:5000/management/orders",
+  MENU_MANAGEMENT: "http://localhost:5000/management/menu-management",
+  BILLING: "http://localhost:5000/management/billing",
+  REPORTS: "http://localhost:5000/management/reports-and-analytics",
+  QR_CODE: "http://localhost:5000/management/qr-code",
+  SETTINGS: "http://localhost:5000/management/settings",
+  LOGOUT: "http://localhost:5000/management/logout",
+  KDS: "http://localhost:5000/management/kds",
+  TABLES: "http://localhost:5000/management/tables",
 };
 
 export const RESTAURANT_API_ROUTES = {
@@ -90,21 +92,21 @@ export const RESTAURANT_API_ROUTES = {
 };
 
 export const CUSTOMER_ROUTES = {
-  HOME: "/customer/home",
-  ORDERS: "/customer/orders",
-  BROWSE: "/customer/restaurants",
-  PROFILE: "/customer/profile",
-  CART: "/customer/cart",
-  NOTIFICATIONS: "/customer/notifications",
-  CHECKOUT: "/customer/cart/checkout",
-  PAYMENT_SUCCESS: "/customer/payment/success",
-  PAYMENT_FAILED: "/customer/payment/failed",
-  SETTINGS: "/customer/settings",
-  LOGOUT: "/customer/logout",
-  SCAN: "/customer/scan",
+  HOME: "http://localhost:3000/home",
+  ORDERS: "http://localhost:3000/orders",
+  BROWSE: "http://localhost:3000/restaurants",
+  PROFILE: "http://localhost:3000/profile",
+  CART: "http://localhost:3000/cart",
+  NOTIFICATIONS: "http://localhost:3000/notifications",
+  CHECKOUT: "http://localhost:3000/cart/checkout",
+  PAYMENT_SUCCESS: "http://localhost:3000/payment/success",
+  PAYMENT_FAILED: "http://localhost:3000/payment/failed",
+  SETTINGS: "http://localhost:3000/settings",
+  LOGOUT: "http://localhost:3000/logout",
+  SCAN: "http://localhost:3000/scan",
 } as const;
 
 export const RESTAURANT_ROUTES = {
-  DETAILS: (id: string | number) => `/restaurants/${id}`,
-  REVIEWS: (id: string | number) => `/restaurants/reviews/${id}`,
+  DETAILS: (id: string | number) => `http://localhost:3000/restaurants/${id}`,
+  REVIEWS: (id: string | number) => `http://localhost:3000/restaurants/reviews/${id}`,
 } as const;

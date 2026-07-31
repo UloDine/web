@@ -1,3 +1,18 @@
+interface ModifierOption {
+  id: string;
+  name: string;
+  price: number;
+}
+
+interface ModifierGroup {
+  id: string;
+  title: string;
+  required: boolean;
+  min_selection: number;
+  max_selection: number;
+  options: ModifierOption[];
+}
+
 interface Menu {
   id: string;
   image: string;
@@ -39,6 +54,7 @@ interface Menu {
   stockStatus: "Available" | "Out of Stock";
   status: "Ready" | "Not Ready";
   price: number;
+  modifiers?: ModifierGroup[] | string | null;
 }
 
 interface MenuData {
@@ -52,6 +68,7 @@ interface MenuData {
   stock_status: string;
   discount: number;
   menu_image: string;
+  modifiers?: ModifierGroup[] | string | null;
   date_created: string;
   updated_at: string;
 }
@@ -110,6 +127,7 @@ interface MenuForm {
   price: string;
   discount: string;
   restaurantId: string;
+  modifiers?: ModifierGroup[] | string | null;
 }
 
 interface MenuEditDraft {
@@ -123,4 +141,5 @@ interface MenuEditDraft {
   price: string | number;
   discount?: number | string;
   menu_image: string;
+  modifiers?: ModifierGroup[] | string | null;
 }

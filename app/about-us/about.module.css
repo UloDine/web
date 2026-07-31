@@ -1,0 +1,100 @@
+.about_page {
+  background: var(--main-background, #f5f5f5);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #171717;
+}
+
+.hero_banner {
+  background: #ffffff;
+  padding: 4rem 1.5rem;
+  text-align: center;
+}
+
+.hero_banner h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.hero_banner p {
+  color: #6b6a6a;
+  font-size: 1.15rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.content_section {
+  padding: 5rem 1.5rem;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.text_box h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.text_box p {
+  color: #6b6a6a;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.visual_box {
+  display: flex;
+  justify-content: center;
+}
+
+.values_section {
+  background: #ffffff;
+  padding: 5rem 1.5rem;
+}
+
+.container_narrow {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.values_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.value_card {
+  background: #f5f5f5;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.value_card h3 {
+  font-size: 1.2rem;
+  font-weight: 650;
+  color: #00bb95;
+  margin-bottom: 0.6rem;
+}
+
+.value_card p {
+  color: #6b6a6a;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .values_grid {
+    grid-template-columns: 1fr;
+  }
+}
