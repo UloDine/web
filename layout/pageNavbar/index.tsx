@@ -104,10 +104,19 @@ export default function HeaderNavLayout() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const closeMobileNav = () => {
+    setOpenMobile(false);
+    setActiveDropdown(null);
+  };
+
+  const toggleDropdown = (name: string) => {
+    setActiveDropdown((prev) => (prev === name ? null : name));
+  };
+
   return (
     <header className={styles.header_nav}>
       <div className={styles.home_left}>
-        <Link href={"/"} className={styles.home_logo}>
+        <Link href={"/"} className={styles.home_logo} onClick={closeMobileNav}>
           {GeneralIcons.logo} <h1>UloDIne</h1>
         </Link>
 
@@ -122,15 +131,24 @@ export default function HeaderNavLayout() {
       <nav>
         <div
           className={`${styles.menu} ${!openMobile && width < 850 ? styles.close : ""}`}
-          onClick={() => setOpenMobile(false)}
         >
+          {width < 850 && openMobile && (
+            <button
+              className={styles.mobile_close_btn}
+              onClick={closeMobileNav}
+              aria-label="Close menu"
+            >
+              ✕
+            </button>
+          )}
+
           <ul className={styles.nav_list}>
             {/* 1. Home */}
             <li>
               <Link
                 href="/"
                 className={pathname === "/" ? styles.active : ""}
-                onClick={(e) => e.stopPropagation()}
+                onClick={closeMobileNav}
               >
                 Home
               </Link>
@@ -138,23 +156,34 @@ export default function HeaderNavLayout() {
 
             {/* 2. For Restaurants Mega-Menu Dropdown */}
             <li
-              className={styles.dropdown_parent}
-              onMouseEnter={() => setActiveDropdown("restaurants")}
-              onMouseLeave={() => setActiveDropdown(null)}
+              className={`${styles.dropdown_parent} ${activeDropdown === "restaurants" ? styles.dropdown_parent_active : ""}`}
+              onMouseEnter={() => {
+                if (width >= 850) setActiveDropdown("restaurants");
+              }}
+              onMouseLeave={() => {
+                if (width >= 850) setActiveDropdown(null);
+              }}
             >
-              <button className={`${styles.dropdown_btn} ${(pathname || "").startsWith("/restaurants") || (pathname || "").startsWith("/features") ? styles.active : ""}`}>
+              <button
+                type="button"
+                className={`${styles.dropdown_btn} ${(pathname || "").startsWith("/restaurants") || (pathname || "").startsWith("/features") ? styles.active : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDropdown("restaurants");
+                }}
+              >
                 For Restaurants <span className={styles.arrow_down}>▾</span>
               </button>
 
               {activeDropdown === "restaurants" && (
-                <div className={`${styles.mega_card_overlay} ${styles.company_card_overlay}`} onClick={(e) => e.stopPropagation()}>
+                <div className={`${styles.mega_card_overlay} ${styles.company_card_overlay}`}>
                   <div className={styles.mega_card_header}>
                     <span>RESTAURANT SOLUTIONS</span>
                     <small>0% Commission Tools</small>
                   </div>
                   <div className={styles.mega_grid_single}>
                     {restaurantMenu.map((sub, i) => (
-                      <Link key={i} href={sub.path} className={styles.mega_item}>
+                      <Link key={i} href={sub.path} className={styles.mega_item} onClick={closeMobileNav}>
                         <div className={styles.sub_icon_wrap}>{sub.icon}</div>
                         <div className={styles.sub_text_wrap}>
                           <strong>{sub.title}</strong>
@@ -169,23 +198,34 @@ export default function HeaderNavLayout() {
 
             {/* 3. For Diners Dropdown */}
             <li
-              className={styles.dropdown_parent}
-              onMouseEnter={() => setActiveDropdown("diners")}
-              onMouseLeave={() => setActiveDropdown(null)}
+              className={`${styles.dropdown_parent} ${activeDropdown === "diners" ? styles.dropdown_parent_active : ""}`}
+              onMouseEnter={() => {
+                if (width >= 850) setActiveDropdown("diners");
+              }}
+              onMouseLeave={() => {
+                if (width >= 850) setActiveDropdown(null);
+              }}
             >
-              <button className={`${styles.dropdown_btn} ${(pathname || "") === "/for-diners" ? styles.active : ""}`}>
+              <button
+                type="button"
+                className={`${styles.dropdown_btn} ${(pathname || "") === "/for-diners" ? styles.active : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDropdown("diners");
+                }}
+              >
                 For Diners <span className={styles.arrow_down}>▾</span>
               </button>
 
               {activeDropdown === "diners" && (
-                <div className={`${styles.mega_card_overlay} ${styles.company_card_overlay}`} onClick={(e) => e.stopPropagation()}>
+                <div className={`${styles.mega_card_overlay} ${styles.company_card_overlay}`}>
                   <div className={styles.mega_card_header}>
                     <span>FOR EVERYDAY DINERS</span>
                     <small>App-Free Dining</small>
                   </div>
                   <div className={styles.mega_grid_single}>
                     {dinersMenu.map((sub, i) => (
-                      <Link key={i} href={sub.path} className={styles.mega_item}>
+                      <Link key={i} href={sub.path} className={styles.mega_item} onClick={closeMobileNav}>
                         <div className={styles.sub_icon_wrap}>{sub.icon}</div>
                         <div className={styles.sub_text_wrap}>
                           <strong>{sub.title}</strong>
@@ -198,36 +238,47 @@ export default function HeaderNavLayout() {
               )}
             </li>
 
-            {/* 3. Pricing */}
+            {/* 4. Pricing */}
             <li>
               <Link
                 href="/pricing"
                 className={pathname === "/pricing" ? styles.active : ""}
-                onClick={(e) => e.stopPropagation()}
+                onClick={closeMobileNav}
               >
                 Pricing
               </Link>
             </li>
 
-            {/* 4. Company Dropdown */}
+            {/* 5. Company Dropdown */}
             <li
-              className={styles.dropdown_parent}
-              onMouseEnter={() => setActiveDropdown("company")}
-              onMouseLeave={() => setActiveDropdown(null)}
+              className={`${styles.dropdown_parent} ${activeDropdown === "company" ? styles.dropdown_parent_active : ""}`}
+              onMouseEnter={() => {
+                if (width >= 850) setActiveDropdown("company");
+              }}
+              onMouseLeave={() => {
+                if (width >= 850) setActiveDropdown(null);
+              }}
             >
-              <button className={`${styles.dropdown_btn} ${pathname === "/about-us" || pathname === "/faq" || pathname === "/contact" ? styles.active : ""}`}>
+              <button
+                type="button"
+                className={`${styles.dropdown_btn} ${pathname === "/about-us" || pathname === "/faq" || pathname === "/contact" ? styles.active : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleDropdown("company");
+                }}
+              >
                 Company <span className={styles.arrow_down}>▾</span>
               </button>
 
               {activeDropdown === "company" && (
-                <div className={`${styles.mega_card_overlay} ${styles.company_card_overlay}`} onClick={(e) => e.stopPropagation()}>
+                <div className={`${styles.mega_card_overlay} ${styles.company_card_overlay}`}>
                   <div className={styles.mega_card_header}>
                     <span>ULODINE PLATFORM</span>
                     <small>Support & Mission</small>
                   </div>
                   <div className={styles.mega_grid_single}>
                     {companyMenu.map((sub, i) => (
-                      <Link key={i} href={sub.path} className={styles.mega_item}>
+                      <Link key={i} href={sub.path} className={styles.mega_item} onClick={closeMobileNav}>
                         <div className={styles.sub_icon_wrap}>{sub.icon}</div>
                         <div className={styles.sub_text_wrap}>
                           <strong>{sub.title}</strong>
@@ -241,41 +292,50 @@ export default function HeaderNavLayout() {
             </li>
           </ul>
 
-          <div className={styles.action_buttons} onClick={(e) => e.stopPropagation()}>
-            <UloDineLink
-              color="green"
-              label="Login"
-              path={AUTH_ROUTES.RES_LOGIN}
-              underline={false}
-              type="main"
-              labelColor="green"
-              style={{
-                background: "#f5f5f5",
-                borderRadius: "2rem",
-                height: "3rem",
-                padding: "0 1.8rem",
-              }}
-              className={styles.extended}
-            />
+          <div className={styles.action_buttons}>
+            <div onClick={closeMobileNav}>
+              <UloDineLink
+                color="green"
+                label="Login"
+                path={AUTH_ROUTES.RES_LOGIN}
+                underline={false}
+                type="main"
+                labelColor="green"
+                style={{
+                  background: "#f5f5f5",
+                  borderRadius: "2rem",
+                  height: "3rem",
+                  padding: "0 1.8rem",
+                }}
+                className={styles.extended}
+              />
+            </div>
 
-            <UloDineLink
-              color="white"
-              label="Create Store"
-              path={AUTH_ROUTES.RES_SIGNUP}
-              underline={false}
-              type="main"
-              style={{
-                borderRadius: "2rem",
-                height: "3rem",
-                padding: "0 1.8rem",
-              }}
-              className={styles.extended}
-            />
+            <div onClick={closeMobileNav}>
+              <UloDineLink
+                color="white"
+                label="Create Store"
+                path={AUTH_ROUTES.RES_SIGNUP}
+                underline={false}
+                type="main"
+                style={{
+                  borderRadius: "2rem",
+                  height: "3rem",
+                  padding: "0 1.8rem",
+                }}
+                className={styles.extended}
+              />
+            </div>
           </div>
         </div>
 
         {width < 850 && (
-          <button className={styles.hamburger_btn} onClick={() => setOpenMobile((pr) => !pr)}>
+          <button
+            type="button"
+            className={styles.hamburger_btn}
+            onClick={() => setOpenMobile((pr) => !pr)}
+            aria-label="Toggle navigation menu"
+          >
             <span />
             <span />
             <span />

@@ -88,7 +88,8 @@
   transition: transform 0.2s ease;
 }
 
-.dropdown_parent:hover .arrow_down {
+.dropdown_parent:hover .arrow_down,
+.dropdown_parent_active .arrow_down {
   transform: rotate(180deg);
   color: #00bb95;
 }
@@ -255,6 +256,24 @@
     flex-direction: column;
     width: 100%;
     margin-top: 2rem;
+  }
+  .dropdown_btn {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+  }
+  .mobile_close_btn {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #171717;
+    cursor: pointer;
+    padding: 0.4rem;
+    line-height: 1;
   }
   .hamburger_btn {
     display: flex;
