@@ -34,8 +34,7 @@ const UloDineInput = React.forwardRef<
     otpLoading = false,
     onResend,
     otpChange,
-  }: // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  Input,
+  }: Input,
   forwardedRef: React.ForwardedRef<HTMLInputElement | HTMLTextAreaElement>,
 ) {
   const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>(
@@ -158,7 +157,7 @@ const UloDineInput = React.forwardRef<
     if (isComplete && onComplete) {
       onComplete(otp);
     }
-  }, [otp]);
+  }, [otp, onComplete]);
 
   if (type == "otp") {
     // Format time as mm:ss

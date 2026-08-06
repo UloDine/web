@@ -49,9 +49,13 @@ function UloDineModal({
       }
     };
 
+    previousFocusRef.current = document.activeElement as HTMLElement;
+
+    const finalFocusTarget = finalFocusRef?.current;
+    const previousFocusTarget = previousFocusRef.current;
+
     if (isOpen) {
       document.addEventListener("keydown", handleEscKey);
-      previousFocusRef.current = document.activeElement as HTMLElement;
 
       if (initialFocusRef?.current) {
         initialFocusRef.current.focus();
@@ -68,10 +72,10 @@ function UloDineModal({
       document.removeEventListener("keydown", handleEscKey);
 
       if (isOpen && returnFocusOnClose) {
-        if (finalFocusRef?.current) {
-          finalFocusRef.current.focus();
-        } else if (previousFocusRef.current) {
-          previousFocusRef.current.focus();
+        if (finalFocusTarget) {
+          finalFocusTarget.focus();
+        } else if (previousFocusTarget) {
+          previousFocusTarget.focus();
         }
       }
 

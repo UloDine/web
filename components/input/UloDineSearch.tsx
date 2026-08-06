@@ -74,7 +74,7 @@ function UloDineSearch({
           );
           setResults(filtered);
         }
-      } catch (err) {
+      } catch {
         // Offline / dev fallback search
         const q = searchTerm.toLowerCase();
         const filtered = MOCK_RESTAURANTS.filter(
@@ -90,7 +90,7 @@ function UloDineSearch({
     }, 300);
 
     return () => clearTimeout(delayDebounce);
-  }, [searchTerm]);
+  }, [searchTerm, onSearchChange]);
 
   const handleSelectRestaurant = (id: string) => {
     setIsOpen(false);

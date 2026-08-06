@@ -26,7 +26,7 @@ export default function UloDineHybridEditor({
       }
     };
     renderHtml();
-  }, [markdown]);
+  }, [markdown, htmlToMd, mdToHtml]);
 
   // When the user types, convert HTML → Markdown and send it up
   const handleInput = () => {
