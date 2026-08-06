@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import UloDineLink from "@/components/button/UloDineLink";
-import UloDineSearch from "@/components/input/UloDineSearch";
 import { GeneralIcons } from "@/icons/general/icons";
 import { AUTH_ROUTES } from "@/routes/RoutePaths";
 import styles from "./style/index.module.css";
@@ -24,10 +23,10 @@ export default function HeaderNavLayout() {
 
   const restaurantMenu: MegaMenuSubItem[] = [
     {
-      title: "Restaurant Directory",
-      desc: "Browse local food spots, view digital menus, and order direct.",
-      path: "/restaurants",
-      icon: GeneralIcons.search,
+      title: "Get Started",
+      desc: "Register your venue, setup your digital menu, and go live in minutes.",
+      path: process.env.NEXT_PUBLIC_RESTAURANT_PORTAL_URL || "http://localhost:5000/auth/signup",
+      icon: GeneralIcons.check,
     },
     {
       title: "QR Code Dine-In",
@@ -119,13 +118,6 @@ export default function HeaderNavLayout() {
         <Link href={"/"} className={styles.home_logo} onClick={closeMobileNav}>
           {GeneralIcons.logo} <h1>UloDIne</h1>
         </Link>
-
-        <UloDineSearch
-          type="home-page"
-          placeholder="Search restaurants..."
-          onSearchChange={() => {}}
-          width="100%"
-        />
       </div>
 
       <nav>

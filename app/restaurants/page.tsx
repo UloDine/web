@@ -154,7 +154,7 @@ export default function PublicRestaurantsDiscovery() {
                       color="green"
                       label="View Menu & Order"
                       onClick={() => {
-                        window.location.href = `http://localhost:3000/restaurants/${restaurant.id}`;
+                        window.location.href = `/restaurants/${restaurant.id}`;
                       }}
                       style={{ width: "100%" }}
                     />

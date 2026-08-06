@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import styles from "./page.module.css";
 import HeaderNavLayout from "@/layout/pageNavbar";
 import Footer from "@/layout/footer";
 import UloDIneButton from "@/components/button/UloDIneButton";
+import UloDineSearch from "@/components/input/UloDineSearch";
 import { FoodIllustrations } from "@/components/illustrations/illustrations";
 import { GeneralIcons } from "@/icons/general/icons";
 
@@ -27,43 +29,36 @@ export default function Home() {
 
         <section className={styles.hero_section}>
           <div className={styles.hero_content}>
-            <span className={styles.hero_badge_title}>
-              0% Commission Order Management
-            </span>
-
             <h1 className={styles.hero_title}>
               Keep <span>100% of Your Revenue</span>. Zero Commission Fees.
             </h1>
 
             <p className={styles.hero_desc}>
-              Stop losing 30% of your earnings to third-party delivery apps. UloDine gives local restaurants direct QR table ordering, live kitchen display systems, and menu customization — all for one flat ₦5,000 monthly fee.
+              Stop losing 30% of your earnings to third-party delivery apps. UloDine gives local restaurants direct QR table ordering, live kitchen display systems, and menu customization — all for one flat monthly fee.
             </p>
 
-            <div className={styles.hero_ctas}>
-              <UloDIneButton
-                type="primary"
-                color="green"
-                label="Start 30-Day Free Trial"
-                className={styles.hero_main_btn}
-                onClick={() => {
-                  window.location.href = "http://localhost:5000/auth/signup";
-                }}
+            <div className={styles.hero_search_wrap}>
+              <UloDineSearch
+                type="home-page"
+                placeholder="Search local restaurants, dishes..."
+                onSearchChange={() => {}}
+                width="100%"
               />
-              <button
-                className={styles.hero_main_btn}
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  color: "#171717",
-                  border: "none",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                }}
-                onClick={() => {
-                  window.location.href = "http://localhost:3000/restaurants";
-                }}
+            </div>
+
+            <div className={styles.hero_ctas}>
+              <Link
+                href={process.env.NEXT_PUBLIC_RESTAURANT_PORTAL_URL || "http://localhost:5000/auth/signup"}
+                className={`${styles.hero_main_btn} ${styles.btn_primary}`}
+              >
+                Start 30-Day Free Trial
+              </Link>
+              <Link
+                href="/restaurants"
+                className={`${styles.hero_main_btn} ${styles.btn_secondary}`}
               >
                 Explore Restaurants
-              </button>
+              </Link>
             </div>
           </div>
 
@@ -120,15 +115,15 @@ export default function Home() {
       {/* Interactive ROI Savings Calculator Section */}
       <section className={styles.calculator_section}>
         <div className={styles.calculator_container}>
-          <h2 className={styles.section_title}>Calculate Your Monthly Savings</h2>
+          <h2 className={styles.section_title}>Calculate Your Monthly Revenue Kept</h2>
           <p className={styles.section_subtitle}>
-            See how much more money your restaurant keeps when switching from 30% commission platforms to UloDine.
+            See how much more profit your restaurant keeps when switching from 30% commission platforms to UloDine&apos;s flat monthly plan.
           </p>
 
           <div className={styles.slider_card}>
             <div className={styles.slider_head}>
-              <span>Your Estimated Monthly Revenue:</span>
-              <strong>₦{monthlyRevenue.toLocaleString()}</strong>
+              <span>Estimated Monthly Sales Volume:</span>
+              <strong className={styles.revenue_display}>₦{monthlyRevenue.toLocaleString()}</strong>
             </div>
 
             <input
@@ -143,21 +138,30 @@ export default function Home() {
 
             <div className={styles.comparison_grid}>
               <div className={`${styles.comp_card} ${styles.traditional}`}>
-                <h4>30% Commission Apps</h4>
+                <div className={styles.comp_card_header}>
+                  <div className={styles.comp_icon_red}>✕</div>
+                  <h4>30% Delivery Apps</h4>
+                </div>
                 <div className={styles.amount}>-₦{traditionalFee.toLocaleString()}</div>
-                <small style={{ color: "#6b6a6a" }}>Lost in fees every month</small>
+                <span className={styles.comp_subtext}>Lost in commissions every month</span>
               </div>
 
               <div className={`${styles.comp_card} ${styles.ulodine}`}>
-                <h4>UloDine Flat Plan</h4>
+                <div className={styles.comp_card_header}>
+                  <div className={styles.comp_icon_green}>✓</div>
+                  <h4>UloDine Flat Plan</h4>
+                </div>
                 <div className={styles.amount}>₦{ulodineFee.toLocaleString()}</div>
-                <small style={{ color: "#6b6a6a" }}>Fixed monthly subscription</small>
+                <span className={styles.comp_subtext}>Fixed flat monthly subscription</span>
               </div>
 
               <div className={`${styles.comp_card} ${styles.savings}`}>
-                <h4>Your Monthly Savings</h4>
+                <div className={styles.comp_card_header}>
+                  <div className={styles.comp_icon_star}>★</div>
+                  <h4>Your Net Monthly Profit</h4>
+                </div>
                 <div className={styles.amount}>+₦{netSavings.toLocaleString()}</div>
-                <small style={{ color: "#00bb95", fontWeight: 600 }}>Kept directly in your business!</small>
+                <span className={styles.comp_savings_pill}>100% Direct Paystack Earnings</span>
               </div>
             </div>
           </div>
@@ -240,7 +244,7 @@ export default function Home() {
             <div className={styles.full_section_text}>
               <h2>Run a Highly Profitable Venue with 0% Commission</h2>
               <p>
-                Stop losing 30% of your revenue to third-party delivery apps. UloDine provides local restaurants with direct QR table ordering, real-time Kitchen Display Systems, menu customizers, and instant Paystack settlements — all for a flat ₦5,000 monthly fee.
+                Stop losing 30% of your revenue to third-party delivery apps. UloDine provides local restaurants with direct QR table ordering, real-time Kitchen Display Systems, menu customizers, and instant Paystack settlements — all for a flat monthly fee.
               </p>
               <div style={{ marginTop: "1rem" }}>
                 <UloDIneButton
